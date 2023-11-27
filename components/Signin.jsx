@@ -12,6 +12,7 @@ function SignIn({ closeModal }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
+    console.log('click signin')
     fetch("http://localhost:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -86,7 +87,7 @@ function SignIn({ closeModal }) {
         <div className={styles.inputs}>
           <input type="text" placeholder="Username" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername} />
           <input type="password" placeholder="enter your password" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/>
-          <button id="signup" onClick={() => handleConnection()}>Sign in</button>
+          <button  onClick={() => handleConnection()}>Sign in</button>
         </div>
       </div>
     </> 

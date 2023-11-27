@@ -13,16 +13,16 @@ function SignUp({ closeModal }) {
   const dispatch = useDispatch();
 
   const handleRegister = () => {
-    fetch("http://localhost:3000/users/signup", {
+    console.log('click signup');
+    fetch('http://localhost:3000/users/signup', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         firstname: signUpFirstname,
         username: signUpUsername,
-        password: signUpPassword,
+        password: signUpPassword
       }),
-    })
-      .then((response) => response.json())
+    }).then((response) => response.json())
       .then((data) => {
         if (data.result) {
           console.log(data)
