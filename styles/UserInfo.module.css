@@ -1,0 +1,61 @@
+.logoLink:hover {
+    opacity: 50%;
+}
+
+.logoLink{
+  transform: rotate(0.5turn);
+  
+}
+
+
+.photoProfil {
+    border-radius: 5rem;
+    
+}
+
+.userInfoPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    margin-left: 5rem;
+    flex-grow: 1;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border-right: 1px solid grey;
+    padding-right: 1rem;
+    max-width: 20%;
+}
+
+.bottom{
+    display: flex;
+    flex-direction: column;
+}
+
+.blocUser {
+    display: flex;
+    margin-bottom: 1rem;
+    height: 3rem;
+}
+
+.logoutButton {
+    background-color: #3690ED;
+    width: 5rem;
+}
+
+.username{
+    color: #57616E;
+    font-size: 0.75rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 0.5rem;
+}
+
+.userLog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1rem;
+    align-items:start;
+}
+    

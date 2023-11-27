@@ -1,0 +1,35 @@
+.infoUser {
+    color: #57616E;
+    font-size: 0.75rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 0.5rem;
+    
+}
+
+.blocUser {
+    display: flex;
+    
+}
+
+.oneTweet {
+    border-top: 1px, solid, #57616E;
+    height: 10rem;
+}
+
+.logo {
+    display: flex;
+    width: 3rem;
+    justify-content: space-between;
+}
+
+.userPhoto {
+    border-radius: 50%;
+}
+
+.allInfoUser {
+    margin-left: 1rem;
+}
+
+.description {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

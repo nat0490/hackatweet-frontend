@@ -1,0 +1,68 @@
+.modalBackroung{
+    background-color: #151f2b;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.modalContainer {
+    width: 500px;
+    height: 500px;
+    border-radius: 12px;
+    background-color: #151f2b;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    position: absolute;
+    left:50%;
+    transform: translate(-50%, 45%);
+    justify-content: center;
+}
+
+.modalContainer .title, .logo {
+    display: inline-block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnToClose{
+    color: #a7a7a7;
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btnSign {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #151f2b;
+    background-color: white;
+} 
+
+.inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
