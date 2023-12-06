@@ -42,54 +42,53 @@ function SignIn({ closeModal }) {
   return (
     
     <>
-      <div className={styles.modalBackgroung}>
+      
         <div className={styles.modalContainer}>
-          <div className={styles.btnContainer}>
-            <button className={styles.btnToClose} onClick={() => closeModal(false)}> X </button>
-          </div>
-          <div className={styles.body}>
-            <div className={styles.logo}>
-              <Image
-                className={styles.logo}
-                src="/logo.png"
-                width={50}
-                height={50}
-                alt="logo xtwitter"
+
+        <div className={styles.topPage}> 
+          <div>
+            <Image
+              src="/Dessin.png"
+              width={100}
+              height={100}
+              alt="logo"
               />
-            </div>
+          </div>
+          
+            <button 
+              className={styles.btnToClose} 
+              onClick={() => closeModal(false)}
+            >X</button>
+          
+        </div>
+
+
+          <div className={styles.body}>
+            
             <div className={styles.title}>
-              <h1>Connect to Hackatweet</h1>
+              <h1>Connect to Flower</h1>
             </div>
-            <div className={styles.inputs}></div>
-            <input
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setSignInUsername(e.target.value)}
-              value={signInUsername}
-            />
-            <input
-              type="password"
-              placeholder="enter your password"
-              onChange={(e) => setSignInPassword(e.target.value)}
-              value={signInPassword}
-            />
-            <button id="signup" onClick={() => handleConnection()}>
-              Sign in
-            </button>
+            
+            <div className={styles.inputs}>
+              <input
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setSignInUsername(e.target.value)}
+                value={signInUsername}
+              />
+              <input
+                type="password"
+                placeholder="enter your password"
+                onChange={(e) => setSignInPassword(e.target.value)}
+                value={signInPassword}
+              />
+              <button id="signup" onClick={() => handleConnection()}> Sign in </button>
+            </div>
+
           </div>
         </div>
-      </div>
-      <div className={styles.body}>
-        <div className={styles.logo}>
-          <Image className={styles.logo} src="/logo.png" width={100} height={100} alt="logo xtwitter" />
-        </div>
-        <div className={styles.title}><h1>Connect to Hackatweet</h1></div>
-        <div className={styles.inputs}>
-          <input type="text" placeholder="Username" onChange={(e) => setSignInUsername(e.target.value)} value={signInUsername} />
-          <input type="password" placeholder="enter your password" onChange={(e) => setSignInPassword(e.target.value)} value={signInPassword}/>
-          <button  onClick={() => handleConnection()}>Sign in</button>
-        </div>
-      </div>
+      
+      
     </> 
 
   );

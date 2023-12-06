@@ -24,6 +24,7 @@ function SignUp({ closeModal }) {
       }),
     }).then((response) => response.json())
       .then((data) => {
+        console.log(data)
         if (data.result) {
           console.log(data)
           dispatch(
@@ -42,56 +43,63 @@ function SignUp({ closeModal }) {
   };
 
   return (
-    <div className={styles.modalBackgroung}>
+    
       <div className={styles.modalContainer}>
-        <div className={styles.btnContainer}>
-          <button
-            className={styles.btnToClose}
-            onClick={() => closeModal(false)}
-          >
-            X
-          </button>
-        </div>
-        <div className={styles.body}>
-          <div className={styles.logo}>
+
+        <div className={styles.topPage}> 
+          <div>
             <Image
-              className={styles.logo}
-              src="/logo.png"
+              src="/Dessin.png"
               width={100}
               height={100}
-              alt="logo xtwitter"
-            />
+              alt="logo"
+              />
           </div>
+          
+            <button 
+              className={styles.btnToClose} 
+              onClick={() => closeModal(false)}
+            >X</button>
+          
+        </div>
+
+
+        <div>
+          
         
-      <div className={styles.title}>
-            <h1>Create your Hackatweet account</h1>
+          <div className={styles.title}> 
+            <h1>Create your Flower account</h1>
           </div>
+          
+          
           <div className={styles.inputs}>
-          <input
-            type="text"
-            placeholder="Firstname"
-            onChange={(e) => setSignUpFirstname(e.target.value)}
-            value={signUpFirstname}
-          />
-          <input
-            type="text"
-            placeholder="Username"
-            onChange={(e) => setSignUpUsername(e.target.value)}
-            value={signUpUsername}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setSignUpPassword(e.target.value)}
-            value={signUpPassword}
-          />
-          <button className={styles.btnSign} onClick={() => handleRegister()}>
-            Sign up
-          </button>
-            </div>
-</div>
+            <input
+              type="text"
+              placeholder="Firstname"
+              onChange={(e) => setSignUpFirstname(e.target.value)}
+              value={signUpFirstname}
+            />
+            <input
+              type="text"
+              placeholder="Username"
+              onChange={(e) => setSignUpUsername(e.target.value)}
+              value={signUpUsername}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setSignUpPassword(e.target.value)}
+              value={signUpPassword}
+            />
+            <button className={styles.btnSign} onClick={() => handleRegister()}>
+              Sign up
+            </button>
+          </div>
+        </div>
+
+
       </div>
-    </div>
+    
   );
 }
 

@@ -16,10 +16,10 @@ function UserInfo() {
   return (
     <div className={styles.userInfoPage}>
     
-      <Link href="/"><Image src={"/twitterLogo.png"} width={50} height={50} className={styles.logoLink} /></Link>
+      <Link href="/"><Image src={"/Dessin.png"} width={50} height={50} className={styles.logoLink} /></Link>
       <div className={styles.bottom}> 
         <div className={styles.blocUser}>
-          <Image className={styles.photoProfil} src={"/userPdp.png"} width={50} height={50} />
+          <Image className={styles.photoProfil} src={"/user.jpg"} width={50} height={50} />
           <div className={styles.userLog} >
             <span>{user.firstname}</span>
             <span className={styles.username}> @{user.username}</span>

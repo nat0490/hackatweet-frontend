@@ -15,14 +15,12 @@
 
 .logoLeftContainer{
     width: 50px;
-    transform: rotate(180deg);
-
+    transform: rotate(-45deg);
     }
     
     
 .rightContainer{
     width: 50%;
-    background-color:#131E28;
     margin-left: 40px;
     display: flex;
     flex-direction: column;
@@ -32,27 +30,31 @@
          
 
 .img{
-   height: 100%;
+    height: 100%;
     width: 100%;
     object-fit: cover;
 }
 
 .btnSignIn {
-color:#0085EB;
+color:#EA3680;
+font-weight: bold;
 background-color: transparent;
 height: 4vh;
 width: 40vw;
 border-radius: 17px;
-border: 1px solid white;
+border: 1px solid #EA3680;
+cursor: grab;
 
 }
 
 .btnSignUp {
-background-color:#0097F1;
+background-color: #EA3680;
+font-weight: bold;
 color: white;
 height: 4vh;
 width: 40vw;
 border-radius: 17px;
 border: 0px;
+cursor:grab;
 
 }

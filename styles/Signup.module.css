@@ -1,25 +1,20 @@
-.modalBackroung {
-    background-color: #151f2b;
-    position: absolute;
-    top: 0;
-    left: 0;
-   
-}
 
 .modalContainer {
-  width: 500px;
-  height: 500px;
-  border-radius: 12px;
-  background-color: #151f2b;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 25px;
-  position: absolute;
-  left:50%;
-  transform: translate(-50%, 45%);
-  justify-content: center;
+    background-color: #EA3680;
+    width: 500px;
+    height: 500px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    left:50%;
+    margin: 0;
+    padding: 0;
+    transform: translate(-50%, 45%);
+    position: absolute;
+    z-index: 1;
 }
 
 .modalContainer .title {
@@ -28,19 +23,15 @@
     margin-top: 10px;
 }
 
-.btnContainer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-}
+
 
 .btnToClose{
-    color: #a7a7a7;
+    color: #fff;
     background-color: transparent;
     border: none;
-    font-size: 15px;
+    font-size: 20px;
     cursor: pointer;
-    
+    font-weight: bold;
 }
 
 .btnSign {
@@ -57,7 +48,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   
 }
 
 .title{
@@ -73,5 +63,20 @@
     text-align: center;
     margin-top: 10px;
 }
+
+.title {
+    justify-content: center;
+    
+}
+
+.topPage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+}
+
+
 
 

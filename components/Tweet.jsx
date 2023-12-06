@@ -40,16 +40,16 @@ function Tweet(props) {
     <div className={styles.oneTweet}>
       <div className={styles.blocUser}>
         <Image
-          src={"/userPdp.png"}
+          src={"/user.jpg"}
           width={50}
           height={50}
           className={styles.userPhoto}
         />
         <p className={styles.allInfoUser}>
-          {props.user.firstname}{" "}
+          {/* props.user.firstname? props.user.firstname : "" */}
           <span className={styles.infoUser}>
             {" "}
-            @{props.user.username} - {moment.duration(tempsEcoule).humanize()}{" "}
+           {/* @{props.user.username} - {moment.duration(tempsEcoule).humanize()}{" "} */}
           </span>
         </p>
       </div>
