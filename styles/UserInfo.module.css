@@ -19,10 +19,10 @@
     justify-content: space-between;
     align-items: flex-start;
     height: 100vh;
-    margin-left: 5rem;
+    padding-left: 3rem;
     flex-grow: 1;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
     border-right: 1px solid grey;
     padding-right: 1rem;
     max-width: 20%;
@@ -40,7 +40,7 @@
 }
 
 .logoutButton {
-    background-color: #3690ED;
+    background-color: #EA3680;
     width: 5rem;
 }
 

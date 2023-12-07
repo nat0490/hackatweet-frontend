@@ -53,6 +53,7 @@ function SignUp({ closeModal }) {
               width={100}
               height={100}
               alt="logo"
+              className={styles.logoStyle}
               />
           </div>
           
@@ -78,18 +79,21 @@ function SignUp({ closeModal }) {
               placeholder="Firstname"
               onChange={(e) => setSignUpFirstname(e.target.value)}
               value={signUpFirstname}
+              style={{ backgroundColor: '#fff', color: '#000'}}
             />
             <input
               type="text"
               placeholder="Username"
               onChange={(e) => setSignUpUsername(e.target.value)}
               value={signUpUsername}
+              style={{ backgroundColor: '#fff', color: '#000'}}
             />
             <input
               type="password"
               placeholder="Password"
               onChange={(e) => setSignUpPassword(e.target.value)}
               value={signUpPassword}
+              style={{ backgroundColor: '#fff', color: '#000'}}
             />
             <button className={styles.btnSign} onClick={() => handleRegister()}>
               Sign up

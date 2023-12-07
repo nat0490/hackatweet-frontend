@@ -134,7 +134,7 @@ function LastTweets() {
         />
         <div className={styles.dessousInput}>
           <span className={styles.lengthText}>{tweet.length}/280</span>
-          <button onClick={handleAddTweet} className={styles.blueButton}>
+          <button onClick={handleAddTweet} className={styles.addButton}>
             Tweet
           </button>
         </div>

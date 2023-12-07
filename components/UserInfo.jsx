@@ -16,7 +16,7 @@ function UserInfo() {
   return (
     <div className={styles.userInfoPage}>
     
-      <Link href="/"><Image src={"/Dessin.png"} width={50} height={50} className={styles.logoLink} /></Link>
+      <Link href="/"><Image src={"/Dessin.png"} width={100} height={100} className={styles.logoLink} /></Link>
       <div className={styles.bottom}> 
         <div className={styles.blocUser}>
           <Image className={styles.photoProfil} src={"/user.jpg"} width={50} height={50} />

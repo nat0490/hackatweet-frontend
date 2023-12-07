@@ -41,26 +41,27 @@ function SignIn({ closeModal }) {
 
   return (
     
-    <>
+    
       
         <div className={styles.modalContainer}>
 
-        <div className={styles.topPage}> 
-          <div>
-            <Image
-              src="/Dessin.png"
-              width={100}
-              height={100}
-              alt="logo"
-              />
+          <div className={styles.topPage}> 
+            <div>
+              <Image
+                src="/Dessin.png"
+                width={100}
+                height={100}
+                alt="logo"
+                className={styles.logoStyle}
+                />
+            </div>
+            
+              <button 
+                className={styles.btnToClose} 
+                onClick={() => closeModal(false)}
+              >X</button>
+            
           </div>
-          
-            <button 
-              className={styles.btnToClose} 
-              onClick={() => closeModal(false)}
-            >X</button>
-          
-        </div>
 
 
           <div className={styles.body}>
@@ -75,21 +76,23 @@ function SignIn({ closeModal }) {
                 placeholder="Username"
                 onChange={(e) => setSignInUsername(e.target.value)}
                 value={signInUsername}
+                style={{ backgroundColor: '#fff', color: '#000'}}
               />
               <input
                 type="password"
                 placeholder="enter your password"
                 onChange={(e) => setSignInPassword(e.target.value)}
                 value={signInPassword}
+                style={{ backgroundColor: '#fff', color: '#000'}}
               />
-              <button id="signup" onClick={() => handleConnection()}> Sign in </button>
+              <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Sign in </button>
             </div>
 
           </div>
         </div>
       
       
-    </> 
+   
 
   );
 };

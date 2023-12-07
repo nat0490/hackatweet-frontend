@@ -32,6 +32,7 @@
     font-size: 20px;
     cursor: pointer;
     font-weight: bold;
+    width: 10%
 }
 
 .btnSign {
@@ -74,8 +75,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 500px;
+    width: 400px;
 }
+
+.logoStyle {
+    transform: rotate(-45deg);
+}
+
 
 
 

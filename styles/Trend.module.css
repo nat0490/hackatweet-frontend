@@ -1,8 +1,8 @@
 .hashtagContainer {
-    background-color: #1B232C;
     margin: 20px;
     border-radius: 10px;
     padding: 20px;
+    background-color: rgba(0,0,0,0.6);
 }
 
 .titlePage {
@@ -17,7 +17,7 @@
 }
 
 .totalTweet {
-    color: #57616E;
+    color: #EA3680;
     font-size: 0.75rem;
 }
 
@@ -29,5 +29,6 @@
     flex-grow: 1;
     border-left: 1px solid grey;
     padding-left: 1rem;
+    max-width: 25%;
 }
 

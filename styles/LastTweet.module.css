@@ -1,6 +1,7 @@
 .inputLastTweets {
-    background-color: #151D27;
-    border: none;
+    background-color: #fff;
+    color: #000;
+    border: #EA3680;
     border-bottom: 1px solid grey;
     width: 80%;
     margin-left: 5rem;
@@ -8,8 +9,8 @@
     margin-bottom: 2rem;
 }
 
-.blueButton {
-    background-color: #3690ED;
+.addButton {
+    background-color: #EA3680;
     color: #fff;
     border-radius: 20px;
     border: none;
@@ -25,7 +26,11 @@
     flex-direction: column;
     align-items: left;
     justify-content: left;
-    margin-bottom: 5rem;
+    margin-bottom: 2rem;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding-top: 8px;
+    padding-bottom: 4px;
 }
 
 
@@ -46,7 +51,6 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-width: 40%;
     padding-left: 1rem;
     padding-right: 1rem;
 }
