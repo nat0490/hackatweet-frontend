@@ -8,7 +8,8 @@ body {
   padding: 0;
   margin: 0;
   background-color: #f9e3f0;
-  font-family: 'Mont-Heavy', sans-serif;
+  overflow-y:hidden;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 * {
@@ -17,7 +18,9 @@ body {
 
 .hashtag {
   color: #EA3680;
-  font-weight: 900;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-variant-caps: small-caps;
 }
 
 button {

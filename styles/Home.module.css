@@ -2,5 +2,12 @@
 .PageAcceuil {
   display: flex;
   width: 100%;
+  overflow-y:hidden;
 }
+
+.lastTweetsContainer {
+  width: 55%;
+}
+
+
 

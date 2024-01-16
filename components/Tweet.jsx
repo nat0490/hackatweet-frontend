@@ -8,7 +8,8 @@ import moment from "moment";
 
 function Tweet(props) {
   const user = useSelector((state) => state.users.value);
-  const [likes, setLikes] = useState(props.whoLike?.length);
+  const [likes, setLikes] = useState(props.nbLike);
+  //console.log(likes);
 
   const handleLike = () => {
     fetch(`http://localhost:3000/tweets/nbLike/${props._id}`, {
@@ -35,7 +36,9 @@ function Tweet(props) {
   const datePoste = moment(props.date);
   const dateActuelle = moment();
   const tempsEcoule = dateActuelle.diff(datePoste);
-  console.log(moment.duration(tempsEcoule).humanize());
+  //console.log(moment.duration(tempsEcoule).humanize());
+
+
   return (
     <div className={styles.oneTweet}>
       <div className={styles.blocUser}>
@@ -48,16 +51,16 @@ function Tweet(props) {
         <p className={styles.allInfoUser}>
           {/* props.user.firstname? props.user.firstname : "" */}
           <span className={styles.infoUser}>
-            {" "}
-           {/* @{props.user.username} - {moment.duration(tempsEcoule).humanize()}{" "} */}
+            {" "} 
+            {props.user.username} - {moment.duration(tempsEcoule).humanize()} 
           </span>
         </p>
       </div>
       <div>
         <p className={styles.description}>
-          {props.description?.split(" ").map((e) => {
+          {props.description?.split(" ").map((e, i) => {
             if (new RegExp("#").test(e)) {
-              return <span className="hashtag"> {e} </span>;
+              return <span className="hashtag" key={i}> {e} </span>;
             } else {
               return ` ${e} `;
             }
@@ -69,11 +72,12 @@ function Tweet(props) {
           <FontAwesomeIcon
             icon={faHeart}
             style={props.isLiked && { color: "red" }}
-          />{" "}
-          {likes}
+          />   <span className={styles.likesText}>    {   likes} </span>
         </div>
-        {user.id === props.user && (
-          <FontAwesomeIcon onClick={handleDelete} icon={faTrash} />
+        {user.id === props.user._id && (
+          <div onClick={handleDelete} >
+            <FontAwesomeIcon icon={faTrash} />
+          </div>
         )}
       </div>
     </div>

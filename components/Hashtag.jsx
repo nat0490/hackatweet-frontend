@@ -8,12 +8,29 @@ import Trend from "./Trend";
 
 function Hashtag() {
   const router = useRouter();
+  
 
   const [hashtag, setHashtag] = useState(router.query.hashtagName);
+  const [tweetMatch, setTweetMatch ] = useState([]);
   const [hashtagArray, setHashtagArray] = useState([]);
   const [tweetsLiked, setTweetsLiked] = useState([]);
 
+  const fetchTweetForHashtag = (hash) => {
+    fetch(`http://localhost:3000/tweets/hashtagNumber/${hash}`)
+      .then(res => res.json())
+      .then(hashtag => {
+        console.log(hashtag.tweets);
+        setTweetMatch([]);
+        setTweetMatch(hashtag.tweets.reverse());
+      })
+  }
+
   useEffect(() => {
+    setHashtag(router.query.hashtagName);
+    //console.log(router.query.hashtagName)
+    fetchTweetForHashtag(hashtag);
+
+/*
     setHashtag(router.query.hashtagName);
     fetch(`http://localhost:3000/trends/oneHashtag/${hashtag}`)
       .then((response) => response.json())
@@ -26,6 +43,7 @@ function Hashtag() {
           setHashtagArray([]);
         }
       });
+*/
   }, [hashtag, router.query]);
 
   const handleLike = (id) => {
@@ -48,20 +66,39 @@ function Hashtag() {
     />
   ));
 
+  const afficheTweet = tweetMatch.map((tweet, i) => (
+    <Tweet
+      {...tweet}
+      key={i}
+      handleLike={handleLike}
+      isLiked={tweetsLiked.some((e) => !!e && e === tweet._id)}
+    />
+  ));
+
   return (
     <div className={styles.PageAcceuil}>
       <UserInfo className={styles.userInfo} />
       <div className={styles.hashtagPage}> 
         <div>
-          <h2 className={styles.titlePage}>Hashtag</h2>
-          <input
-            type="text"
-            className={styles.inputHashtag}
-            onChange={(e) => setHashtag(e.target.value.replace(/^#/, ""))}
-            value={"#" + hashtag}
-          />
+          <h2 className={styles.titlePage}>Hashtag Match</h2>
+          <div className={styles.addTweet}>
+            <input
+              type="text"
+              value={"#" + hashtag}
+              onChange={(e) => setHashtag(e.target.value.replace(/^#/, ""))}
+              className={styles.inputLastTweets}
+            />
+            <div className={styles.dessousInput}>
+              {/*<span className={styles.lengthText}>{tweet.length}/280</span>*/}
+              <button className={styles.addButton}> Rechercher </button>
+            </div>
+          </div>
+
+
+
+          
         </div>
-        <div>{hashtagArray ? allArrayForHashtag : "No tweets found with #hashtagname"}</div>
+        <div>{afficheTweet ? afficheTweet : "No tweets found with #hashtagname"}</div>
       </div>
       <Trend className={styles.trend}/>
     </div>

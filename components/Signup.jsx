@@ -13,7 +13,7 @@ function SignUp({ closeModal }) {
   const dispatch = useDispatch();
 
   const handleRegister = () => {
-    console.log('click signup');
+    //console.log('click signup');
     fetch('http://localhost:3000/users/signup', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -24,15 +24,15 @@ function SignUp({ closeModal }) {
       }),
     }).then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        //console.log(data)
         if (data.result) {
-          console.log(data)
+          //console.log(data)
           dispatch(
             login({
               firstname: signUpFirstname,
               username: signUpUsername,
               token: data.newDoc.token,
-              //id: data.newdoc._id,
+              id: data.newDoc._id,
             })
           );
           setSignUpFirstname("");

@@ -12,7 +12,7 @@ function SignIn({ closeModal }) {
   const dispatch = useDispatch();
 
   const handleConnection = () => {
-    console.log('click signin')
+    //console.log('click signin')
     fetch("http://localhost:3000/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -23,7 +23,7 @@ function SignIn({ closeModal }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
         if (data.result) {
           dispatch(
             login({

@@ -7,7 +7,9 @@ function Home() {
   return (
     <div className={styles.PageAcceuil}>
       <UserInfo className={styles.userInfo} />
-      <LastTweets className={styles.lastTweets}/>
+      <div className={styles.lastTweetsContainer}>
+        <LastTweets className={styles.lastTweets}/>
+      </div>
       <Trend className={styles.trend}/>
     </div>
   );

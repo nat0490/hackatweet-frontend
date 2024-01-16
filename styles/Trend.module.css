@@ -9,16 +9,23 @@
     margin-left: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    font-family: Snell Roundhand, cursive;
+    text-align: center;
 }
 
 .hashtagName {
     color: #fff;
     text-decoration: none;
+    font-variant-caps: small-caps;
+    font-size: 1.25rem;
 }
 
 .totalTweet {
     color: #EA3680;
     font-size: 0.75rem;
+    font-variant-caps: small-caps;
+    margin-top: -0.25rem;
+    margin-left: 1rem;
 }
 
 .oneTweet{
