@@ -5,17 +5,21 @@ import styles from "../styles/LastTweet.module.css";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
 
 function LastTweets() {
+
   const user = useSelector((state) => state.users.value);
   const hashtag = useSelector((state) => state.hashtags.value);
   const dispatch = useDispatch();
 
-  //console.log(hashtag);
+  
 
   const [tweetsData, setTweetsData] = useState([]);
   const [tweet, setTweet] = useState("");
   const [tweetsLiked, setTweetsLiked] = useState([]);
 
+  const [likedMovies, setLikedMovies] = useState([]);
+
   //const [allhashtags, setAllhashtags] = useState([]);
+  //console.log(tweetsData);
 
   const fetchTweet = () => {
     fetch("http://localhost:3000/tweets/lastTweet")
@@ -97,35 +101,6 @@ function LastTweets() {
           console.log(createdTweet.tweet.hashtags);
           fetchAllHashtag();
         }
-
-/*
-        createdTweet.tweet.hashtags.map((hashtag) => {
-          fetch(`http://localhost:3000/trends/update/${hashtag}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ tweetId: createdTweet.tweet._id }),
-          })
-            .then((res) => res.json())
-            .then((updatedData) => {
-              if (!updatedData.result) {
-                fetch("http://localhost:3000/trends/create", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    hashtag,
-                    tweets: createdTweet.tweet._id,
-                  }),
-                })
-                  .then((res) => res.json())
-                  .then((createdHashtag) => {
-                  });
-              }
-            });
-        });*/
       });
   };
 
@@ -140,8 +115,26 @@ function LastTweets() {
       .then((res) => res.json())
       .then((data) => {
         setTweetsData(tweetsData.filter((e) => e._id !== id));
+        fetchAllHashtag();
       });
   };
+
+  const updateLikedTweet = (tweetId) => {
+    //console.log(tweetsLiked.find(tweet => tweet.toString() === tweetId.toString()));
+    //setTweetsLiked([...tweetsLiked, tweetId]);
+    //console.log(tweetsLiked.some(tweet => tweet == tweetId));
+    if (tweetsLiked.some(tweet => tweet === tweetId)) {      
+      setTweetsLiked(tweetsLiked.filter(tweet => tweet !== tweetId));
+    } else {     
+      setTweetsLiked([...tweetsLiked, tweetId]);
+    } 
+  };
+
+
+  console.log(tweetsLiked);
+  tweetsLiked.map(e => {
+    console.log(e)
+  });
 
   const handleLike = (id) => {
     const tweetLiked = tweetsLiked.find((e) => {
@@ -154,17 +147,19 @@ function LastTweets() {
     }
   };
 
+  //{tweetsLiked.some((e) => {
+  //        console.log(e);
+  //        return !!e && e === tweet._id;
+  //      }) }
+
   const tweets = tweetsData.map((tweet, i) => {
     //console.log(tweet);
     return (
       <Tweet
         key={i}
         {...tweet}
-        handleLike={handleLike}
-        isLiked={tweetsLiked.some((e) => {
-          console.log(e);
-          return !!e && e === tweet._id;
-        })}
+        updateLikedTweet={updateLikedTweet}
+        isLiked={tweetsLiked.some( e => e === tweet._id )}        
         handleDelete={handleDelete}
       />
     );

@@ -28,7 +28,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 40%;
     padding-left: 1rem;
     padding-right: 1rem;
 }
@@ -79,4 +79,14 @@
     width: 7rem;
     margin-right: 2rem;
 }
+
+.tweetContainer {
+    height: 45rem; /* ou une hauteur fixe selon vos besoins */
+    overflow-y: auto; /* activer le défilement vertical si nécessaire */    
+    scrollbar-width: thin;
+}
+
+.tweetContainer::-webkit-scrollbar {
+    width: 12px;
+  }
 

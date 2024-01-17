@@ -76,14 +76,14 @@ function SignIn({ closeModal }) {
                 placeholder="Username"
                 onChange={(e) => setSignInUsername(e.target.value)}
                 value={signInUsername}
-                style={{ backgroundColor: '#fff', color: '#000'}}
+                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
               />
               <input
                 type="password"
                 placeholder="enter your password"
                 onChange={(e) => setSignInPassword(e.target.value)}
                 value={signInPassword}
-                style={{ backgroundColor: '#fff', color: '#000'}}
+                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
               />
               <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Sign in </button>
             </div>

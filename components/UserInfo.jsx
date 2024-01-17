@@ -4,18 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {} from "@fortawesome/free-solid-svg-icons";
-
 import styles from '../styles/UserInfo.module.css';
 
 
 
 
 function UserInfo() {
+
   const user = useSelector((state) => state.users.value);
   const dispatch = useDispatch();
+  
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.assign('/');
+  }
+  
   return (
     <div className={styles.userInfoPage}>
-    
       <Link href="/"><Image src={"/Dessin.png"} width={100} height={100} className={styles.logoLink} /></Link>
       <div className={styles.bottom}> 
         <div className={styles.blocUser}>
@@ -25,8 +30,7 @@ function UserInfo() {
             <span className={styles.username}> @{user.username}</span>
           </div>
         </div>
-      
-        <button onClick={() => dispatch(logout())} className={styles.logoutButton}>Logout</button>
+       <button onClick={handleLogout} className={styles.logoutButton}>Logout</button> 
       </div>
     </div>
   );

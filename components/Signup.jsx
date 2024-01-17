@@ -24,9 +24,7 @@ function SignUp({ closeModal }) {
       }),
     }).then((response) => response.json())
       .then((data) => {
-        //console.log(data)
         if (data.result) {
-          //console.log(data)
           dispatch(
             login({
               firstname: signUpFirstname,
@@ -79,21 +77,21 @@ function SignUp({ closeModal }) {
               placeholder="Firstname"
               onChange={(e) => setSignUpFirstname(e.target.value)}
               value={signUpFirstname}
-              style={{ backgroundColor: '#fff', color: '#000'}}
+              style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
             />
             <input
               type="text"
               placeholder="Username"
               onChange={(e) => setSignUpUsername(e.target.value)}
               value={signUpUsername}
-              style={{ backgroundColor: '#fff', color: '#000'}}
+              style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
             />
             <input
               type="password"
               placeholder="Password"
               onChange={(e) => setSignUpPassword(e.target.value)}
               value={signUpPassword}
-              style={{ backgroundColor: '#fff', color: '#000'}}
+              style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
             />
             <button className={styles.btnSign} onClick={() => handleRegister()}>
               Sign up

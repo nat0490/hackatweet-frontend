@@ -78,7 +78,7 @@
 }
 
 .lastTweetsContainer {
-    max-height: 45%; /* ou une hauteur fixe selon vos besoins */
+    height: 45rem; /* ou une hauteur fixe selon vos besoins */
     overflow-y: auto; /* activer le défilement vertical si nécessaire */    
     scrollbar-width: thin;
   }

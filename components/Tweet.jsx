@@ -9,7 +9,7 @@ import moment from "moment";
 function Tweet(props) {
   const user = useSelector((state) => state.users.value);
   const [likes, setLikes] = useState(props.nbLike);
-  //console.log(likes);
+  //console.log(props);
 
   const handleLike = () => {
     fetch(`http://localhost:3000/tweets/nbLike/${props._id}`, {
@@ -28,6 +28,17 @@ function Tweet(props) {
         }
       });
   };
+
+  const handleLikeTweet = () => {
+    console.log(props._id)
+    props.updateLikedTweet(props._id);
+    //props.isLiked = true ;
+  };
+
+  let heartIconStyle = { 'cursor': 'pointer' };
+  if (props.isLiked) {
+    heartIconStyle = { 'color': '#e74c3c', 'cursor': 'pointer' };
+  }
 
   const handleDelete = () => {
     props.handleDelete(props._id);
@@ -71,7 +82,8 @@ function Tweet(props) {
         <div onClick={handleLike}>
           <FontAwesomeIcon
             icon={faHeart}
-            style={props.isLiked && { color: "red" }}
+            style={props.isLiked && { 'color': '#e74c3c', 'cursor': 'pointer' }}
+            onClick={handleLikeTweet}
           />   <span className={styles.likesText}>    {   likes} </span>
         </div>
         {user.id === props.user._id && (
