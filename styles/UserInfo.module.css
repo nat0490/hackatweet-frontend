@@ -56,6 +56,6 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 1rem;
-    align-items:start;
+    align-items:flex-start;
 }
     

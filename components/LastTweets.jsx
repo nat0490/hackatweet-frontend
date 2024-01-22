@@ -131,10 +131,10 @@ function LastTweets() {
   };
 
 
-  console.log(tweetsLiked);
+  /*console.log(tweetsLiked);
   tweetsLiked.map(e => {
     console.log(e)
-  });
+  });*/
 
   const handleLike = (id) => {
     const tweetLiked = tweetsLiked.find((e) => {
