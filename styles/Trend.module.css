@@ -1,9 +1,4 @@
-.hashtagContainer {
-    margin: 20px;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: rgba(0,0,0,0.6);
-}
+
 
 .titlePage {
     margin-left: 1rem;
@@ -13,12 +8,7 @@
     text-align: center;
 }
 
-.hashtagName {
-    color: #fff;
-    text-decoration: none;
-    font-variant-caps: small-caps;
-    font-size: 1.25rem;
-}
+
 
 .totalTweet {
     color: #EA3680;
@@ -32,10 +22,50 @@
     margin-bottom: 20px;
 }
 
-.trendPage {
+
+/* LIGHT MODE */
+.light.trendPage {
     flex-grow: 1;
     border-left: 1px solid grey;
     padding-left: 1rem;
     max-width: 25%;
+}
+
+.light.hashtagContainer {
+    margin: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.light.hashtagName {
+    color: #000;
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    font-size: 1.25rem;
+}
+
+
+/* DARK MODE */
+.dark.trendPage {
+    background-color: #222;
+    flex-grow: 1;
+    border-left: 1px solid grey;
+    padding-left: 1rem;
+    max-width: 25%;
+}
+
+.dark.hashtagContainer {
+    margin: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.dark.hashtagName {
+    color: #fff;
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    font-size: 1.25rem;
 }
 

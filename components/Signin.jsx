@@ -23,7 +23,7 @@ function SignIn({ closeModal }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         if (data.result) {
           dispatch(
             login({
@@ -40,8 +40,6 @@ function SignIn({ closeModal }) {
   };
 
   return (
-    
-    
       
         <div className={styles.modalContainer}>
 

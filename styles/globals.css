@@ -1,16 +1,22 @@
 
+
 @font-face {
   font-family: 'Mont-Heavy';
   src: url('../public/mont-heavy.ttf');
 }
 
-body {
-  padding: 0;
-  margin: 0;
-  background-color: #f9e3f0;
-  overflow-y:hidden;
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
-}
+
+
+/* @media (prefers-color-scheme: light) { */
+  body {
+    padding: 0;
+    margin: 0;
+    background-color: rgba(168, 20, 109, 0.4);
+    overflow-y:hidden;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+
 
 * {
   box-sizing: border-box;

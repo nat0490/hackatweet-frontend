@@ -1,0 +1,70 @@
+.blocPhoto{
+    display: flex;
+    align-items: center;
+   }
+
+.userPhotoCom {
+    border-radius: 50%;
+}
+
+.blocUserCom {
+    width: 100%; 
+ }
+
+.userNameAndDeleteCom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: -0.25rem;
+}
+
+.infoUserCom {
+    font-size: 0.75rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 0.5rem;
+    color: #91a3ba;
+}
+
+.oneLogo {
+    margin-right: 1.5rem;
+}
+
+.textCom {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 1rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0;
+}
+
+.logoCom {
+    margin-left: 3rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.likesText {
+    font-size: 0.6rem; 
+    font-weight: 100;
+    margin-left: 0.5rem;
+}
+
+.unTrait{
+    margin-left: 1rem;
+    width: 80%;
+}
+
+
+/* LIGHT MODE */
+.light.unTrait{
+    border-bottom: 1px double #EA3680 ;
+}
+
+
+/* DARK MODE */
+.dark.unTrait{
+    border-bottom: 1px double #000 ;
+}

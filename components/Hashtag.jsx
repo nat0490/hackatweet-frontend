@@ -1,16 +1,19 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Tweet from "./Tweet";
 import styles from "../styles/Hashtag.module.css";
-import UserInfo from "./UserInfo";
-import Trend from "./Trend";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function Hashtag() {
+
+  const theme = useSelector(state => state.theme.value);
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const URL = 'http://localhost:3000/'
   
 
   const [hashtag, setHashtag] = useState(router.query.hashtagName);
@@ -19,10 +22,10 @@ function Hashtag() {
   const [tweetsLiked, setTweetsLiked] = useState([]);
 
   const fetchTweetForHashtag = (hash) => {
-    fetch(`http://localhost:3000/tweets/hashtagNumber/${hash}`)
+    fetch(`${URL}tweets/hashtagNumber/${hash}`)
       .then(res => res.json())
       .then(hashtag => {
-        console.log(hashtag.tweets);
+        //console.log(hashtag.tweets);
         setTweetMatch([]);
         setTweetMatch(hashtag.tweets.reverse());
       })
@@ -51,7 +54,7 @@ function Hashtag() {
   };
 
   const handleDelete = (id) => {
-    fetch("http://localhost:3000/tweets/delete", {
+    fetch(`${URL}tweets/delete`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -77,7 +80,7 @@ function Hashtag() {
   
 
   const fetchAllHashtag = () => {
-    fetch("http://localhost:3000/tweets/lastTweet")
+    fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
       .then((data) => {
         //console.log(data.tweets);        
@@ -114,11 +117,11 @@ function Hashtag() {
 
   return (
     <div className={styles.PageAcceuil}>
-      <UserInfo className={styles.userInfo} />
-      <div className={styles.hashtagPage}> 
+      
+      <div className={`${styles[theme]} ${styles.hashtagPage}`}> 
         <div>
-          <h2 className={styles.titlePage}>Hashtag Match</h2>
-          <div className={styles.addTweet}>
+          <h3 className={`${styles[theme]} ${styles.titlePage}`}>Recherche par #</h3>
+          <div className={`${styles[theme]} ${styles.addTweet}`}>
             <input
               type="text"
               value={"#" + hashtag}
@@ -135,9 +138,9 @@ function Hashtag() {
 
           
         </div>
-        <div className={styles.tweetContainer}>{afficheTweet ? afficheTweet : "No tweets found with #hashtagname"}</div>
+        <div className={styles.tweetContainer}>{ tweetMatch.length > 0 ? afficheTweet : "No tweets found with #hashtagname"}</div>
       </div>
-      <Trend className={styles.trend}/>
+      
     </div>
   );
 }

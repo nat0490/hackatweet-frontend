@@ -1,28 +1,14 @@
-.infoUser {
-    color: #57616E;
-    font-size: 0.75rem;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    margin-left: 0.5rem;
-}
+
 
 .blocUser {
     display: flex;
-    margin-bottom: -0.75rem;
-}
-
-.oneTweet {
-    border-top: 1px, solid, #57616E;    
-    background-color: rgba(255,255,255,0.8);
-    border-radius: 20px;
-    margin-bottom: 0.5rem;
-    padding: 5px;
+    margin-bottom: -1rem;
 }
 
 .logo {
     display: flex;    
-    margin-left: 1rem;
-    margin-bottom: 0.5rem;
-    margin-top: -0.25rem;    
+    margin-left: 3.25rem;
+    margin-top: -0.75rem;
 }
 
 .userPhoto {
@@ -31,10 +17,13 @@
 
 .allInfoUser {
     margin-left: 1rem;
+    margin-top: -0.25rem;
 }
 
 .description {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 50px;
+    margin-top: 0;
 }
 
 .likesText {
@@ -43,7 +32,7 @@
 }
 
 .oneLogo {
-    margin-right: 2rem;
+    margin-right: 1.5rem;
 }
 
 .userNameAndDelete {
@@ -53,29 +42,14 @@
     align-items: center;
 }
 
-.addComment {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-    margin-left: 2rem;
-    padding-top: 1rem;   
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    width: 80%;
-}
-
 .inputComment {    
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0);
     color: #000;
-    border: #EA3680;
+    border: none;
     border-bottom: 1px solid grey;
-
     width: 80%;
     margin-left: 2rem;   
 }
-
 
 
 .addButton {
@@ -90,5 +64,161 @@
     margin-bottom: 1rem;
     height: 1.5rem;
     width: 5rem;
+    text-decoration: none;
+    font-variant-caps: small-caps;
 }
 
+.oneTweet {
+    border-radius: 20px;
+    margin-bottom: 0.5rem;
+    padding: 5px;
+}
+
+.infoUser {
+    font-size: 0.75rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 0.5rem;
+    color: #91a3ba;
+}
+
+.addComment {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    padding-top: 1rem;   
+    border-radius: 20px;
+    width: 60%;
+}
+
+.inputComment {    
+    border: none;
+    width: 80%;
+    margin-left: 2rem;   
+}
+
+.borderComments {
+    margin-left: 1rem;
+}
+
+.allComment {
+    width: 60%;
+    margin-left: 1rem;  
+    border-radius: 20px;
+    margin-top: -0.25rem;
+    margin-bottom: 0.25rem;
+    padding-left: 2rem; 
+    padding-bottom: 0.25rem; 
+}
+
+.blocUserCom {
+   width: 100%; 
+}
+
+
+.unTrait{
+    margin-left: 1rem;
+    width: 80%;
+}
+
+
+.textCom {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 1rem;
+    margin-top: -0.5rem;
+    margin-bottom: 0;
+}
+
+.infoUserCom {
+    font-size: 0.75rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 0.5rem;
+    color: #91a3ba;
+}
+
+.logoCom {
+    margin-left: 3rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+}
+
+.userPhotoCom {
+    border-radius: 50%;
+}
+
+.blocPhoto{
+ display: flex;
+ align-items: center;
+}
+
+.userNameAndDeleteCom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: -0.25rem;
+}
+
+
+
+
+/* LIGHT MODE */
+.light.oneTweet {
+    border-top: 1px, solid, #57616E;    
+    background-color: rgba(255,255,255,0.8);
+}
+
+.light.addComment {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.light.inputComment {    
+    background-color: rgba(255, 255, 255, 0);
+    color: #000;
+    border-bottom: 1px solid #222;
+}
+
+.light.borderComments {
+    border-left: 1px solid #222;
+}
+
+.light.allComment {
+    background-color: rgba(255,255,255,0.6);
+}
+
+.light.unTrait{
+    border-bottom: 1px double #EA3680 ;
+}
+
+/* DARK MODE */
+.dark.oneTweet {
+    border-top: 1px, solid, #57616E;    
+    background-color: rgba(168, 20, 109, 0.2);
+}
+
+.dark.addComment {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dark.inputComment {    
+    background-color: rgba(255, 255, 255, 0);
+    color: #000;
+    border-bottom: 1px solid #222;
+}
+
+.dark.borderComments {
+    border-left: 1px solid #ddd;
+}
+
+.dark.allComment {
+    background-color: rgba(168, 20, 109, 0.4);
+}
+
+.dark.unTrait{
+    border-bottom: 1px double #000 ;
+}

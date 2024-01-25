@@ -4,16 +4,30 @@
 
 .logoLink{
   transform: rotate(-45deg);
-  
 }
-
 
 .photoProfil {
     border-radius: 5rem;
-    
 }
 
-.userInfoPage {
+.light.userInfoPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    padding-left: 3rem;
+    flex-grow: 1;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    border-right: 1px solid grey;
+    padding-right: 1rem;
+    max-width: 20%;
+}
+
+.dark.userInfoPage {
+    background-color: #222;
+    color: #fefefe;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -58,4 +72,11 @@
     margin-left: 1rem;
     align-items:flex-start;
 }
-    
+
+.btnTheme {
+    cursor: pointer;
+    border-radius: 50%;    
+    width: 70px;
+    height: 70px;    
+}
+

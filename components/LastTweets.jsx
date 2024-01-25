@@ -1,44 +1,54 @@
+import React, {useRef} from 'react';
 import { useEffect, useState } from "react";
 import Tweet from "./Tweet";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/LastTweet.module.css";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
+import { addLikedTweet, rmvLikedTweet, rmvAlltweet } from '../reducers/likes';
 
 function LastTweets() {
 
-  const user = useSelector((state) => state.users.value);
-  const hashtag = useSelector((state) => state.hashtags.value);
+  const tweetRef = useRef();
   const dispatch = useDispatch();
-
-  
+  const URL = 'http://localhost:3000/';
+  const user = useSelector((state) => state.users.value);
+  const theme = useSelector(state => state.theme.value); 
+  const tweetILkd = useSelector(state => state.likes.value.tweet); 
+  //console.log(tweetILkd);
 
   const [tweetsData, setTweetsData] = useState([]);
   const [tweet, setTweet] = useState("");
-  const [tweetsLiked, setTweetsLiked] = useState([]);
 
-  const [likedMovies, setLikedMovies] = useState([]);
-
-  //const [allhashtags, setAllhashtags] = useState([]);
-  //console.log(tweetsData);
+  useEffect(() => {
+    fetchTweet();
+    fetchAllHashtag();
+  }, []);
 
   const fetchTweet = () => {
-    fetch("http://localhost:3000/tweets/lastTweet")
+    //console.log('fetch tweet');
+    fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data.tweets);
-        const likes = [];
-        data.tweets.map((tweet) => {
-          let liker = tweet.nbLike;
-          if (liker && liker.length > 0) {
-            if (liker.includes(user.id)) {
-              likes.push(tweet);
-            }
-          }          
-        });
-        setTweetsLiked(likes);
-        setTweetsData(data.tweets.reverse());
+        if (data.tweets) {
+          const likes = [];
+          data.tweets.map((tweet) => {
+            let liker = tweet.nbLike;
+            if (liker && liker.length > 0) {
+              if (liker.includes(user.id)) {
+                likes.push(tweet);
+              }
+            }          
+          });
+          //setTweetsLiked(likes);
+          setTweetsData(data.tweets.reverse());
+        } else {
+          console.error("Error in fetchTweet: Response is missing 'tweets' field", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error in fetchTweet:", error);
       });
-  }
+  };
 
   const nbrOccurence = (tab) => {
     const occurences = [];  
@@ -50,27 +60,26 @@ function LastTweets() {
     dispatch(addHashtag(occurences));
   };
   
-
   const fetchAllHashtag = () => {
-    fetch("http://localhost:3000/tweets/lastTweet")
+    fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
       .then((data) => {
         //console.log(data.tweets);        
-        const hashtagsFind = [];
-        data.tweets.map((tweet) => {
-          let hashT = tweet.hashtags;
-          if (hashT && hashT.length > 0) {
-            hashtagsFind.push(...hashT);
-          }          
-        }); 
-        //console.log(hashtagsFind);
-        nbrOccurence(hashtagsFind);
+        if (data.tweets) {       
+          const hashtagsFind = [];
+          data.tweets.map((tweet) => {
+            let hashT = tweet.hashtags;
+            if (hashT && hashT.length > 0) {
+              hashtagsFind.push(...hashT);
+            }          
+          }); 
+          //console.log(hashtagsFind);
+          nbrOccurence(hashtagsFind);
+        } else {
+          console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
+        }
       });
   }
-
-  useEffect(() => {
-    fetchTweet();
-  }, []);
 
   const handleAddTweet = () => {
     let hashtags = tweet.split(" ").filter((e) => new RegExp("#").test(e));
@@ -81,7 +90,7 @@ function LastTweets() {
       hashtags: hashtags,
     }
     console.log(newPost);
-    fetch("http://localhost:3000/tweets/create", {
+    fetch(`${URL}tweets/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +114,7 @@ function LastTweets() {
   };
 
   const handleDelete = (id) => {
-    fetch("http://localhost:3000/tweets/delete", {
+    fetch(`${URL}tweets/delete`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -120,66 +129,43 @@ function LastTweets() {
   };
 
   const updateLikedTweet = (tweetId) => {
-    //console.log(tweetsLiked.find(tweet => tweet.toString() === tweetId.toString()));
-    //setTweetsLiked([...tweetsLiked, tweetId]);
-    //console.log(tweetsLiked.some(tweet => tweet == tweetId));
-    if (tweetsLiked.some(tweet => tweet === tweetId)) {      
-      setTweetsLiked(tweetsLiked.filter(tweet => tweet !== tweetId));
+    //dispatch(rmvAlltweet());
+    if (tweetILkd.some(tweet => tweet === tweetId)) {  
+      dispatch(rmvLikedTweet(tweetId));    
     } else {     
-      setTweetsLiked([...tweetsLiked, tweetId]);
+      dispatch(addLikedTweet(tweetId));
     } 
   };
 
-
-  /*console.log(tweetsLiked);
-  tweetsLiked.map(e => {
-    console.log(e)
-  });*/
-
-  const handleLike = (id) => {
-    const tweetLiked = tweetsLiked.find((e) => {
-      return !!e && e === id;
-    });
-    if (!!tweetLiked) {
-      setTweetsLiked(tweetsLiked.filter((e) => e !== id));
-    } else {
-      setTweetsLiked([...tweetsLiked, id]);
-    }
-  };
-
-  //{tweetsLiked.some((e) => {
-  //        console.log(e);
-  //        return !!e && e === tweet._id;
-  //      }) }
-
   const tweets = tweetsData.map((tweet, i) => {
-    //console.log(tweet);
     return (
       <Tweet
+        ref={tweetRef}
         key={i}
         {...tweet}
         updateLikedTweet={updateLikedTweet}
-        isLiked={tweetsLiked.some( e => e === tweet._id )}        
+        isLiked={tweetILkd.some( e => e === tweet._id )}        
         handleDelete={handleDelete}
+        fetchTweet={fetchTweet}
       />
     );
   });
 
   return (
-    <div className={styles.tweetPage}>
-      <h2 className={styles.titlePage}>Flower new's</h2>
-      <div className={styles.addTweet}>
+    <div className={`${styles[theme]} ${styles.tweetPage}`}>
+      <h3 className={styles.titlePage}>Flower New's</h3>
+      <div className={`${styles[theme]} ${styles.addTweet}`}>
         <input
           type="text"
           value={tweet}
           onChange={(e) => setTweet(e.target.value)}
-          className={styles.inputLastTweets}
+          className={`${styles[theme]} ${styles.inputLastTweets}`}
           maxLength={280}
         />
         <div className={styles.dessousInput}>
           <span className={styles.lengthText}>{tweet.length}/280</span>
           <button onClick={handleAddTweet} className={styles.addButton}>
-            Tweet
+            Post
           </button>
         </div>
       </div>

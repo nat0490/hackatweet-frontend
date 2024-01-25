@@ -1,6 +1,6 @@
+import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import React from "react";
 import styles from "../styles/Signup.module.css";
 import Image from "next/image";
 import { login } from "../reducers/user";

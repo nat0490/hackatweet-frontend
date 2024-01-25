@@ -1,12 +1,10 @@
-import { useSelector } from "react-redux";
-import Hashtag from "../../../components/Hashtag";
-import Trend from "../../../components/Trend";
+import React from 'react';
+import Home2 from "../../../components/Home2";
 
 function HashtagPage() {
-  const user = useSelector((state) => state.users.value);
   return (
     <div>
-      <Hashtag/>
+      <Home2/>
     </div>
   );
 }

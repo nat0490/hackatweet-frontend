@@ -1,24 +1,55 @@
+import React, { forwardRef, useRef } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrash, faCommentDots, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faCommentDots, faXmark } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Tweet.module.css";
 import moment from "moment";
+import Comment from './Comment';
+import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
 
-function Tweet(props) {
-  const user = useSelector((state) => state.users.value);
-  const [likes, setLikes] = useState(props.nbLike);
+const Tweet = forwardRef((props, ref) => {
+
+  const commentRef = useRef();
+  const dispatch= useDispatch();
+  const URL = "http://localhost:3000/";
+  const user = useSelector(state => state.users.value);
+  const theme = useSelector(state => state.theme.value);
+  const commentILkd = useSelector(state => state.likes.value.comment);
+
+  //console.log(tweetILkd);
+
+  const [ likes, setLikes ] = useState(props.nbLike);
   const [ showInputAddComment, setShowInputAddComment ] = useState(false);
   const [ textComment, setTextComment] = useState("");
-  //console.log(props);
+  const [ comment, setComment] = useState([]);
+  //console.log(comment);
+ 
+  useEffect(() => {
+    setComment(props.comment);
+  },[]);
 
+  const updateLikedCom = (comId) => {
+    if (commentILkd.some(com => com === comId)) { 
+      dispatch(rmvLikedComment(comId));     
+    } else {   
+      dispatch(addLikedComment(comId));
+    } 
+  };
+
+  const fetchTweet = () => {
+    props.fetchTweet();
+  };
+
+  const handleDelete = () => {
+    props.handleDelete(props._id)
+  };
   
   const handleLikeTweet = () => {
-    //console.log(props._id)
     props.updateLikedTweet(props._id);
     if (props.isLiked) {
-      fetch(`http://localhost:3000/tweets/rmvNbLike/${props._id}`, {
+      fetch(`${URL}tweets/rmvNbLike/${props._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -28,12 +59,11 @@ function Tweet(props) {
       .then(res => res.json())
       .then(data => {
         if (data.result) {
-          //console.log("remove like");
           setLikes(likes - 1);
         }
       });
     } else {    
-    fetch(`http://localhost:3000/tweets/addNbLike/${props._id}`, {
+    fetch(`${URL}tweets/addNbLike/${props._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -43,73 +73,110 @@ function Tweet(props) {
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          //console.log("add one like");
           setLikes(likes + 1);
         }
       });
     };
   };
 
-  let heartIconStyle = { 'cursor': 'pointer' };
-  if (props.isLiked) {
-    heartIconStyle = { 'color': '#e74c3c', 'cursor': 'pointer' };
-  }
-
-  const handleDelete = () => {
-    props.handleDelete(props._id);
-  };
-
   const handleShowAddComment = () => {
     setShowInputAddComment(!showInputAddComment);
-  };
-
-  
+  };  
 
   const handleAddComment = () => {
-    console.log("addComment");
-    fetch(`http://localhost:3000/tweets/addComment/${props._id}`, {
+    const newCom = {
+      userId: user.id,
+      text: textComment,
+    }
+    fetch(`${URL}tweets/addComment/${props._id}`, {
       method: "PUT",
-      header: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        userFrom: "A METTRE",
-        text: "A METTRE"
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-      })
+      headers: { "Content-type": "application/json", },
+      body: JSON.stringify(newCom)
+    })
+    .then(res => res.json())
+    .then(data => {
+      //console.log(data.comment);
+      const com = data.comment;
+      const newAddCom = {
+        date : com.date,
+        userFrom : user,
+        text: com.text,
+        nbLike: com.nbLike,
+        _id: com._id,
+      }
+      setComment([...comment, newAddCom])
+      setTextComment("");
+      fetchTweet();
     })
   };
 
-  const datePoste = moment(props.date);
-  const dateActuelle = moment();
-  const tempsEcoule = dateActuelle.diff(datePoste);
-  //console.log(moment.duration(tempsEcoule).humanize());
+  const handleDeleteComment = (id) => {
+    fetch(`${URL}tweets/${props._id}/removeComment/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(),
+    })
+      .then((res)=> res.json())
+      .then((data) => {
+        //console.log(data);
+        if (data.result) {
+          setComment(comment.filter((e)=> e._id !== id));
+          fetchTweet();
+        } else {
+          console.log(data.error);
+        }
+      })
+  };
+
+  //Temps écoulé depuis une date
+  const tempsEcoule = (datePost) => {
+    const dateActuelle = moment();
+    const datePoste = moment(datePost);
+    const difference = dateActuelle.diff(datePoste);
+    //console.log(difference)
+    return moment.duration(difference);
+  };
+ 
+
+  const allComment2 = comment.map((com,i) => {
+    //console.log(com);
+    return (
+      <Comment
+        ref={commentRef}
+        key={i}
+        {...com}
+        isLiked={commentILkd.some( e => e === com._id )}   
+        tweetId={props._id}
+        handleDeleteComment={handleDeleteComment}
+        updateLikedCom={updateLikedCom}
+      />
+    )
+  });
+
 
 
   return (
     <> 
-          <div className={styles.oneTweet}>
+      <div className={`${styles[theme]} ${styles.oneTweet}`} ref={ref}>
         <div className={styles.blocUser}>
           <Image
             src={"/user.jpg"}
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             className={styles.userPhoto}
           />
           <div className={styles.userNameAndDelete}> 
             <p className={styles.allInfoUser}>
-              {/* props.user.firstname? props.user.firstname : "" */}
-              <span className={styles.infoUser}>
+              <span className={`${styles[theme]} ${styles.infoUser}`}>
                 {" "} 
-                {props.user.username} - {moment.duration(tempsEcoule).humanize()} 
+                {props.user.username} - {moment.duration(tempsEcoule(props.date)).humanize()} 
               </span>
             </p>
             {user.id === props.user._id && (
               <div onClick={handleDelete} className={styles.oneLogo}>
-                <FontAwesomeIcon icon={faXmark} />
+                <FontAwesomeIcon icon={faXmark} style={{ cursor: 'pointer'}}/>
               </div>
             )}
           </div>
@@ -129,30 +196,41 @@ function Tweet(props) {
           <div className={styles.oneLogo}>
             <FontAwesomeIcon
               icon={faHeart}
-              style={props.isLiked && { 'color': '#e74c3c', 'cursor': 'pointer' }}
+              size="xs"
+              style={{ cursor: 'pointer', ...(props.isLiked && { color: '#EA3680' }) }}
               onClick={handleLikeTweet}
             />   <span className={styles.likesText}>    {   likes} </span>
           </div>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon
               icon={faCommentDots}
+              size="xs"
               onClick={handleShowAddComment}
-            />   
+              style={{ cursor: 'pointer'}}
+            />   <span className={styles.likesText}>    {   comment.length} </span>
           </div> 
         </div>
       </div>
 
       {showInputAddComment ? 
       <div>
-        <div className={styles.addComment}>
+
+        { comment.length > 0 ? 
+        <div className={`${styles[theme]} ${styles.borderComments}`}>
+          <div className={`${styles[theme]} ${styles.allComment}`}>
+            {allComment2}</div>
+        </div> : ""
+         }      
+        
+        <div className={`${styles[theme]} ${styles.addComment}`}>
           <input
             type="text"
             value={textComment}
             onChange={(e) => setTextComment(e.target.value)}
-            className={styles.inputComment}            
+            className={`${styles[theme]} ${styles.inputComment}`}            
           />
           <div className={styles.dessousInput}>            
-            <button  className={styles.addButton}> Add </button>
+            <button className={styles.addButton} onClick={handleAddComment}> Post </button>
           </div>
         </div>
 
@@ -161,6 +239,6 @@ function Tweet(props) {
 
     </>
   );
-}
+});
 
 export default Tweet;
