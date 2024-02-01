@@ -2,8 +2,6 @@
     width: 100%;
     display: flex;
     height: 100vh;
-    
-
 }
 
 .leftContainer{
@@ -11,13 +9,12 @@
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
-    }
+}
 
 .logoLeftContainer{
     width: 50px;
     transform: rotate(-45deg);
-    }
-    
+}
     
 .rightContainer{
     width: 50%;
@@ -25,9 +22,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-}
-         
+}         
 
 .img{
     height: 100%;
@@ -36,25 +31,23 @@
 }
 
 .btnSignIn {
-color:#EA3680;
-font-weight: bold;
-background-color: transparent;
-height: 4vh;
-width: 40vw;
-border-radius: 17px;
-border: 1px solid #EA3680;
-cursor: pointer;
-
+    color:#EA3680;
+    font-weight: bold;
+    background-color: transparent;
+    height: 4vh;
+    width: 40vw;
+    border-radius: 17px;
+    border: 1px solid #EA3680;
+    cursor: pointer;
 }
 
 .btnSignUp {
-background-color: #EA3680;
-font-weight: bold;
-color: white;
-height: 4vh;
-width: 40vw;
-border-radius: 17px;
-border: 0px;
-cursor:pointer;
-
+    background-color: #EA3680;
+    font-weight: bold;
+    color: white;
+    height: 4vh;
+    width: 40vw;
+    border-radius: 17px;
+    border: 0px;
+    cursor:pointer;
 }

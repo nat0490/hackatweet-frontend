@@ -10,7 +10,7 @@
     border-radius: 5rem;
 }
 
-.light.userInfoPage {
+.userInfoPage {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -20,24 +20,6 @@
     flex-grow: 1;
     padding-top: 3rem;
     padding-bottom: 3rem;
-    border-right: 1px solid grey;
-    padding-right: 1rem;
-    max-width: 20%;
-}
-
-.dark.userInfoPage {
-    background-color: #222;
-    color: #fefefe;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    height: 100vh;
-    padding-left: 3rem;
-    flex-grow: 1;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    border-right: 1px solid grey;
     padding-right: 1rem;
     max-width: 20%;
 }
@@ -56,6 +38,10 @@
 .logoutButton {
     background-color: #EA3680;
     width: 5rem;
+}
+
+.logoutButton:hover {
+    opacity: 70%;
 }
 
 .username{
@@ -78,5 +64,38 @@
     border-radius: 50%;    
     width: 70px;
     height: 70px;    
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.oneLogo {
+    margin-bottom: 0.5rem;
+}
+.oneLogo:hover {
+    opacity: 50%;
+}
+
+.topPage {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* LIGHT MODE */
+.light.userInfoPage {
+    border-right: 1px solid grey;
+}
+
+/* DARK MODE */
+.dark.userInfoPage {
+    background-color: #222;
+    color: #fefefe;
+    border-right: 1px solid grey;
 }
 

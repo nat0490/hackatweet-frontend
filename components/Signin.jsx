@@ -4,12 +4,45 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/user";
+import { addHashtag, removehashTag } from "../reducers/hashtags";
 
 function SignIn({ closeModal }) {
   const [signInUsername, setSignInUsername] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
 
   const dispatch = useDispatch();
+
+
+  const nbrOccurence = (tab) => {
+    const occurences = [];  
+    for (let i = 0; i < tab.length; i++) {
+      const element = tab[i];  
+      occurences[element] = (occurences[element] || 0) + 1;
+    }
+    dispatch(removehashTag());
+    dispatch(addHashtag(occurences));
+  };
+  
+  const fetchAllHashtag = () => {
+    fetch(`${URL}tweets/lastTweet`)
+      .then((res) => res.json())
+      .then((data) => {
+        //console.log(data.tweets);        
+        if (data.tweets) {       
+          const hashtagsFind = [];
+          data.tweets.map((tweet) => {
+            let hashT = tweet.hashtags;
+            if (hashT && hashT.length > 0) {
+              hashtagsFind.push(...hashT);
+            }          
+          }); 
+          //console.log(hashtagsFind);
+          nbrOccurence(hashtagsFind);
+        } else {
+          console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
+        }
+      });
+  }
 
   const handleConnection = () => {
     //console.log('click signin')
@@ -35,6 +68,7 @@ function SignIn({ closeModal }) {
           );
           setSignInUsername("");
           setSignInPassword("");
+          fetchAllHashtag();
         }
       });
   };

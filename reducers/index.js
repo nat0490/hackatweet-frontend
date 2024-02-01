@@ -1,11 +1,6 @@
-import hashtags from './hashtags';
-import likes from './likes';
-import theme from './theme';
-import users from './user';
+export * from './hashtags';
+export * from './likes';
+export * from './theme';
+export * from './user';
+export * from './showComment';
 
-export {
-    hashtags,
-    likes,
-    theme,
-    users,
-};

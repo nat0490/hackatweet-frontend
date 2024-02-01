@@ -10,9 +10,6 @@
     margin-bottom: 2rem;
 }
 
-
-
-
 .PageAcceuil {
     display: flex;
     width: 100%;
@@ -77,9 +74,7 @@
     width: 12px;
   }
 
-
-/* LIGHT MODE */
-.light.hashtagPage {
+.hashtagPage {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -88,54 +83,32 @@
     padding-right: 1rem;
 }
 
-.light.addTweet {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    margin-bottom: 2rem;
+.addTweet {
     background-color: rgba(0,0,0,0.2);
-    border-radius: 10px;
-    padding-top: 8px;
-    padding-bottom: 4px;
 }
 
-.light.titlePage {
+.titlePage {
     margin-left: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-family: Snell Roundhand, cursive;
     text-align: center;
+}
+
+/* LIGHT MODE */
+.light.addTweet {
+    background-color: rgba(0,0,0,0.2);
 }
 
 /* DARK MODE */
 .dark.hashtagPage {
     background-color: #222;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .dark.addTweet {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    margin-bottom: 2rem;
     background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    padding-top: 8px;
-    padding-bottom: 4px;
 }
 
 .dark.titlePage {
     color: #fff;
-    margin-left: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-family: Snell Roundhand, cursive;
-    text-align: center;
 }

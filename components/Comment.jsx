@@ -13,19 +13,25 @@ const Comment = forwardRef((props, ref) => {
   const theme = useSelector(state => state.theme.value);
   const URL = "http://localhost:3000/";
 
-  //console.log(props);
+  //console.log("user id", props.userFrom);
   const [ likes, setLikes ] = useState(props.nbLike);
 
   const handleLikeComment = (comId) => {
     props.updateLikedCom(props._id);
-    //console.log(props.tweetId);
+    //console.log(user);
     if (!props.isLiked) {
+      const newNotification = {
+        commentText: props.text, 
+        fromUserName: user.username,
+        fromUserId: user.id,
+        toUserId: props.userFrom.id || props.userFrom._id ,
+        };
       fetch(`${URL}tweets/${props.tweetId}/addLikeComment/${props._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(),
+      body: JSON.stringify(newNotification),
     })
       .then(res => res.json())
       .then(data => {

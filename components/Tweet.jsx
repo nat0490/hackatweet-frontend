@@ -8,6 +8,7 @@ import styles from "../styles/Tweet.module.css";
 import moment from "moment";
 import Comment from './Comment';
 import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
+import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
 
 const Tweet = forwardRef((props, ref) => {
 
@@ -17,19 +18,26 @@ const Tweet = forwardRef((props, ref) => {
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value);
   const commentILkd = useSelector(state => state.likes.value.comment);
+  const commentILook = useSelector(state => state.showComment.value);
 
-  //console.log(tweetILkd);
+  //console.log(commentILook);
 
-  const [ likes, setLikes ] = useState(props.nbLike);
+  const [ likes, setLikes ] = useState("");
+  const [ upLikes, setUpLikes] = useState(0);
+  const [ comment, setComment] = useState(props.comment);
+
   const [ showInputAddComment, setShowInputAddComment ] = useState(false);
   const [ textComment, setTextComment] = useState("");
-  const [ comment, setComment] = useState([]);
-  //console.log(comment);
+  
+  
+  //console.log(upLikes);
  
-  useEffect(() => {
-    setComment(props.comment);
-  },[]);
 
+  useEffect(() => {
+    setShowInputAddComment(commentILook.includes(props._id));
+  },[props._id]);
+
+  
   const updateLikedCom = (comId) => {
     if (commentILkd.some(com => com === comId)) { 
       dispatch(rmvLikedComment(comId));     
@@ -48,45 +56,57 @@ const Tweet = forwardRef((props, ref) => {
   
   const handleLikeTweet = () => {
     props.updateLikedTweet(props._id);
+    //console.log(props);
     if (props.isLiked) {
-      fetch(`${URL}tweets/rmvNbLike/${props._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(),
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.result) {
-          setLikes(likes - 1);
-        }
-      });
-    } else {    
+      if (props.nbLike >0) {
+        fetch(`${URL}tweets/rmvNbLike/${props._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(),
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.result) {
+              props.nbLike > 0 && setUpLikes(upLikes - 1);
+            }
+          });
+      }
+    } else {   
+      const notification = {
+        tweetDescription: props.description,
+        fromUserId: user.id,
+        fromUserName: user.username,
+        toUserId: props.user._id,
+      };
     fetch(`${URL}tweets/addNbLike/${props._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ whoLike: user.id, push: !props.isLiked }),
+      body: JSON.stringify( /*{ whoLike: user.id, push: !props.isLiked },*/ notification ),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.result) {
-          setLikes(likes + 1);
+          setUpLikes(upLikes + 1);
         }
       });
     };
   };
 
   const handleShowAddComment = () => {
+    showInputAddComment ? dispatch(rmvShowComment(props._id)) : dispatch(addShowComment(props._id));
     setShowInputAddComment(!showInputAddComment);
   };  
+
 
   const handleAddComment = () => {
     const newCom = {
       userId: user.id,
       text: textComment,
+      userName: user.username,
     }
     fetch(`${URL}tweets/addComment/${props._id}`, {
       method: "PUT",
@@ -140,12 +160,12 @@ const Tweet = forwardRef((props, ref) => {
   };
  
 
-  const allComment2 = comment.map((com,i) => {
+  const allComment2 = props.comment.length > 0 && props.comment.map((com,i) => {
     //console.log(com);
     return (
       <Comment
         ref={commentRef}
-        key={i}
+        key={com._id}
         {...com}
         isLiked={commentILkd.some( e => e === com._id )}   
         tweetId={props._id}
@@ -159,7 +179,10 @@ const Tweet = forwardRef((props, ref) => {
 
   return (
     <> 
-      <div className={`${styles[theme]} ${styles.oneTweet}`} ref={ref}>
+
+
+
+    <div className={`${styles[theme]} ${styles.oneTweet}`} ref={ref}>
         <div className={styles.blocUser}>
           <Image
             src={"/user.jpg"}
@@ -199,7 +222,7 @@ const Tweet = forwardRef((props, ref) => {
               size="xs"
               style={{ cursor: 'pointer', ...(props.isLiked && { color: '#EA3680' }) }}
               onClick={handleLikeTweet}
-            />   <span className={styles.likesText}>    {   likes} </span>
+            />   <span className={styles.likesText}>    {   props.nbLike + upLikes } </span>
           </div>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon
@@ -207,20 +230,22 @@ const Tweet = forwardRef((props, ref) => {
               size="xs"
               onClick={handleShowAddComment}
               style={{ cursor: 'pointer'}}
-            />   <span className={styles.likesText}>    {   comment.length} </span>
+            />   <span className={styles.likesText}>    {   props.comment.length > 0 ? props.comment.length : ""} </span>
           </div> 
         </div>
       </div>
+      
+    
 
-      {showInputAddComment ? 
+{ showInputAddComment  &&
       <div>
 
-        { comment.length > 0 ? 
+        { props.comment.length > 0  && 
         <div className={`${styles[theme]} ${styles.borderComments}`}>
           <div className={`${styles[theme]} ${styles.allComment}`}>
-            {allComment2}</div>
-        </div> : ""
-         }      
+            {allComment2}
+            </div>
+        </div> }      
         
         <div className={`${styles[theme]} ${styles.addComment}`}>
           <input
@@ -234,8 +259,8 @@ const Tweet = forwardRef((props, ref) => {
           </div>
         </div>
 
-      </div> : "" }
-
+      </div>  }
+      
 
     </>
   );

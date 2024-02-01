@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Signup.module.css";
 import Image from "next/image";
 import { login } from "../reducers/user";
+import { addHashtag, removehashTag } from '../reducers/hashtags';
 
 function SignUp({ closeModal }) {
   const [signUpFirstname, setSignUpFirstname] = useState("");
@@ -11,6 +12,37 @@ function SignUp({ closeModal }) {
   const [signUpPassword, setSignUpPassword] = useState("");
 
   const dispatch = useDispatch();
+
+  const nbrOccurence = (tab) => {
+    const occurences = [];  
+    for (let i = 0; i < tab.length; i++) {
+      const element = tab[i];  
+      occurences[element] = (occurences[element] || 0) + 1;
+    }
+    dispatch(removehashTag());
+    dispatch(addHashtag(occurences));
+  };
+  
+  const fetchAllHashtag = () => {
+    fetch(`${URL}tweets/lastTweet`)
+      .then((res) => res.json())
+      .then((data) => {
+        //console.log(data.tweets);        
+        if (data.tweets) {       
+          const hashtagsFind = [];
+          data.tweets.map((tweet) => {
+            let hashT = tweet.hashtags;
+            if (hashT && hashT.length > 0) {
+              hashtagsFind.push(...hashT);
+            }          
+          }); 
+          //console.log(hashtagsFind);
+          nbrOccurence(hashtagsFind);
+        } else {
+          console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
+        }
+      });
+  }
 
   const handleRegister = () => {
     //console.log('click signup');
@@ -36,6 +68,7 @@ function SignUp({ closeModal }) {
           setSignUpFirstname("");
           setSignUpUsername("");
           setSignUpPassword("");
+          fetchAllHashtag();
         }
       });
   };

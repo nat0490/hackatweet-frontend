@@ -1,0 +1,109 @@
+.modalContainer {
+    width: 25rem;
+    height: 40rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 1rem;
+    transform: translate(-40%, 15%);
+    position: absolute;
+    z-index: 1;
+    overflow-y: auto; /* activer le défilement vertical si nécessaire */    
+    scrollbar-width:none;
+}
+
+.title {
+    font-variant-caps: small-caps;
+    text-align: right;
+    margin-top: -0.25rem;
+}
+
+.oneNote {
+    width: 100%;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+}
+
+.infoNote {
+    font-size: 14px;
+    margin: 0;
+    margin-left: 0.75rem;
+}
+
+.photoAndInfo {
+    display: flex;
+    flex-direction: row;
+    /* margin-top: 0.25rem; */
+    padding-top: 0.25rem;
+    margin-left: 0.25rem;
+}
+
+
+.noteDescript {
+    font-size: 12px;
+    /* padding-left: 2rem; */
+    margin: 0;
+    font-style: italic;
+    color: #91a3ba;
+    /* padding-top: -2rem; */
+
+}
+
+.userPhoto {
+    border-radius: 50%;
+}
+
+.contenteLine {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bottomLine {
+    border-bottom: 1px solid #000;
+    width: 80%;
+    margin-top: 0.5rem;
+}
+
+.noteLu {
+    font-size: 10px;
+    text-align: right;
+    margin-bottom: -0.75rem;
+    margin-right: 3rem;
+    font-variant-caps: small-caps;
+}
+
+.dateNotif {
+    font-size: 10px;
+}
+
+/* LIGHT MODE */
+.light.modalContainer {
+    background-color: #edebeb;
+    box-shadow: rgba(31, 1, 20, 0.35) 0px 0px 15px;
+}
+
+.light.oneNote {
+    box-shadow: rgba(31, 1, 20, 0.35) -10px -10px 10px;
+}
+
+.light.noteUnread {
+    background-color: #fff;
+}
+
+
+/* DARK MODE */
+.dark.modalContainer {
+    background-color: #171717;
+    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
+}
+
+.dark.oneNote {
+    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
+}
+
+.dark.noteUnread {
+    background-color: #000;
+}

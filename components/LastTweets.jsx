@@ -5,6 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/LastTweet.module.css";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
 import { addLikedTweet, rmvLikedTweet, rmvAlltweet } from '../reducers/likes';
+import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
+
 
 function LastTweets() {
 
@@ -14,32 +16,23 @@ function LastTweets() {
   const user = useSelector((state) => state.users.value);
   const theme = useSelector(state => state.theme.value); 
   const tweetILkd = useSelector(state => state.likes.value.tweet); 
-  //console.log(tweetILkd);
+  const commentILook = useSelector(state => state.showComment.value);
+  //console.log(commentILook);
 
   const [tweetsData, setTweetsData] = useState([]);
   const [tweet, setTweet] = useState("");
-
+  
   useEffect(() => {
     fetchTweet();
-    fetchAllHashtag();
+    //fetchAllHashtag();
   }, []);
 
+
   const fetchTweet = () => {
-    //console.log('fetch tweet');
     fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
       .then((data) => {
         if (data.tweets) {
-          const likes = [];
-          data.tweets.map((tweet) => {
-            let liker = tweet.nbLike;
-            if (liker && liker.length > 0) {
-              if (liker.includes(user.id)) {
-                likes.push(tweet);
-              }
-            }          
-          });
-          //setTweetsLiked(likes);
           setTweetsData(data.tweets.reverse());
         } else {
           console.error("Error in fetchTweet: Response is missing 'tweets' field", data);
@@ -50,21 +43,19 @@ function LastTweets() {
       });
   };
 
-  const nbrOccurence = (tab) => {
-    const occurences = [];  
-    for (let i = 0; i < tab.length; i++) {
-      const element = tab[i];  
-      occurences[element] = (occurences[element] || 0) + 1;
-    }
-    dispatch(removehashTag());
-    dispatch(addHashtag(occurences));
-  };
-  
   const fetchAllHashtag = () => {
+    const nbrOccurence = (tab) => {
+      const occurences = [];  
+      for (let i = 0; i < tab.length; i++) {
+        const element = tab[i];  
+        occurences[element] = (occurences[element] || 0) + 1;
+      }
+      dispatch(removehashTag());
+      dispatch(addHashtag(occurences));
+    };
     fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
-      .then((data) => {
-        //console.log(data.tweets);        
+      .then((data) => {     
         if (data.tweets) {       
           const hashtagsFind = [];
           data.tweets.map((tweet) => {
@@ -73,7 +64,6 @@ function LastTweets() {
               hashtagsFind.push(...hashT);
             }          
           }); 
-          //console.log(hashtagsFind);
           nbrOccurence(hashtagsFind);
         } else {
           console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
@@ -89,7 +79,6 @@ function LastTweets() {
       description: tweet,
       hashtags: hashtags,
     }
-    console.log(newPost);
     fetch(`${URL}tweets/create`, {
       method: "POST",
       headers: {
@@ -99,15 +88,12 @@ function LastTweets() {
     })
       .then((res) => res.json())
       .then((createdTweet) => {
-        //console.log(createdTweet);
         fetchTweet();
         setTweet("");
-        //setTweetsData([...tweetsData, createdTweet.tweet]);
         if (!createdTweet.result) {
           return;
         };
         if (createdTweet.tweet.hashtags.length > 0) {
-          console.log(createdTweet.tweet.hashtags);
           fetchAllHashtag();
         }
       });
@@ -137,11 +123,11 @@ function LastTweets() {
     } 
   };
 
-  const tweets = tweetsData.map((tweet, i) => {
+  const tweets = tweetsData.map((tweet) => {
     return (
       <Tweet
         ref={tweetRef}
-        key={i}
+        key={tweet._id}
         {...tweet}
         updateLikedTweet={updateLikedTweet}
         isLiked={tweetILkd.some( e => e === tweet._id )}        
@@ -157,6 +143,7 @@ function LastTweets() {
       <div className={`${styles[theme]} ${styles.addTweet}`}>
         <input
           type="text"
+          name="createPost"
           value={tweet}
           onChange={(e) => setTweet(e.target.value)}
           className={`${styles[theme]} ${styles.inputLastTweets}`}

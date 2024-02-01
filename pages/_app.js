@@ -7,18 +7,26 @@ import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { hashtags, users, theme, likes } from '../reducers';
-// import users from "../reducers/user";
-// import hashtags from "../reducers/hashtags";
-// import theme from "../reducers/theme";
+//import { hashtags, users, theme, likes } from '../reducers';
+import users from "../reducers/user";
+import hashtags from "../reducers/hashtags";
+import theme from "../reducers/theme";
+import likes from "../reducers/likes";
+import showComment from '../reducers/showComment';
 
-const reducers = combineReducers({ users, hashtags, theme, likes });
-const persistConfig = { key: "hackaTweet", storage };
+const reducers = combineReducers({ users, hashtags, theme, likes, showComment });
+const persistConfig = { 
+  key: "filters", 
+  storage,
+  blacklist: ["showComment"],
+};
 
 const store = configureStore({
   reducer: persistReducer(persistConfig, reducers),
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
+    getDefaultMiddleware({ 
+      serializableCheck: false 
+    }),
 });
 
 const persistor = persistStore(store);
