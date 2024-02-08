@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styles from "../styles/Comment.module.css";
-import moment from "moment";
+import { tempsEcoule } from '../utils';
 
 const Comment = forwardRef((props, ref) => {
 
@@ -58,14 +58,7 @@ const Comment = forwardRef((props, ref) => {
     props.handleDeleteComment(props._id)
   };
 
-  //Temps écoulé depuis une date
-  const tempsEcoule = (datePost) => {
-    const dateActuelle = moment();
-    const datePoste = moment(datePost);
-    const difference = dateActuelle.diff(datePoste);
-    return moment.duration(difference);
-    };
-
+  
 //console.log(props.userFrom);
   return (
     <> 
@@ -79,7 +72,7 @@ const Comment = forwardRef((props, ref) => {
               />
           <div className={styles.blocUserCom}>
             <div className={styles.userNameAndDeleteCom}> 
-              <p className={styles.infoUserCom}>{props.userFrom.username} - {tempsEcoule(props.date).humanize()}</p> 
+              <p className={styles.infoUserCom}>{props.userFrom.username} - {tempsEcoule(props.date)}</p> 
               {user.id === (props.userFrom._id || props.userFrom.id) && (
                   <div className={styles.oneLogo}>
                     <FontAwesomeIcon onClick={handleDeleteComment} icon={faXmark} style={{ cursor: 'pointer'}} size="xs"/>

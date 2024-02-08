@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from "../styles/Notification.module.css";
 import Image from 'next/image';
-import moment from "moment";
-import { faHeart, faCommentDots, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { updateNotification, addNotification, rmvAllNotification} from "../reducers/notifications";
+import { tempsEcoule } from '../utils';
+
 
 export default function Notification() {
 
+    const dispatch = useDispatch();
+
     const user = useSelector(state => state.users.value);
     const theme = useSelector(state => state.theme.value); 
+    const notification = useSelector((state)=> state.notifications.value.notification);
+
     const URL = "http://localhost:3000/";
-
-
-    //console.log(user)
-
-    const [ myNotifications, setMyNotification] = useState([]);
 
     useEffect(()=> {
         fetchMyNotifications();
     }, [])
-
-//Laisser ici? ou reducer et faire le fetch sur l'acceuil?? => A voir avec notif push
 
     const fetchMyNotifications = async () => {
         try {
@@ -33,7 +31,8 @@ export default function Notification() {
                 let allNotifs = data.notifs;
                 let onlyMine = allNotifs.filter(e => e.fromUserId !== user.id );
                 //console.log("onlyMine:", onlyMine);
-                setMyNotification(onlyMine.reverse());
+                dispatch(rmvAllNotification());
+                dispatch(addNotification(onlyMine.reverse()));
             } else {
                 console.log(data.comment)
             }
@@ -42,9 +41,9 @@ export default function Notification() {
         }
     };
 
-    const fetchUpdateRead = async(notifId) => {
+    const fetchUpdateRead = async(notif) => {
         try {
-            const reponse = await fetch(`${URL}notification/updateRead/${notifId}`, {
+            const reponse = await fetch(`${URL}notification/updateRead/${notif._id}`, {
                 method: "PUT",
                 headers: {
                     "Content-type" : "application/json",
@@ -56,7 +55,10 @@ export default function Notification() {
             }
             const data = await reponse.json();
             if(data.result) {
+                //dispatch(updateNotification(notif));
+                //console.log("reducer: ", notification);
                 fetchMyNotifications();
+
             } else {
                 console.log(data.error);
             }
@@ -65,19 +67,13 @@ export default function Notification() {
         }
     };
 
-    const tempsEcoule = (datePost) => {
-        const dateActuelle = moment();
-        const datePoste = moment(datePost);
-        const difference = dateActuelle.diff(datePoste);
-        return moment.duration(difference);
-      };
   
-    const notif = myNotifications?.map((note, i) => {
+    const notif = notification?.map((note, i) => {
         return(
              <div 
                 key={note._id} 
                 className={`${styles[theme]} ${styles.oneNote} ${ !note.isRead && styles.noteUnread}`}
-                onClick={() => fetchUpdateRead(note._id)}>
+                onClick={() => fetchUpdateRead(note)}>
                 {note.isRead && <p className={styles.noteLu}>lu</p> }
                 <div className={styles.photoAndInfo}> 
                 
@@ -88,7 +84,7 @@ export default function Notification() {
                         className={styles.userPhoto}
                     />
                     <div> 
-                        <p className={styles.infoNote}>{note.fromUserName}.  <span className={styles.dateNotif}> {moment.duration(tempsEcoule(note.time)).humanize()} </span> </p>
+                        <p className={styles.infoNote}>{note.fromUserName}.  <span className={styles.dateNotif}> {tempsEcoule(note.time)} </span> </p>
                         <p className={styles.infoNote}> A { note.type === "Like" && "aimé" || note.type === "Comment" && "commenté"} ton post<span className={styles.noteDescript}> " { note.tweetDescription } "</span>   </p>
                     </div>
                     

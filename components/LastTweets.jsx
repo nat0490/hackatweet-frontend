@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import Tweet from "./Tweet";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/LastTweet.module.css";
-import { addHashtag, removehashTag } from '../reducers/hashtags';
 import { addLikedTweet, rmvLikedTweet, rmvAlltweet } from '../reducers/likes';
-import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
+import { fetchAllTags} from '../utils';
 
 
 function LastTweets() {
@@ -16,17 +15,14 @@ function LastTweets() {
   const user = useSelector((state) => state.users.value);
   const theme = useSelector(state => state.theme.value); 
   const tweetILkd = useSelector(state => state.likes.value.tweet); 
-  const commentILook = useSelector(state => state.showComment.value);
-  //console.log(commentILook);
 
   const [tweetsData, setTweetsData] = useState([]);
   const [tweet, setTweet] = useState("");
   
   useEffect(() => {
+    console.log("fetch lastTweet sur LastTweetpage");
     fetchTweet();
-    //fetchAllHashtag();
   }, []);
-
 
   const fetchTweet = () => {
     fetch(`${URL}tweets/lastTweet`)
@@ -43,33 +39,6 @@ function LastTweets() {
       });
   };
 
-  const fetchAllHashtag = () => {
-    const nbrOccurence = (tab) => {
-      const occurences = [];  
-      for (let i = 0; i < tab.length; i++) {
-        const element = tab[i];  
-        occurences[element] = (occurences[element] || 0) + 1;
-      }
-      dispatch(removehashTag());
-      dispatch(addHashtag(occurences));
-    };
-    fetch(`${URL}tweets/lastTweet`)
-      .then((res) => res.json())
-      .then((data) => {     
-        if (data.tweets) {       
-          const hashtagsFind = [];
-          data.tweets.map((tweet) => {
-            let hashT = tweet.hashtags;
-            if (hashT && hashT.length > 0) {
-              hashtagsFind.push(...hashT);
-            }          
-          }); 
-          nbrOccurence(hashtagsFind);
-        } else {
-          console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
-        }
-      });
-  }
 
   const handleAddTweet = () => {
     let hashtags = tweet.split(" ").filter((e) => new RegExp("#").test(e));
@@ -94,7 +63,7 @@ function LastTweets() {
           return;
         };
         if (createdTweet.tweet.hashtags.length > 0) {
-          fetchAllHashtag();
+          fetchAllTags(dispatch);
         }
       });
   };
@@ -110,7 +79,7 @@ function LastTweets() {
       .then((res) => res.json())
       .then((data) => {
         setTweetsData(tweetsData.filter((e) => e._id !== id));
-        fetchAllHashtag();
+        fetchAllHashtag(dispatch);
       });
   };
 

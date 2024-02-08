@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Tweet.module.css";
-import moment from "moment";
 import Comment from './Comment';
 import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
 import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
+import { tempsEcoule } from '../utils';
 
 const Tweet = forwardRef((props, ref) => {
 
@@ -70,10 +70,13 @@ const Tweet = forwardRef((props, ref) => {
           .then(data => {
             if (data.result) {
               props.nbLike > 0 && setUpLikes(upLikes - 1);
+              console.log("like --");
             }
           });
+      } else {
+        console.log("props nb like = 0", props.nbLike)
       }
-    } else {   
+    } else { 
       const notification = {
         tweetDescription: props.description,
         fromUserId: user.id,
@@ -150,15 +153,6 @@ const Tweet = forwardRef((props, ref) => {
       })
   };
 
-  //Temps écoulé depuis une date
-  const tempsEcoule = (datePost) => {
-    const dateActuelle = moment();
-    const datePoste = moment(datePost);
-    const difference = dateActuelle.diff(datePoste);
-    //console.log(difference)
-    return moment.duration(difference);
-  };
- 
 
   const allComment2 = props.comment.length > 0 && props.comment.map((com,i) => {
     //console.log(com);
@@ -174,7 +168,6 @@ const Tweet = forwardRef((props, ref) => {
       />
     )
   });
-
 
 
   return (
@@ -194,7 +187,7 @@ const Tweet = forwardRef((props, ref) => {
             <p className={styles.allInfoUser}>
               <span className={`${styles[theme]} ${styles.infoUser}`}>
                 {" "} 
-                {props.user.username} - {moment.duration(tempsEcoule(props.date)).humanize()} 
+                {props.user.username} - {tempsEcoule(props.date)}
               </span>
             </p>
             {user.id === props.user._id && (

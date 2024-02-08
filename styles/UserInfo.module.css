@@ -87,6 +87,23 @@
     width: 100%;
 }
 
+.nbrNotif {
+    border-radius: 50%;
+    background-color: red;
+    font-size: 8px;
+    font-weight: bold;
+    color: #fff;
+    padding: 0.2rem;
+    position:absolute;
+    z-index: 1;
+    margin-left: -0.75rem;
+    margin-top: -0.5rem;
+
+
+}
+
+
+
 /* LIGHT MODE */
 .light.userInfoPage {
     border-right: 1px solid grey;

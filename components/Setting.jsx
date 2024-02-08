@@ -24,6 +24,12 @@ export default function Setting() {
             </button> 
           </div>
         </div>
+        <div className={styles.lineTheme}> 
+          <p>Voir mon profil</p>
+        </div>
+        <div className={styles.lineTheme}> 
+          <p>Modifier mon profil</p>
+        </div>
       </div>
     </div>
   );

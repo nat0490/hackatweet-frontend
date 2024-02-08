@@ -13,8 +13,9 @@ import hashtags from "../reducers/hashtags";
 import theme from "../reducers/theme";
 import likes from "../reducers/likes";
 import showComment from '../reducers/showComment';
+import notifications from '../reducers/notifications';
 
-const reducers = combineReducers({ users, hashtags, theme, likes, showComment });
+const reducers = combineReducers({ users, hashtags, theme, likes, showComment, notifications });
 const persistConfig = { 
   key: "filters", 
   storage,

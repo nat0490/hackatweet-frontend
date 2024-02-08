@@ -9,7 +9,9 @@ function Trend() {
   const theme = useSelector(state => state.theme.value);
   //console.log(hashtag);
 
-  const hashs = Object.entries(hashtag[0]).map(([key, value], i) => {
+  const hashs = Object.entries(hashtag[0])
+    .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+    .map(([key, value], i) => {
     return (
       <div key={i} className={styles.oneTweet}>
         <Link href={`/hashtag/${key}`}>
