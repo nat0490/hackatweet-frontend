@@ -16,8 +16,8 @@ const UserInfo = forwardRef((props, ref) => {
   const dispatch = useDispatch();
 
   const { customClassName } = props;
-  const user = useSelector((state) => state.users.value);
-  const theme = useSelector( state => state.theme.value);
+  const user = useSelector(state => state.users.value);
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const notifNonLues = useSelector(state => state.notifications.value.nonLu);
   //console.log("reducer non lu:", notifNonLues);
 
@@ -32,7 +32,7 @@ const UserInfo = forwardRef((props, ref) => {
   return (
     <div className={`${styles[theme]} ${styles.userInfoPage} ${customClassName}`} ref={ref}>
       <div className={styles.topPage}> 
-      <Link href="/"><Image src={"/Dessin.png"} width={100} height={100} className={styles.logoLink} /></Link>
+      <Link href="/"><Image src={"/Logo2.png"} width={100} height={100} className={styles.logoLink} /></Link>
 
       <div className={styles.logo}>
 
@@ -70,7 +70,7 @@ const UserInfo = forwardRef((props, ref) => {
             <span className={styles.username}> @{user.username}</span>
           </div>
         </div>
-       <button onClick={handleLogout} className={styles.logoutButton}>Logout</button> 
+       <button onClick={handleLogout} className={styles.logoutButton}>Deconnexion</button> 
       </div>
     </div>
   );

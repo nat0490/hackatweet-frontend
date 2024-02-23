@@ -5,11 +5,13 @@ import Tweet from "./Tweet";
 import styles from "../styles/Hashtag.module.css";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
 import { useDispatch, useSelector } from "react-redux";
+import { BeatLoader } from 'react-spinners';
 
 
 function Hashtag() {
 
-  const theme = useSelector(state => state.theme.value);
+  const user = useSelector(state => state.users.value);
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -18,22 +20,28 @@ function Hashtag() {
 
   const [hashtag, setHashtag] = useState(router.query.hashtagName);
   const [tweetMatch, setTweetMatch ] = useState([]);
-  const [hashtagArray, setHashtagArray] = useState([]);
   const [tweetsLiked, setTweetsLiked] = useState([]);
+  const [ isLoading, setIsLoading] = useState(false);
 
-  const fetchTweetForHashtag = (hash) => {
-    fetch(`${URL}tweets/hashtagNumber/${hash}`)
-      .then(res => res.json())
-      .then(hashtag => {
-        //console.log(hashtag.tweets);
-        setTweetMatch([]);
-        setTweetMatch(hashtag.tweets.reverse());
-      })
-  }
+  
+
+  const fetchTweetForHashtag = async (hash) => {
+    try {
+      setIsLoading(true);
+      const data = await fetch(`${URL}tweets/hashtagNumber/${hash}`);
+      const hashtag = await data.json();
+      setTweetMatch([]);
+      setTweetMatch(hashtag.tweets.reverse());
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching tweets:", error);
+      setIsLoading(false);
+    }
+  };
+      
 
   useEffect(() => {
     setHashtag(router.query.hashtagName);
-    //console.log(router.query.hashtagName)
     fetchTweetForHashtag(router.query.hashtagName);
   }, [router.query.hashtagName]);
 
@@ -96,14 +104,6 @@ function Hashtag() {
       });
   }
 
-  const allArrayForHashtag = hashtagArray.map((tweet, i) => (
-    <Tweet
-      {...tweet}
-      key={i}
-      handleLike={handleLike}
-      isLiked={tweetsLiked.some((e) => !!e && e === tweet._id)}
-    />
-  ));
 
   const afficheTweet = tweetMatch.map((tweet, i) => (
     <Tweet
@@ -120,14 +120,17 @@ function Hashtag() {
       
       <div className={`${styles[theme]} ${styles.hashtagPage}`}> 
         <div>
-          <h3 className={`${styles[theme]} ${styles.titlePage}`}>Recherche par #</h3>
+          {/* <h3 className={`${styles[theme]} ${styles.titlePage}`}>Recherche par #</h3> */}
           <div className={`${styles[theme]} ${styles.addTweet}`}>
-            <input
-              type="text"
-              value={"#" + hashtag}
-              onChange={(e) => setHashtag(e.target.value.replace(/^#/, ""))}
-              className={styles.inputLastTweets}
-            />
+            <div className={styles.inputLine}> 
+              <span className={styles.tag}>#</span>
+              <input
+                type="text"
+                value={hashtag}
+                onChange={(e) => setHashtag(e.target.value.replace(/^#/, ""))}
+                className={styles.inputLastTweets}
+              />
+            </div>
             <div className={styles.dessousInput}>
               {/*<span className={styles.lengthText}>{tweet.length}/280</span>*/}
               <button className={styles.addButton} onClick={handleFindTweetForHashtag}> Rechercher </button>
@@ -138,7 +141,11 @@ function Hashtag() {
 
           
         </div>
-        <div className={styles.tweetContainer}>{ tweetMatch.length > 0 ? afficheTweet : "No tweets found with #hashtagname"}</div>
+       
+        <div className={styles.tweetContainer}>
+          { isLoading?  <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : 
+            tweetMatch.length > 0 ? afficheTweet : 
+              <div className={styles.noFound}>Pas de <span className={styles.postNoFound}>post</span> trouvé </div>}</div>
       </div>
       
     </div>

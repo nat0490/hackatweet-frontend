@@ -7,6 +7,16 @@
 
 .lastTweetsContainer {
   width: 55%;
+  height: 100vh;
+}
+
+
+.dark.lastTweetsContainer {
+  background-color: #222;
+}
+
+.lastTweets {
+  height: 100%;
 }
 
 .Hashtag {

@@ -9,6 +9,9 @@
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .logoLeftContainer{
@@ -25,9 +28,13 @@
 }         
 
 .img{
-    height: 100%;
-    width: 100%;
+    /* height: 100%;
+    width: 100%; */
     object-fit: cover;
+}
+
+.text1 {
+    font-size: 12px;
 }
 
 .btnSignIn {
@@ -38,7 +45,9 @@
     width: 40vw;
     border-radius: 17px;
     border: 1px solid #EA3680;
-    cursor: pointer;
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    margin-bottom: 2rem;
 }
 
 .btnSignUp {
@@ -49,5 +58,28 @@
     width: 40vw;
     border-radius: 17px;
     border: 0px;
-    cursor:pointer;
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    margin-bottom: 2rem;
+}
+
+.btnSignUp:hover {
+    opacity: 70%;
+    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 40px;
+}
+
+.btnSignIn:hover {
+    opacity: 70%;
+    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 40px;
+}
+
+.title {
+    text-decoration: none;
+    font-variant-caps: small-caps;
+    margin-bottom: 14rem;
+
+}
+
+.blockLog {
+    text-align: center;
 }

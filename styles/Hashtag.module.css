@@ -21,6 +21,7 @@
     align-items: left;
     justify-content: left;
     margin-bottom: 2rem;
+    margin-top: 2rem;
     background-color: rgba(0,0,0,0.2);
     border-radius: 10px;
     padding-top: 8px;
@@ -93,6 +94,34 @@
     margin-bottom: 1rem;
     font-family: Snell Roundhand, cursive;
     text-align: center;
+}
+
+.spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.inputLine {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag {
+    font-weight: bold;
+    margin-right: -3.5rem;
+    font-size: 20px;
+}
+
+.noFound {
+    text-align: center;
+}
+
+.postNoFound {
+    font-variant-caps: small-caps;
+    font-weight: bold;
 }
 
 /* LIGHT MODE */

@@ -11,10 +11,12 @@
   body {
     padding: 0;
     margin: 0;
-    background-color: rgba(168, 20, 109, 0.4);
+    background-color: rgba(168, 20, 109, 0.4); 
     overflow-y:hidden;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
   }
+
+
 
 
 
@@ -27,6 +29,11 @@
   font-size: 0.9rem;
   font-weight: 600;
   font-variant-caps: small-caps;
+}
+
+.hashtag:hover {
+  opacity: 70%;
+  cursor: pointer;
 }
 
 button {

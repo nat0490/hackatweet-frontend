@@ -9,9 +9,9 @@ import { tempsEcoule } from '../utils';
 export default function Notification() {
 
     const dispatch = useDispatch();
-
+    
     const user = useSelector(state => state.users.value);
-    const theme = useSelector(state => state.theme.value); 
+    const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
     const notification = useSelector((state)=> state.notifications.value.notification);
 
     const URL = "http://localhost:3000/";
@@ -55,10 +55,7 @@ export default function Notification() {
             }
             const data = await reponse.json();
             if(data.result) {
-                //dispatch(updateNotification(notif));
-                //console.log("reducer: ", notification);
                 fetchMyNotifications();
-
             } else {
                 console.log(data.error);
             }
@@ -67,6 +64,12 @@ export default function Notification() {
         }
     };
 
+    const LimiterCaracteres = ({ texte, limiteCaracteres }) => {
+        const texteTronque = texte.length > limiteCaracteres
+          ? `${texte.substring(0, limiteCaracteres)}...`
+          : texte;
+        return texteTronque
+      };
   
     const notif = notification?.map((note, i) => {
         return(
@@ -76,16 +79,18 @@ export default function Notification() {
                 onClick={() => fetchUpdateRead(note)}>
                 {note.isRead && <p className={styles.noteLu}>lu</p> }
                 <div className={styles.photoAndInfo}> 
-                
-                    <Image
-                        src={"/user.jpg"}
-                        width={20}
-                        height={20}
-                        className={styles.userPhoto}
-                    />
-                    <div> 
+                    <div className={styles.photoContainer}> 
+                        <Image
+                            src={"/user.jpg"}
+                            width={20}
+                            height={20}
+                            
+                            className={styles.userPhoto}
+                        />
+                    </div>
+                    <div className={styles.blocText}> 
                         <p className={styles.infoNote}>{note.fromUserName}.  <span className={styles.dateNotif}> {tempsEcoule(note.time)} </span> </p>
-                        <p className={styles.infoNote}> A { note.type === "Like" && "aimé" || note.type === "Comment" && "commenté"} ton post<span className={styles.noteDescript}> " { note.tweetDescription } "</span>   </p>
+                        <p className={styles.infoNote}> A { note.type === "Like" && "aimé" || note.type === "Comment" && "commenté"} ton post<span className={styles.noteDescript}> " <LimiterCaracteres texte={note.tweetDescription} limiteCaracteres={28} /> "</span>   </p>
                     </div>
                     
                 </div>

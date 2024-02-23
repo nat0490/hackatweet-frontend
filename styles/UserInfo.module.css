@@ -37,7 +37,9 @@
 
 .logoutButton {
     background-color: #EA3680;
-    width: 5rem;
+    width: 8rem;
+    text-decoration: none;
+    font-variant-caps: small-caps;
 }
 
 .logoutButton:hover {

@@ -1,22 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 'light',
+  value: [],
 };
 
 export const themeSlice = createSlice({
   name: "theme",
   initialState,
   reducers: {
-    changeTheme: (state, action) => {
-        if (state.value === 'light') {
-            state.value = 'dark';
-        } else if (state.value === 'dark') {
-            state.value = "light";
-        }
+    addTheme: (state, action) => {
+      //console.log(addTheme);
+      if (!state.value.some(e => e.user === action.payload )){
+        state.value.push({
+          user: action.payload,
+          style: "light",
+        });
+      } else {
+        console.log("user déjà existant");
+      }
     },
+    changeTheme: (state, action) => {
+      const userIndex = state.value.findIndex(e => e.user === action.payload);
+      if (userIndex !== -1) {
+        // L'utilisateur a été trouvé
+        const updatedTheme = {
+          ...state.value[userIndex],
+          style: state.value[userIndex].style === 'light' ? 'dark' : 'light',
+        };
+        state.value = [
+          ...state.value.slice(0, userIndex),
+          updatedTheme,
+          ...state.value.slice(userIndex + 1),
+        ];
+      } else {
+        console.log("Utilisateur non trouvé");
+        addTheme(state, action);
+      }
+    },
+    resetTheme: (state,action) => {
+      state.value = [];
+    } , 
   },
 });
 
-export const { changeTheme } = themeSlice.actions;
+export const { changeTheme, resetTheme, addTheme } = themeSlice.actions;
 export default themeSlice.reducer;

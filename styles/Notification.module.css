@@ -23,6 +23,8 @@
     width: 100%;
     margin-bottom: 0.5rem;
     border-radius: 10px;
+    /* max-height: 3rem;
+    overflow: hidden; */
 }
 
 .infoNote {
@@ -34,6 +36,7 @@
 .photoAndInfo {
     display: flex;
     flex-direction: row;
+    align-items: center;
     /* margin-top: 0.25rem; */
     padding-top: 0.25rem;
     margin-left: 0.25rem;
@@ -47,11 +50,19 @@
     font-style: italic;
     color: #91a3ba;
     /* padding-top: -2rem; */
-
 }
+
+/* .blocText {
+    margin-left: 1rem;
+} */
 
 .userPhoto {
     border-radius: 50%;
+}
+
+.photoContainer {
+    width: 20px; /* Définissez la largeur souhaitée */
+    height: 20px; /* Définissez la hauteur souhaitée */
 }
 
 .contenteLine {

@@ -6,11 +6,13 @@ import { changeTheme } from '../reducers/theme';
 
 export default function Setting() {
 
-    const theme = useSelector(state => state.theme.value);
+  const user = useSelector(state => state.users.value);
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+    
     const dispatch = useDispatch();
 
     const handleTheme = () => {
-      dispatch(changeTheme());    
+      dispatch(changeTheme(user.token));    
     };
   
   return (

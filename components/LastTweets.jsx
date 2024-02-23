@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import Tweet from "./Tweet";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/LastTweet.module.css";
-import { addLikedTweet, rmvLikedTweet, rmvAlltweet } from '../reducers/likes';
+import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from '../reducers/likes';
+import { addTheme, resetTheme,changeTheme } from '../reducers/theme';
 import { fetchAllTags} from '../utils';
+import { BeatLoader } from 'react-spinners';
+
 
 
 function LastTweets() {
@@ -13,14 +16,20 @@ function LastTweets() {
   const dispatch = useDispatch();
   const URL = 'http://localhost:3000/';
   const user = useSelector((state) => state.users.value);
-  const theme = useSelector(state => state.theme.value); 
-  const tweetILkd = useSelector(state => state.likes.value.tweet); 
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+  const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
+  //const tweetILkd = [];
+  const tweetComment = useSelector(state => state.likes.value); 
 
   const [tweetsData, setTweetsData] = useState([]);
   const [tweet, setTweet] = useState("");
+
+
+  //console.log("tweetILkd:", tweetComment);
+  //console.log("tweet & comment:", tweetComment);
+  
   
   useEffect(() => {
-    console.log("fetch lastTweet sur LastTweetpage");
     fetchTweet();
   }, []);
 
@@ -41,8 +50,12 @@ function LastTweets() {
 
 
   const handleAddTweet = () => {
-    let hashtags = tweet.split(" ").filter((e) => new RegExp("#").test(e));
-    hashtags = hashtags.map((e) => e.split("#")[1]);
+    //let hashtags = tweet.split(" ").filter((e) => new RegExp("#").test(e));
+   // let tags = tweet.split(/[ ,;.!@$%^&*()_+{}\[\]:;<>,.?~\\/-]+/).filter((e) => e.startsWith("#"));
+    //let hashtags = tags.map((e) => e.substring(1)); 
+    let tags = tweet.match(/#(\w+)/g) || []; 
+    let hashtags = tags.map((tag) => tag.substring(1)); //
+    //console.log(hashtags); 
     const newPost = {
       user: user.id,
       description: tweet,
@@ -79,16 +92,18 @@ function LastTweets() {
       .then((res) => res.json())
       .then((data) => {
         setTweetsData(tweetsData.filter((e) => e._id !== id));
-        fetchAllHashtag(dispatch);
+        fetchAllTags(dispatch);
       });
   };
 
   const updateLikedTweet = (tweetId) => {
     //dispatch(rmvAlltweet());
-    if (tweetILkd.some(tweet => tweet === tweetId)) {  
-      dispatch(rmvLikedTweet(tweetId));    
+    if (tweetILkd?.some(tweet => tweet === tweetId)) {  
+      dispatch(rmvLikedTweet({user: user.token, tweet: tweetId}));  
+      //console.log("rmv t:", tweetComment);  
     } else {     
-      dispatch(addLikedTweet(tweetId));
+      dispatch(addLikedTweet({user: user.token, tweet: tweetId}));
+      //console.log("add t:", tweetComment);
     } 
   };
 
@@ -99,7 +114,7 @@ function LastTweets() {
         key={tweet._id}
         {...tweet}
         updateLikedTweet={updateLikedTweet}
-        isLiked={tweetILkd.some( e => e === tweet._id )}        
+        isLiked={tweetILkd?.some( e => e === tweet._id )}        
         handleDelete={handleDelete}
         fetchTweet={fetchTweet}
       />
@@ -116,16 +131,17 @@ function LastTweets() {
           value={tweet}
           onChange={(e) => setTweet(e.target.value)}
           className={`${styles[theme]} ${styles.inputLastTweets}`}
-          maxLength={280}
+          // maxLength={280}
         />
         <div className={styles.dessousInput}>
-          <span className={styles.lengthText}>{tweet.length}/280</span>
+          {/* <span className={styles.lengthText}>{tweet.length}/280</span> */}
           <button onClick={handleAddTweet} className={styles.addButton}>
             Post
           </button>
         </div>
+        
       </div>
-      <div className={styles.lastTweetsContainer}>{tweets}</div>
+      <div className={styles.lastTweetsContainer}>{tweetsData.length === 0 ? <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : tweets}</div>
     </div>
   );
 }

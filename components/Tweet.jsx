@@ -9,6 +9,7 @@ import Comment from './Comment';
 import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
 import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
 import { tempsEcoule } from '../utils';
+import Link from 'next/link';
 
 const Tweet = forwardRef((props, ref) => {
 
@@ -16,11 +17,17 @@ const Tweet = forwardRef((props, ref) => {
   const dispatch= useDispatch();
   const URL = "http://localhost:3000/";
   const user = useSelector(state => state.users.value);
-  const theme = useSelector(state => state.theme.value);
-  const commentILkd = useSelector(state => state.likes.value.comment);
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+  const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
+  
+  //const commentILkd = [];
+  //const commentILkd = useSelector(state => state.likes.value.comment);
   const commentILook = useSelector(state => state.showComment.value);
 
-  //console.log(commentILook);
+  //console.log(commentILkd);
+
+  const tweetComment = useSelector(state => state.likes.value); 
+  //console.log("tweet & comment:", tweetComment);
 
   const [ likes, setLikes ] = useState("");
   const [ upLikes, setUpLikes] = useState(0);
@@ -40,9 +47,9 @@ const Tweet = forwardRef((props, ref) => {
   
   const updateLikedCom = (comId) => {
     if (commentILkd.some(com => com === comId)) { 
-      dispatch(rmvLikedComment(comId));     
+      dispatch(rmvLikedComment({user: user.token, comment: comId}));     
     } else {   
-      dispatch(addLikedComment(comId));
+      dispatch(addLikedComment({user: user.token, comment: comId}));
     } 
   };
 
@@ -161,13 +168,138 @@ const Tweet = forwardRef((props, ref) => {
         ref={commentRef}
         key={com._id}
         {...com}
-        isLiked={commentILkd.some( e => e === com._id )}   
+        isLiked={commentILkd?.some( e => e === com._id )}   
         tweetId={props._id}
         handleDeleteComment={handleDeleteComment}
         updateLikedCom={updateLikedCom}
       />
     )
   });
+
+
+
+  // const formatDescription = (description) => {
+  //   if (!description) {
+  //     return null;
+  //   }
+
+  //   const hashtags = description.match(/#(\w+)/g) || [];
+  //   const formattedText = description
+  //     .split(/[\s,;.!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+/)
+  //     //.split(/\s+/)
+  //     //.split(" ")
+  //     .map((word, index) => {
+  //       console.log(word);
+  //       if (hashtags.includes(`#${word}`)) {
+  //         return <span className="hashtag" key={index}>{` #${word} `}</span>;
+  //       } else {
+  //         return ` ${word} `;
+  //       }
+  //     });
+
+  //   return formattedText;
+  // };
+
+
+
+  // const formatDescription = (description) => {
+  //   if (!description) {
+  //     return null;
+  //   }
+
+  //   const wordsAndPunctuations = description.split(/(\s|[^\w#']+)/);
+    
+
+  //   const formattedText = wordsAndPunctuations.map((wordOrPunctuation, index, array) => {
+  //     const isHashtag = wordOrPunctuation.startsWith('#');
+  //     const isPunctuation = /[,;.!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+/.test(wordOrPunctuation);
+  //     console.log(wordOrPunctuation);
+
+  //     if (isHashtag) {
+  //       const newWord = wordOrPunctuation.split(/(\s|[^\w#']+)/);
+  //       console.log(newWord);
+
+  //       return (
+  //         <Link key={index} href='#' className={styles.oneTag}>
+  //           <span className="hashtag">{wordOrPunctuation}</span>
+  //         </Link>
+  //       );
+  //     } else if (isPunctuation) {
+  //       return `${wordOrPunctuation} `;
+  //     } else {
+  //       // Ajouter un espace après un hashtag, sauf si c'est le dernier élément du tableau
+  //       const nextIsHashtag = array[index + 1] && array[index + 1].startsWith('#');
+  //       return `${wordOrPunctuation}${isHashtag && !nextIsHashtag ? ' ' : ''}`;
+  //     }
+  //   });
+
+  //   return formattedText;
+  // };
+
+
+
+
+  const formatDescription = (description) => {
+    if (!description) {
+      return null;
+    }
+
+    //const hashtagRegex = /(?:^|\s)(#\w+)/g;
+    //const hashtagRegex = /(?:^|\s)(#[^\s,;!?'"%=\)\]]+)/g;
+    const hashtagRegex = /(?:^|\s)(#[^\s,;!?'"%=\)\]]+[\s,;!?'"%=\)\]]*)/g;
+    const combinedRegex = /(?:^|\s)(#\w+)|(?:^|\s)(#[^\s,;!?'"%=\)\]]+(?=\s|$))/g;
+  
+    const formattedText = description.split(combinedRegex).map((segment, index) => {
+      if (segment && typeof segment === 'string' && segment.startsWith('#')) {
+        return (
+          <Link key={index} href='#'>
+            <span className="hashtag">{segment}</span>
+          </Link>
+        );
+      } else {
+        return segment;
+      }
+    });
+
+    return formattedText;
+  };
+
+
+
+//   const formatDescription = (description) => {
+//   if (!description) {
+//     return null;
+//   }
+
+//   // Définir la regex pour extraire les hashtags
+//   const hashtagRegex = /#[^\s,;!?'"%=\)\]]+/g;
+//   const hashtags = description.match(hashtagRegex) || [];
+
+//   // Définir la regex combinée pour diviser la chaîne
+//   const combinedRegex = /(?:^|\s)(#\w+)|(?:^|\s)(#[^\s,;!?'"%=\)\]]+(?=\s|$))/g;
+
+//   // Diviser la chaîne et formater le texte
+//   const formattedText = description.split(combinedRegex).map((segment, index) => {
+//     return (
+//       <React.Fragment key={index}>
+//         {segment}
+//         {index < hashtags.length && (
+//           <Link href='#'>
+//             <span className="hashtag">{hashtags[index]}</span>
+//           </Link>
+//         )}
+//       </React.Fragment>
+//     );
+//   });
+
+//   return formattedText;
+// };
+  
+
+
+ 
+  
+
 
 
   return (
@@ -198,7 +330,7 @@ const Tweet = forwardRef((props, ref) => {
           </div>
         </div>
         <div>
-          <p className={styles.description}>
+          {/* <p className={styles.description}>
             {props.description?.split(" ").map((e, i) => {
               if (new RegExp("#").test(e)) {
                 return <span className="hashtag" key={i}> {e} </span>;
@@ -206,7 +338,12 @@ const Tweet = forwardRef((props, ref) => {
                 return ` ${e} `;
               }
             })}
+          </p> */}
+
+          <p className={styles.description}>
+            {formatDescription(props.description)}
           </p>
+
         </div>
         <div className={styles.logo}>
           <div className={styles.oneLogo}>

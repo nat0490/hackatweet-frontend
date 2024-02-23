@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 function Trend() {
 
   const hashtag = useSelector((state) => state.hashtags.value);
-  const theme = useSelector(state => state.theme.value);
+  const user = useSelector(state => state.users.value);
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   //console.log(hashtag);
 
   const hashs = Object.entries(hashtag[0])

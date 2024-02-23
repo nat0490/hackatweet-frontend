@@ -172,6 +172,11 @@
     margin-top: -0.25rem;
 }
 
+.oneTag:hover {
+    opacity: 80%;
+}
+
+
 
 
 

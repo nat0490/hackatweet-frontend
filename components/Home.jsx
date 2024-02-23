@@ -14,10 +14,14 @@ function Home() {
   const dispatch = useDispatch();
   const URL = 'http://localhost:3000/';
   const user = useSelector((state)=> state.users.value);
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
+
+  console.log("them:",theme);
   
   useEffect(()=> {
     getMyNotif();
     fetchAllTags(dispatch);
+    
   }, []);
 
   const getMyNotif = () => {
@@ -41,8 +45,8 @@ function Home() {
   return (
     <div className={styles.PageAcceuil}>
       <UserInfo customClassName={styles.userInfo} ref={userRef}/>
-      <div className={styles.lastTweetsContainer}>
-        <LastTweets className={styles.lastTweets}/>
+      <div className={`${styles[theme]} ${styles.lastTweetsContainer} `}>
+        <LastTweets customClassName={`${styles[theme]}  ${styles.lastTweets} `}/>
       </div>
       <Trend className={styles.trend}/>
     </div>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/user";
 import { addHashtag, removehashTag } from "../reducers/hashtags";
+import { addTheme } from "../reducers/theme";
 
 function SignIn({ closeModal }) {
   const [signInUsername, setSignInUsername] = useState("");
@@ -69,6 +70,7 @@ function SignIn({ closeModal }) {
           setSignInUsername("");
           setSignInPassword("");
           fetchAllHashtag();
+          dispatch(addTheme(data.data.token));
         }
       });
   };
@@ -78,9 +80,9 @@ function SignIn({ closeModal }) {
         <div className={styles.modalContainer}>
 
           <div className={styles.topPage}> 
-            <div>
+            <div className={styles.blockLogo}>
               <Image
-                src="/Dessin.png"
+                src="/Logo2.png"
                 width={100}
                 height={100}
                 alt="logo"
@@ -98,26 +100,26 @@ function SignIn({ closeModal }) {
 
           <div className={styles.body}>
             
-            <div className={styles.title}>
-              <h1>Connect to Flower</h1>
-            </div>
+            {/* <div className={styles.title}>
+              <h1>Connexion</h1>
+            </div> */}
             
             <div className={styles.inputs}>
               <input
                 type="text"
-                placeholder="Username"
+                placeholder="Nom d'utilisteur"
                 onChange={(e) => setSignInUsername(e.target.value)}
                 value={signInUsername}
-                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
+                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
               />
               <input
                 type="password"
-                placeholder="enter your password"
+                placeholder="Mots de passe"
                 onChange={(e) => setSignInPassword(e.target.value)}
                 value={signInPassword}
-                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px'}}
+                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
               />
-              <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Sign in </button>
+              <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Se connecter </button>
             </div>
 
           </div>

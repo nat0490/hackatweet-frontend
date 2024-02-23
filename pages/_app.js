@@ -37,7 +37,7 @@ function App({ Component, pageProps }) {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Head>
-          <title>HackaTweet</title>
+          <title>FlowerPost</title>
         </Head>
         <Component {...pageProps} />
       </PersistGate>
