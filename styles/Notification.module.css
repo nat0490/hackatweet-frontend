@@ -6,7 +6,7 @@
     flex-direction: column;
     margin: 0;
     padding: 1rem;
-    transform: translate(-40%, 15%);
+    transform: translate(60%, 30%);
     position: absolute;
     z-index: 1;
     overflow-y: auto; /* activer le défilement vertical si nécessaire */    

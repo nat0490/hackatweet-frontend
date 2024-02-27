@@ -18,11 +18,10 @@
     overflow-y: auto;
     scrollbar-width: 0;
     padding: 0;
-    width: 100%;
-     /* activer le défilement vertical si nécessaire */   
-    /* @media only screen and (max-width: 600px) {
-        margin-bottom: 1rem;
-    }  */
+    width: 100%; 
+    @media only screen and (max-width: 600px) {
+        margin-bottom: 2.5rem;
+    } 
   }
   
   .lastTweetsContainer::-webkit-scrollbar {

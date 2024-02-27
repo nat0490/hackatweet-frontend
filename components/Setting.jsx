@@ -21,10 +21,10 @@ export default function Setting() {
       <div >
         <div className={styles.lineTheme}> 
           <p>Changer le Theme</p>
-          <div className={`${styles.buttonContent} ${styles[theme]}`}> 
+          
             <button onClick={handleTheme} className={`${styles.btnTheme} ${styles[theme]}`}>
             </button> 
-          </div>
+          
         </div>
         <div className={styles.lineTheme}> 
           <p>Voir mon profil</p>
