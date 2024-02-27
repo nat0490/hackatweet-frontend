@@ -1,4 +1,4 @@
-.oneTweet {
+/* .oneCom {
     border-radius: 1rem;
     margin-bottom: 0.5rem;
     padding: 1rem;
@@ -6,7 +6,7 @@
         margin-bottom: 0.25rem;
         padding: 0.25rem;
     }
-}
+} */
 
 .blocPhoto{
     display: flex;
@@ -28,6 +28,9 @@
     align-items: center;
     margin-left: 1rem;
     margin-top: -0.25rem;
+    @media only screen and (max-width: 600px) {
+        margin-left: 0.5rem;
+    }
 }
 
 .infoUserCom {
@@ -35,6 +38,9 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     margin-left: 0.5rem;
     color: #91a3ba;
+    @media only screen and (max-width: 600px) {
+        margin-left: 0.25rem;
+    }
 }
 
 .oneLogo {
