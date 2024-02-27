@@ -10,7 +10,11 @@ function Trend() {
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   //console.log(hashtag);
 
-  const hashs = Object.entries(hashtag[0])
+
+  //GENERATION D'ERREUR??
+  const hashs = () => {
+     if (hashtag !== undefined && hashtag !== null)  {
+    Object.entries(hashtag[0])
     .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     .map(([key, value], i) => {
     return (
@@ -22,6 +26,7 @@ function Trend() {
       </div>
     );
   });
+}};
 
   return (
     <div className={`${styles[theme]} ${styles.trendPage}`}>
