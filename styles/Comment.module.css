@@ -1,12 +1,6 @@
-/* .oneCom {
-    border-radius: 1rem;
-    margin-bottom: 0.5rem;
-    padding: 1rem;
-    @media only screen and (max-width: 600px) {
-        margin-bottom: 0.25rem;
-        padding: 0.25rem;
-    }
-} */
+.oneCom {
+    padding: 0;
+}
 
 .blocPhoto{
     display: flex;
@@ -85,6 +79,9 @@
 .unTrait{
     margin-left: 1rem;
     width: 80%;
+    @media only screen and (max-width: 600px) {
+        width: 60%;
+    }
 }
 
 
