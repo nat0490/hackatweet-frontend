@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from "next/link";
 import styles from "../styles/Trend.module.css";
 import { useSelector } from "react-redux";
+import { fetchAllTags } from '../utils';
 
 function Trend() {
 
   const hashtag = useSelector((state) => state.hashtags.value);
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
-  //console.log(hashtag);
+  console.log(hashtag);
 
+  // useEffect(()=> {
+  //   if (hashtag)
+  // })
+
+   //  if (hashtag !== undefined && hashtag !== null)  {
+    //   console.log("hashtag charge");
 
   //GENERATION D'ERREUR??
-  const hashs = () => {
-     if (hashtag !== undefined && hashtag !== null)  {
-    Object.entries(hashtag[0])
+  const hashs = Object.entries(hashtag[0])
     .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     .map(([key, value], i) => {
     return (
@@ -26,7 +31,13 @@ function Trend() {
       </div>
     );
   });
-}};
+// } else {
+//   console.log("hashtag = null or undefined");
+//   return (
+//     <div><p>nothing</p></div>
+//   )
+// };
+  
 
   return (
     <div className={`${styles[theme]} ${styles.trendPage}`}>

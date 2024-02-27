@@ -17,7 +17,7 @@ function Home() {
   const user = useSelector((state)=> state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
 
-  console.log("them:",theme);
+  //console.log("them:",theme);
   
   useEffect(()=> {
     getMyNotif();
