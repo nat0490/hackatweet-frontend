@@ -18,27 +18,43 @@
 .addTweet {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center;
     justify-content: left;
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 10px;
-    padding-top: 8px;
-    padding-bottom: 4px;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    border-radius: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    @media only screen and (max-width: 600px) {
+        padding-top: 0.5rem;
+        padding-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
 }
 
 .inputLastTweets {
-    background-color: #fff;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
-    border-radius: 5px;
-    width: 80%;
-    margin-left: 4rem;
-    margin-right: 4rem;
+    border-radius: 0.5rem;
+    width: 70%;
     margin-bottom: 1rem;
-    margin-top: 1rem;
+    @media only screen and (max-width: 600px) {
+        margin-bottom: 0.25rem;
+    }
+}
+
+.inputLine {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag {
+    font-weight: bold;
+    margin-right: 0.25rem;
+    margin-top: -1rem;
+    font-size: 20px;
 }
 
 .dessousInput {
@@ -46,23 +62,24 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;   
-    padding-right: 4rem;
+    padding-right: 2rem;
 }
 
 .addButton {
     background-color: #EA3680;
     color: #fff;
-    border-radius: 20px;
+    border-radius: 1rem;
     border: none;
-    padding-left: 1rem;
-    padding-right: 1rem;
     height: 1.5rem;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    width: 7rem;
-    margin-right: 2rem;
+    width: 5rem;
     text-decoration: none;
     font-variant-caps: small-caps;
+    font-size: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    @media only screen and (max-width: 600px) {
+        width: 4rem;
+    }
 }
 
 .tweetContainer {
@@ -75,18 +92,19 @@
     width: 12px;
   }
 
-.hashtagPage {
-    flex-grow: 1;
+.hashtagPage{
     display: flex;
     flex-direction: column;
-    width: 40%;
+    flex-grow: 1;
     padding-left: 1rem;
     padding-right: 1rem;
+    height: 100%;
+    @media only screen and (max-width: 600px) {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
 }
 
-.addTweet {
-    background-color: rgba(0,0,0,0.2);
-}
 
 .titlePage {
     margin-left: 1rem;
@@ -102,18 +120,7 @@
     margin-top: 2rem;
 }
 
-.inputLine {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
 
-.tag {
-    font-weight: bold;
-    margin-right: -3.5rem;
-    font-size: 20px;
-}
 
 .noFound {
     text-align: center;
@@ -129,6 +136,13 @@
     background-color: rgba(0,0,0,0.2);
 }
 
+.light.inputLastTweets {
+    background-color: #fff;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
+
 /* DARK MODE */
 .dark.hashtagPage {
     background-color: #222;
@@ -140,4 +154,11 @@
 
 .dark.titlePage {
     color: #fff;
+}
+
+.dark.inputLastTweets {
+    background-color: #fefefe;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
 }

@@ -129,7 +129,7 @@ function Hashtag() {
                 type="text"
                 value={hashtag}
                 onChange={(e) => setHashtag(e.target.value.replace(/^#/, ""))}
-                className={styles.inputLastTweets}
+                className={`${styles[theme]} ${styles.inputLastTweets}`}
               />
             </div>
             <div className={styles.dessousInput}>
