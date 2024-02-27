@@ -109,6 +109,10 @@
     padding-top: 1rem;   
     border-radius: 1rem;
     width: 60%;
+    @media only screen and (max-width: 600px) {
+        margin-left: 1rem;
+        margin-bottom: 0.25rem;
+    }
 }
 
 .inputComment {    
@@ -119,6 +123,9 @@
 
 .borderComments {
     margin-left: 1rem;
+    @media only screen and (max-width: 600px) {
+        margin-left: 0.5rem;
+    }
 }
 
 .allComment {
@@ -129,6 +136,10 @@
     margin-bottom: 0.25rem;
     padding-left: 2rem; 
     padding-bottom: 0.25rem; 
+    @media only screen and (max-width: 600px) {
+        padding-left: 1rem; 
+        width: 80%;
+    }
 }
 
 .blocUserCom {

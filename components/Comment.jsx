@@ -65,7 +65,7 @@ const Comment = forwardRef((props, ref) => {
 //console.log(props.userFrom);
   return (
     <> 
-      <div className={styles.oneCom}>
+      <div className={`${styles[theme]} ${styles.oneCom}`}>
         <div className={styles.blocPhoto}> 
           <Image
                 src={"/user.jpg"}
