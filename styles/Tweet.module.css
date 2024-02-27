@@ -35,6 +35,10 @@
     margin-right: 1.5rem;
 }
 
+.xDelete {
+    margin-right: 0.25rem;
+}
+
 .oneLogo:hover {
     opacity: 50%;
 }
@@ -77,9 +81,9 @@
 }
 
 .oneTweet {
-    border-radius: 20px;
+    border-radius: 1.5rem;
     margin-bottom: 0.5rem;
-    padding: 5px;
+    padding: 1rem;
 }
 
 .infoUser {
@@ -97,7 +101,7 @@
     margin-bottom: 2rem;
     margin-left: 2rem;
     padding-top: 1rem;   
-    border-radius: 20px;
+    border-radius: 1rem;
     width: 60%;
 }
 
@@ -114,7 +118,7 @@
 .allComment {
     width: 60%;
     margin-left: 1rem;  
-    border-radius: 20px;
+    border-radius: 1rem;
     margin-top: -0.25rem;
     margin-bottom: 0.25rem;
     padding-left: 2rem; 

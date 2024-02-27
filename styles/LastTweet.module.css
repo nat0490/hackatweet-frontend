@@ -10,24 +10,21 @@
     font-variant-caps: small-caps;
 }
 
-.blocTweet {    
-        max-height: 100vh; /* ou une hauteur fixe selon vos besoins */
-        overflow-y: auto; /* activer le défilement vertical si nécessaire */
-        width: 100%;
-        scrollbar-width: thin;
-      
-}
-
 .lastTweetsContainer {
     margin-bottom: 1.5rem;
-    overflow-y: auto; /* activer le défilement vertical si nécessaire */   
-    @media only screen and (max-width: 600px) {
+    overflow-y: auto;
+    scrollbar-width: 0;
+    padding: 0;
+    width: 100%;
+     /* activer le défilement vertical si nécessaire */   
+    /* @media only screen and (max-width: 600px) {
         margin-bottom: 1rem;
-    } 
+    }  */
   }
   
   .lastTweetsContainer::-webkit-scrollbar {
-    width: 12px;
+    /* width: 12px; */
+    display: none;
   }
 
 .addButton {
@@ -63,7 +60,7 @@
 }
 
 .inputLastTweets {
-    border-radius: 5px;
+    border-radius: 0.5rem;
     width: 90%;
     /* margin-left: 4rem;
     margin-right: 4rem;
@@ -77,7 +74,7 @@
     align-items: center;
     justify-content: left;
     margin-bottom: 1rem;
-    border-radius: 20px;
+    border-radius: 1.5rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
@@ -89,6 +86,10 @@
     padding-left: 1rem;
     padding-right: 1rem;
     height: 100%;
+    @media only screen and (max-width: 600px) {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
 }
 
 

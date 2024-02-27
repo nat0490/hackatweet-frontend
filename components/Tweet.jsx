@@ -324,7 +324,7 @@ const Tweet = forwardRef((props, ref) => {
               </span>
             </p>
             {user.id === props.user._id && (
-              <div onClick={handleDelete} className={styles.oneLogo}>
+              <div onClick={handleDelete} className={styles.xDelete}>
                 <FontAwesomeIcon icon={faXmark} style={{ cursor: 'pointer'}}/>
               </div>
             )}
