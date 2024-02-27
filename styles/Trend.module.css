@@ -21,6 +21,10 @@
     border-radius: 1rem;
     padding: 1rem;
     overflow-y: auto;
+    @media only screen and (max-width: 600px) {
+        margin: 0.25rem;
+        padding: 0.25rem;
+    }
 }
 
 .hashtagName {
