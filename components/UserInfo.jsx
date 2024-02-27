@@ -32,32 +32,32 @@ const UserInfo = forwardRef((props, ref) => {
   return (
     <div className={`${styles[theme]} ${styles.userInfoPage} ${customClassName}`} ref={ref}>
       <div className={styles.topPage}> 
-      <Link href="/"><Image src={"/Logo2.png"} width={100} height={100} className={styles.logoLink} /></Link>
-
-      <div className={styles.logo}>
-
-          <div className={`${styles.oneLogo} ${styles.logoWithNotif}`}>
-          {/* <div className={{marginRight: "-0.25rem", ...styles.oneLogo }}> */}
-            <FontAwesomeIcon
-              icon={faBell}
-              size="xl"
-              onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
-              style={{ cursor: 'pointer'}}
-            /> {notifNonLues > 0 && <span className={styles.nbrNotif}>{notifNonLues}</span> }
-          </div> 
-          
-          <div className={styles.oneLogo}>
-            <FontAwesomeIcon
-              icon={faGear}
-              size="xl"
-              style={{ cursor: 'pointer' }}
-              onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
-            /> 
+        <div className={styles.topPage2}> 
+        
+        <Link href="/"><Image src={"/Logo2.png"} width={100} height={100} className={styles.logoLink} /></Link>
+        <div className={styles.logo}>
+            <div className={`${styles.oneLogo} ${styles.logoWithNotif}`}>
+            {/* <div className={{marginRight: "-0.25rem", ...styles.oneLogo }}> */}
+              <FontAwesomeIcon
+                icon={faBell}
+                size="xl"
+                onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
+                style={{ cursor: 'pointer'}}
+              /> {notifNonLues > 0 && <span className={styles.nbrNotif}>{notifNonLues}</span> }
+            </div> 
+            
+            <div className={styles.oneLogo}>
+              <FontAwesomeIcon
+                icon={faGear}
+                size="xl"
+                style={{ cursor: 'pointer' }}
+                onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
+              /> 
+            </div>
+          { openNotifModal && <Notification />}
+          { openSettingModal && <Setting />}
+            
           </div>
-
-        { openNotifModal && <Notification />}
-        { openSettingModal && <Setting />}
-          
         </div>
       </div>
 

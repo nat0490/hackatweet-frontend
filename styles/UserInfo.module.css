@@ -16,30 +16,35 @@
     justify-content: space-between;
     align-items: flex-start;
     height: 100vh;
-    padding-left: 3rem;
     flex-grow: 1;
-    padding-top: 3rem;
+    padding-top: 1rem;
     padding-bottom: 3rem;
-    padding-right: 1rem;
-    max-width: 20%;
+    /* 
+    padding-left: 3rem;
+    padding-right: 1rem; */
+    /* max-width: 20%; */
 }
 
 .bottom{
     display: flex;
     flex-direction: column;
+    margin-left: 1rem;
 }
 
 .blocUser {
     display: flex;
     margin-bottom: 1rem;
-    height: 3rem;
+    /* height: 3rem; */
 }
 
 .logoutButton {
     background-color: #EA3680;
-    width: 8rem;
+    /* width: 8rem; */
     text-decoration: none;
     font-variant-caps: small-caps;
+    font-size: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .logoutButton:hover {
@@ -70,8 +75,11 @@
 
 .logo {
     display: flex;
+    width: 100;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content:space-around;
+    align-items: center;
+    margin-top: 1rem;
     
 }
 
@@ -84,9 +92,16 @@
 
 .topPage {
     display: flex;
-    justify-content:space-between;
-    align-items: center;
+    flex-direction: column;
+    justify-content:center;
+    align-items:flex-end;
     width: 100%;
+}
+
+.topPage2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .nbrNotif {
@@ -100,8 +115,6 @@
     z-index: 1;
     margin-left: -0.75rem;
     margin-top: -0.5rem;
-
-
 }
 
 

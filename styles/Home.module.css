@@ -5,11 +5,23 @@
   overflow-y:hidden;
 }
 
-.lastTweetsContainer {
-  width: 55%;
+.userInfo {
+  width: 10%;
   height: 100vh;
 }
 
+.lastTweetsContainer {
+  width: 60%;
+  height: 100vh;
+}
+
+/* .Hashtag {
+  width: 30%;
+} */
+
+.trend {
+  width: 30%;
+}
 
 .dark.lastTweetsContainer {
   background-color: #222;
@@ -19,9 +31,7 @@
   height: 100%;
 }
 
-.Hashtag {
-  width: 55%;
-}
+
 
 
 
