@@ -48,6 +48,7 @@
     @media only screen and (max-width: 600px) {
         max-width: 100%; /* Permet à l'élément de prendre la pleine largeur sur les petits écrans */
         word-wrap: break-word; /* Permet le passage à la ligne à l'intérieur des mots */
+        margin-bottom: 0.5rem;
     }
 }
 
