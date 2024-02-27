@@ -71,7 +71,7 @@ const UserInfo = forwardRef((props, ref) => {
           </div>
         </div>
         <div className={styles.englobButton}> 
-        <button onClick={handleLogout} className={styles.logoutButton}>Deconnexion</button> 
+        <button onClick={handleLogout} className={styles.logoutButton}>Quitter</button> 
         </div>
       </div>
     </div>

@@ -11,14 +11,6 @@ function Trend() {
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   console.log(hashtag);
 
-  // useEffect(()=> {
-  //   if (hashtag)
-  // })
-
-   //  if (hashtag !== undefined && hashtag !== null)  {
-    //   console.log("hashtag charge");
-
-  //GENERATION D'ERREUR??
   const hashs = Object.entries(hashtag[0])
     .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     .map(([key, value], i) => {
@@ -31,12 +23,6 @@ function Trend() {
       </div>
     );
   });
-// } else {
-//   console.log("hashtag = null or undefined");
-//   return (
-//     <div><p>nothing</p></div>
-//   )
-// };
   
 
   return (

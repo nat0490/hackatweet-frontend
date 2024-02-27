@@ -19,8 +19,11 @@
 }
 
 .lastTweetsContainer {
-    height: 45rem; /* ou une hauteur fixe selon vos besoins */
-    overflow-y: auto; /* activer le défilement vertical si nécessaire */    
+    margin-bottom: 1.5rem;
+    overflow-y: auto; /* activer le défilement vertical si nécessaire */   
+    @media only screen and (max-width: 600px) {
+        margin-bottom: 1rem;
+    } 
   }
   
   .lastTweetsContainer::-webkit-scrollbar {
