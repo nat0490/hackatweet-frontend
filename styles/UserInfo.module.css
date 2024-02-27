@@ -39,12 +39,16 @@
 
 .logoutButton {
     background-color: #EA3680;
-    /* width: 8rem; */
+    max-width: 20rem; 
     text-decoration: none;
     font-variant-caps: small-caps;
     font-size: 10px;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    @media only screen and (max-width: 600px) {
+        max-width: 100%; /* Permet à l'élément de prendre la pleine largeur sur les petits écrans */
+        word-wrap: break-word; /* Permet le passage à la ligne à l'intérieur des mots */
+    }
 }
 
 .logoutButton:hover {
