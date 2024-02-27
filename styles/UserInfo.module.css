@@ -32,9 +32,10 @@
 }
 
 .blocUser {
-    display: flex;
+    /* display: flex; */
     margin-bottom: 1rem;
     /* height: 3rem; */
+    
 }
 
 .logoutButton {
@@ -50,6 +51,10 @@
         word-wrap: break-word; /* Permet le passage à la ligne à l'intérieur des mots */
         margin-bottom: 1rem;
     }
+}
+
+.englobButton {
+    max-width: 100%;
 }
 
 .logoutButton:hover {
