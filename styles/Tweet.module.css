@@ -62,20 +62,28 @@
     margin-left: 2rem;   
 }
 
+
 .addButton {
-    background-color: rgba(227, 34, 124, 0.7);
+    background-color: #EA3680;
     color: #fff;
-    border-radius: 2rem;
+    border-radius: 1rem;
     border: none;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-right: 1rem;
-    margin-left: 2rem;
-    margin-bottom: 1rem;
     height: 1.5rem;
     width: 5rem;
     text-decoration: none;
     font-variant-caps: small-caps;
+    font-size: 10px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-right: 1rem;
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    @media only screen and (max-width: 600px) {
+        width: 4rem;
+        margin-right: 0.5rem;
+        margin-left: 1rem;
+        margin-bottom: 0.25rem;
+    }
 }
 
 .addButton:hover {
@@ -115,6 +123,7 @@
     @media only screen and (max-width: 600px) {
         margin-left: 1rem;
         margin-bottom: 0.25rem;
+        padding-top: 0.25rem;   
         width: 90%;
         flex-direction: column;
         align-items: center;
@@ -124,7 +133,10 @@
 .inputComment {    
     border: none;
     width: 80%;
-    margin-left: 2rem;   
+    margin-left: 2rem;  
+    @media only screen and (max-width: 600px) {
+        margin-left: 0
+    }
 }
 
 .borderComments {
@@ -153,12 +165,10 @@
    width: 100%; 
 }
 
-
 .unTrait{
     margin-left: 1rem;
     width: 80%;
 }
-
 
 .textCom {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
