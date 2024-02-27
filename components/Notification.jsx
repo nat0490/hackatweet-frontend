@@ -14,7 +14,8 @@ export default function Notification() {
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
     const notification = useSelector((state)=> state.notifications.value.notification);
 
-    const URL = "http://localhost:3000/";
+    // const URL = "http://localhost:3000/";
+  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
 
     useEffect(()=> {
         fetchMyNotifications();

@@ -11,7 +11,10 @@ const Comment = forwardRef((props, ref) => {
 
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
-  const URL = "http://localhost:3000/";
+  // const URL = "http://localhost:3000/";
+  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+
+  
 
   //console.log("user id", props.userFrom);
   const [ likes, setLikes ] = useState(props.nbLike);

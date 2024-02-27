@@ -13,6 +13,9 @@ function SignIn({ closeModal }) {
 
   const dispatch = useDispatch();
 
+  // const URL = "http://localhost:3000/";
+  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+
 
   const nbrOccurence = (tab) => {
     const occurences = [];  
@@ -47,7 +50,7 @@ function SignIn({ closeModal }) {
 
   const handleConnection = () => {
     //console.log('click signin')
-    fetch("http://localhost:3000/users/signin", {
+    fetch(`${URL}users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

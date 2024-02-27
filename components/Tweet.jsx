@@ -15,7 +15,8 @@ const Tweet = forwardRef((props, ref) => {
 
   const commentRef = useRef();
   const dispatch= useDispatch();
-  const URL = "http://localhost:3000/";
+  // const URL = "http://localhost:3000/";
+  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);

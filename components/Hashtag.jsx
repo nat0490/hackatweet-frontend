@@ -15,7 +15,8 @@ function Hashtag() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const URL = 'http://localhost:3000/'
+  // const URL = "http://localhost:3000/";
+  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
   
 
   const [hashtag, setHashtag] = useState(router.query.hashtagName);
