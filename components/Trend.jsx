@@ -63,7 +63,7 @@ function Trend() {
           value={findTag}
           onChange={e => setFindTag(e.target.value)}
           onFocus={() => setSaisieEnCours(true)}
-          onBlur={() => setSaisieEnCours(false)}
+          onBlur={() => { findTag && setSaisieEnCours(false)}}
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
         { findTag && 
@@ -92,7 +92,7 @@ function Trend() {
           </div>
         )}
       </div>
-      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>{ noResult?<span className={styles.noResult}>Pas de résultat</span> : hashs }</div>
+      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>{ noResult?<span className={styles.noResult}>Pas de post</span> : hashs }</div>
     </div>
   );
 }
