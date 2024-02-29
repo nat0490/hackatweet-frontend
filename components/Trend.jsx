@@ -41,12 +41,12 @@ function Trend() {
         };
       } else {
         return (
-          <div key={i} className={styles.oneTweet}>
-            <Link href={`/hashtag/${key}`}>
+          <Link href={`/hashtag/${key}`}>
+            <div key={i} className={styles.oneTweet}>
               <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
-            </Link>
-            <p className={styles.totalTweet}>{value} post</p>
-          </div>
+              <p className={styles.totalTweet}>{value} post</p>
+            </div>
+          </Link>
         );
       }
   });
@@ -73,6 +73,12 @@ function Trend() {
               icon={faMagnifyingGlass}
               size="xl"
             /> 
+          </div>
+        )}
+
+        {!saisieEnCours && (window.innerWidth <= 600) && (
+          <div className={styles.oneLogo}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
           </div>
         )}
       </div>
