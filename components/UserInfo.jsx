@@ -73,8 +73,8 @@ const UserInfo = forwardRef((props, ref) => {
         <div className={styles.blocUser}>
           <Image className={styles.photoProfil} src={"/user.jpg"} width={50} height={50} />
           <div className={styles.userLog} >
-            <span>{user.firstname}</span>
-            <span className={styles.username}> @{user.username}</span>
+            <span>{user.firstname && user.firstname.slice(0, 8)}</span>
+            <span className={styles.username}> @{user.username && user.username.slice(0, 8) }</span>
           </div>
         </div>
         <div className={styles.englobButton}> 

@@ -15,6 +15,7 @@ function Trend() {
 
   const [ findTag, setFindTag ] = useState(null);
   const [ noResult, setNoResult ] = useState(null);
+  const [ saisieEnCours, setSaisieEnCours ] = useState(false);
 
   useEffect(()=> {
     if (hashs.every(e => e === undefined)) {
@@ -30,12 +31,12 @@ function Trend() {
       if (findTag) {
         if (key.includes(findTag.toLowerCase())) {
           return (
-            <div key={i} className={styles.oneTweet}>
               <Link href={`/hashtag/${key}`}>
-                <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
+                 <div key={i} className={styles.oneTweet}>
+                  <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
+                  <p className={styles.totalTweet}>{value} post</p>
+                </div>
               </Link>
-              <p className={styles.totalTweet}>{value} post</p>
-            </div>
           );
         };
       } else {
@@ -50,6 +51,11 @@ function Trend() {
       }
   });
 
+  const onChangeInput = (e) => {
+    setFindTag(e);
+    setSaisieEnCours(true);
+  };
+
 
   return (
     <div className={`${styles[theme]} ${styles.trendPage}`}>
@@ -58,16 +64,17 @@ function Trend() {
           type="text"
           name="rechercheTag"
           value={findTag}
-          onChange={e => setFindTag(e.target.value)}
+          onChange={e => onChangeInput(e.target.value)}
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
-        
-        <div className={styles.oneLogo}>
-          <FontAwesomeIcon
-            icon={faMagnifyingGlass}
-            size="xl"
-          /> 
-        </div>
+        { !saisieEnCours && !(window.innerWidth <= 600) && 
+          (<div className={styles.oneLogo}>
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              size="xl"
+            /> 
+          </div>
+        )}
       </div>
       <div className={`${styles[theme]} ${styles.hashtagContainer}`}>{ noResult?<span className={styles.noResult}>Pas de résultat</span> : hashs }</div>
     </div>
