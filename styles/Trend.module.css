@@ -73,7 +73,7 @@
     transition: all 0.2s;
     @media only screen and (max-width: 600px) {
         top: 3%;
-        right: 7rem;
+        right: 6rem;
     }
 }
 

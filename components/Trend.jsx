@@ -41,7 +41,9 @@ function Trend() {
         };
       } else {
         return (
-          <Link href={`/hashtag/${key}`}>
+          <Link 
+            href={`/hashtag/${key}`}
+            onClick={() => setSaisieEnCours(false)}>
             <div key={i} className={styles.oneTweet}>
               <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
               <p className={styles.totalTweet}>{value} post</p>
@@ -51,10 +53,10 @@ function Trend() {
       }
   });
 
-  const onChangeInput = (e) => {
-    setFindTag(e);
-    setSaisieEnCours(true);
-  };
+  // const onChangeInput = (e) => {
+  //   setFindTag(e);
+
+  // };
 
 
   return (
@@ -64,7 +66,9 @@ function Trend() {
           type="text"
           name="rechercheTag"
           value={findTag}
-          onChange={e => onChangeInput(e.target.value)}
+          onChange={e => setFindTag(e.target.value)}
+          onFocus={() => setSaisieEnCours(true)}
+          onBlur={() => setSaisieEnCours(false)}
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
         { !saisieEnCours && !(window.innerWidth <= 600) && 
