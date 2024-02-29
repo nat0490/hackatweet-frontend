@@ -21,8 +21,8 @@ function SignUp({ closeModal }) {
 
   const dispatch = useDispatch();
 
-  const URL = "http://localhost:3000/";
-  // const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+  // const URL = "http://localhost:3000/";
+  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
 
   const nbrOccurence = (tab) => {
     const occurences = [];  
