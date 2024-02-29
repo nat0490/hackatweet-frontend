@@ -63,7 +63,7 @@ function Trend() {
           value={findTag}
           onChange={e => setFindTag(e.target.value)}
           onFocus={() => setSaisieEnCours(true)}
-          onBlur={() => { findTag && setSaisieEnCours(false)}}
+          onBlur={() => { !findTag && setSaisieEnCours(false)}}
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
         { findTag && 
