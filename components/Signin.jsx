@@ -6,15 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../reducers/user";
 import { addHashtag, removehashTag } from "../reducers/hashtags";
 import { addTheme } from "../reducers/theme";
+import { Eye, EyeOff } from 'react-feather';
 
 function SignIn({ closeModal }) {
   const [signInUsername, setSignInUsername] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
+  const [ showEye, setShowEye] = useState(true);
+
+  const [ errorMsg, setErrorMsg] = useState(null);
 
   const dispatch = useDispatch();
 
-  // const URL = "http://localhost:3000/";
-  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+  const URL = "http://localhost:3000/";
+  // const URL = "https://hackatweet-backend-iota-three.vercel.app/";
 
 
   const nbrOccurence = (tab) => {
@@ -72,8 +76,12 @@ function SignIn({ closeModal }) {
           );
           setSignInUsername("");
           setSignInPassword("");
+          setErrorMsg(null);
+          setShowEye(true);
           fetchAllHashtag();
           dispatch(addTheme(data.data.token));
+        } else {
+          setErrorMsg(data.message);
         }
       });
   };
@@ -108,23 +116,42 @@ function SignIn({ closeModal }) {
             </div> */}
             
             <div className={styles.inputs}>
+              <label className={styles.onlyInputs}> 
               <input
                 type="text"
-                placeholder="Nom d'utilisteur"
+                placeholder="Nom d'utilisateur"
                 onChange={(e) => setSignInUsername(e.target.value)}
                 value={signInUsername}
-                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
+                style={{ 
+                  backgroundColor: '#fff', 
+                  fontSize: '12px',
+                  color: '#000', 
+                  borderRadius: '5px', 
+                  width: '80%'}}
               />
               <input
-                type="password"
+                type={showEye? "password": "text"}
                 placeholder="Mots de passe"
                 onChange={(e) => setSignInPassword(e.target.value)}
                 value={signInPassword}
-                style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
+                style={{ 
+                  backgroundColor: '#fff', 
+                  fontSize: '12px',
+                  color: '#000', 
+                  borderRadius: '5px', 
+                  width: '80%'}}
               />
-              <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Se connecter </button>
-            </div>
+              
+            
 
+              <div class="password-icon3">
+                  {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> }
+              </div>
+
+              </label>
+              { errorMsg && <span className={styles.errorMsg}>*{errorMsg}</span>}
+              <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Se connecter </button>
+              </div>
           </div>
         </div>
       

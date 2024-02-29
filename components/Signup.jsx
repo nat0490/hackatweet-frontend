@@ -6,16 +6,23 @@ import Image from "next/image";
 import { login } from "../reducers/user";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
 import { addTheme } from '../reducers/theme';
+import { Eye, EyeOff } from 'react-feather';
 
 function SignUp({ closeModal }) {
   const [signUpFirstname, setSignUpFirstname] = useState("");
   const [signUpUsername, setSignUpUsername] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [signUpCheckPassword, setSignUpCheckPassword] = useState("");
+
+  const [ errorMsg, setErrorMsg] = useState(null);
+  const [ errorMsgPw, setErrorMsgPw] = useState(null);
+  const [ showEye, setShowEye] = useState(true);
+  const [ showEye2, setShowEye2] = useState(true);
 
   const dispatch = useDispatch();
 
-  // const URL = "http://localhost:3000/";
-  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+  const URL = "http://localhost:3000/";
+  // const URL = "https://hackatweet-backend-iota-three.vercel.app/";
 
   const nbrOccurence = (tab) => {
     const occurences = [];  
@@ -50,33 +57,50 @@ function SignUp({ closeModal }) {
 
   const handleRegister = () => {
     //console.log('click signup');
-    fetch(`${URL}users/signup`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        firstname: signUpFirstname,
-        username: signUpUsername,
-        password: signUpPassword
-      }),
-    }).then((response) => response.json())
-      .then((data) => {
-        if (data.result) {
-          dispatch(
-            login({
-              firstname: signUpFirstname,
-              username: signUpUsername,
-              token: data.newDoc.token,
-              id: data.newDoc._id,
-            })
-          );
-          setSignUpFirstname("");
-          setSignUpUsername("");
-          setSignUpPassword("");
-          fetchAllHashtag();
-          dispatch(addTheme(data.newDoc.token));
-        }
-      });
+    setErrorMsg(null);
+    setErrorMsgPw(null);
+    if ( signUpPassword === signUpCheckPassword) {
+      fetch(`${URL}users/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstname: signUpFirstname,
+          username: signUpUsername,
+          password: signUpPassword
+        }),
+      }).then((response) => response.json())
+        .then((data) => {
+          //console.log(data);
+          if (data.result) {
+            dispatch(
+              login({
+                firstname: signUpFirstname,
+                username: signUpUsername,
+                token: data.newDoc.token,
+                id: data.newDoc._id,
+              })
+            );
+            setSignUpFirstname("");
+            setSignUpUsername("");
+            setSignUpPassword("");
+            setSignUpCheckPassword("");
+            setErrorMsgPw(null);
+            setErrorMsgUserName(null);
+            setShowEye(true);
+            setShowEye2(true);
+            fetchAllHashtag();
+            dispatch(addTheme(data.newDoc.token));
+          } else {
+            console.log(data.message);
+            setErrorMsg(data.message);
+          }
+        });
+    } else {
+      setErrorMsgPw("Mots de passe différents")
+    }
+    
   };
+
 
   return (
     
@@ -102,38 +126,86 @@ function SignUp({ closeModal }) {
 
 
         <div className={styles.body}>
-          
-        
-          {/* <div className={styles.title}> 
-            <h1>Crée ton compte</h1>
-          </div> */}
-          
-          
           <div className={styles.inputs}>
-            <input
-              type="text"
-              placeholder="Prenom"
-              onChange={(e) => setSignUpFirstname(e.target.value)}
-              value={signUpFirstname}
-              style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
-            />
-            <input
-              type="text"
-              placeholder="Nom d'utilisateur"
-              onChange={(e) => setSignUpUsername(e.target.value)}
-              value={signUpUsername}
-              style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
-            />
-            <input
-              type="password"
-              placeholder="Mots de passe"
-              onChange={(e) => setSignUpPassword(e.target.value)}
-              value={signUpPassword}
-              style={{ backgroundColor: '#fff', color: '#000', borderRadius: '5px', width: '80%'}}
-            />
+            <label className={styles.onlyInputs}> 
+              <input
+                type="text"
+                placeholder="Prenom"
+                onChange={(e) => setSignUpFirstname(e.target.value)}
+                value={signUpFirstname}
+                style={{ 
+                  backgroundColor: '#fff', 
+                  fontSize: '12px',
+                  color: '#000', 
+                  borderRadius: '5px', 
+                  width: '80%'}}
+              />
+              <input
+                type="text"
+                placeholder="Nom d'utilisateur"
+                onChange={(e) => setSignUpUsername(e.target.value)}
+                value={signUpUsername}
+                style={{ 
+                  backgroundColor:'#fff', 
+                  fontSize: '12px',
+                  color: '#000', 
+                  borderRadius: '5px', 
+                  width: '80%', 
+                  }}
+              /> 
+              <input
+                type={showEye? "password": "text"}
+                placeholder="Mot de passe"
+                onChange={(e) => setSignUpPassword(e.target.value)}
+                value={signUpPassword}
+                style={{ 
+                  backgroundColor: '#fff', 
+                  fontSize: '12px',
+                  color: '#000', 
+                  borderRadius: '5px', 
+                  width: '80%',
+                  border: errorMsgPw ? '1.5px solid black': 'none', 
+                  fontWeight: errorMsgPw? 'bold': 'none',
+                  fontStyle: errorMsgPw? 'italic': 'none',}}
+              />
+
+              <div class="password-icon">
+                  {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> }
+              </div>
+              
+              
+              <input
+                 type={showEye2? "password": "text"}
+                placeholder="Vérification du Mot de passe"
+                onChange={(e) => setSignUpCheckPassword(e.target.value)}
+                value={signUpCheckPassword}
+                style={{ 
+                  backgroundColor: '#fff', 
+                  fontSize: '12px',
+                  color: '#000', 
+                  borderRadius: '5px', 
+                  width: '80%',
+                  border: errorMsgPw ? '1.5px solid black': 'none', 
+                  fontWeight: errorMsgPw? 'bold': 'none',
+                  fontStyle: errorMsgPw? 'italic': 'none',}}
+              />
+
+              <div class="password-icon2">
+                  {showEye2 ? <Eye onClick={() => setShowEye2(!showEye2)}/> : <EyeOff onClick={() => setShowEye2(!showEye2)}/> }
+              </div>
+
+            
+          
+            </label>
+
+          { errorMsg && <span className={styles.errorMsg}>*{errorMsg}</span>}
+          { errorMsgPw && <span className={styles.errorMsg}>*{errorMsgPw}</span>}
+            
             <button className={styles.btnSign} onClick={() => handleRegister()}>
               Crée ton compte
             </button>
+
+          
           </div>
         </div>
 

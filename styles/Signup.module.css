@@ -50,7 +50,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 3rem;
+    margin-top: 2rem;
+}
+
+.onlyInputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .body {
@@ -96,6 +103,12 @@
 .blockLogo {
     margin-top: 2rem;
 }
+
+.errorMsg {
+    font-size: 12px;
+}
+
+
 
 
 

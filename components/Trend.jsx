@@ -19,7 +19,7 @@ function Trend() {
         <Link href={`/hashtag/${key}`}>
           <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
         </Link>
-        <p className={styles.totalTweet}>{value} tweet</p>
+        <p className={styles.totalTweet}>{value} post</p>
       </div>
     );
   });
