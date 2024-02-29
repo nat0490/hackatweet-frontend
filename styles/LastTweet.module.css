@@ -104,6 +104,11 @@
     }
 }
 
+.icon {
+    margin-right: 0.75rem;
+    padding: 0.25rem;
+}
+
 
 /* LIGHT MODE */
 .light.inputLastTweets {

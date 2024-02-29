@@ -4,7 +4,7 @@ import styles from "../styles/Trend.module.css";
 import { useSelector } from "react-redux";
 import { fetchAllTags } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faX } from "@fortawesome/free-solid-svg-icons";
 
 function Trend() {
 
@@ -43,7 +43,8 @@ function Trend() {
         return (
           <Link 
             href={`/hashtag/${key}`}
-            onClick={() => setSaisieEnCours(false)}>
+            // onClick={() => setSaisieEnCours(false)}
+            >
             <div key={i} className={styles.oneTweet}>
               <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
               <p className={styles.totalTweet}>{value} post</p>
@@ -52,12 +53,6 @@ function Trend() {
         );
       }
   });
-
-  // const onChangeInput = (e) => {
-  //   setFindTag(e);
-
-  // };
-
 
   return (
     <div className={`${styles[theme]} ${styles.trendPage}`}>
@@ -71,14 +66,25 @@ function Trend() {
           onBlur={() => setSaisieEnCours(false)}
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
-        { !saisieEnCours && !(window.innerWidth <= 600) && 
-          (<div className={styles.oneLogo}>
+        { findTag && 
+        <div className={styles.icon}>
+          <FontAwesomeIcon
+                icon={faX}
+                size="xs"
+                onClick={() =>setFindTag("")}
+                style={{ cursor: 'pointer', color: "grey" }}
+              />  
+        </div>
+        
+        }   
+        { saisieEnCours && (window.innerWidth <= 600) ? "" :
+          <div className={styles.oneLogo}>
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
               size="xl"
             /> 
           </div>
-        )}
+        }
 
         {!saisieEnCours && (window.innerWidth <= 600) && (
           <div className={styles.oneLogo}>

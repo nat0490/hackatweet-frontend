@@ -67,7 +67,22 @@
     align-items: center;
     position: absolute;
     top: 3.5%;
-    right: 16rem;
+    right: 20rem;
+    transform: translateY(-50%);
+    width: 1rem;
+    transition: all 0.2s;
+    @media only screen and (max-width: 600px) {
+        top: 3%;
+        right: 5rem;
+    }
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 3.4%;
+    right: 1.5rem;
     transform: translateY(-50%);
     width: 1rem;
     transition: all 0.2s;

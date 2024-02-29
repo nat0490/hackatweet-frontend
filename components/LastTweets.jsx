@@ -7,6 +7,8 @@ import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from
 import { addTheme, resetTheme,changeTheme } from '../reducers/theme';
 import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
+import { faImage, faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
@@ -24,6 +26,7 @@ function LastTweets() {
 
   const [tweetsData, setTweetsData] = useState([]);
   const [tweet, setTweet] = useState("");
+  const [ privat, setPrivat ] = useState(false);
 
 
   //console.log("tweetILkd:", tweetComment);
@@ -136,6 +139,27 @@ function LastTweets() {
         />
         <div className={styles.dessousInput}>
           {/* <span className={styles.lengthText}>{tweet.length}/280</span> */}
+          <FontAwesomeIcon
+                icon={faImage}
+                size="l"
+                // onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
+                // style={{ cursor: 'pointer'}}
+                className={styles.icon}
+              /> 
+          <FontAwesomeIcon
+                icon={faLock}
+                size="l"
+                onClick={() => setPrivat(true)}
+                style={{ cursor: 'pointer', color: privat ? 'EA3680' : "" }}
+                className={styles.icon}
+              /> 
+          <FontAwesomeIcon
+                icon={faLockOpen}
+                size="l"
+                onClick={() =>setPrivat(false)}
+                style={{ cursor: 'pointer', color: privat ? '' : "#EA3680" }}
+                className={styles.icon}
+              />     
           <button onClick={handleAddTweet} className={styles.addButton}>
             Post
           </button>
