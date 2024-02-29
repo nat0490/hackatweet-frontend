@@ -34,7 +34,14 @@ const UserInfo = forwardRef((props, ref) => {
       <div className={styles.topPage}> 
         <div className={styles.topPage2}> 
         
-        <Link href="/"><Image src={"/Logo2.png"} width={100} height={100} className={styles.logoLink} /></Link>
+        <Link href="/">
+          <Image 
+            src={"/Logo2.png"} 
+            width={100} 
+            height={100} 
+            className={styles.logoLink} 
+          />
+        </Link>
         <div className={styles.logo}>
             <div className={`${styles.oneLogo} ${styles.logoWithNotif}`}>
             {/* <div className={{marginRight: "-0.25rem", ...styles.oneLogo }}> */}

@@ -17,34 +17,45 @@ function Hashtag() {
 
   // const URL = "http://localhost:3000/";
   const URL = "https://hackatweet-backend-iota-three.vercel.app/";
-  
 
-  const [hashtag, setHashtag] = useState(router.query.hashtagName);
-  const [tweetMatch, setTweetMatch ] = useState([]);
-  const [tweetsLiked, setTweetsLiked] = useState([]);
+  const [ hashtag, setHashtag] = useState(null);
+  const [ tweetsLiked, setTweetsLiked] = useState([]);
   const [ isLoading, setIsLoading] = useState(false);
+  const [ allTweet, setAllTweet ] = useState(null);
+  const [ nbMatch, setNbMatch ] = useState(null);
 
   
-
-  const fetchTweetForHashtag = async (hash) => {
-    try {
-      setIsLoading(true);
-      const data = await fetch(`${URL}tweets/hashtagNumber/${hash}`);
-      const hashtag = await data.json();
-      setTweetMatch([]);
-      setTweetMatch(hashtag.tweets.reverse());
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching tweets:", error);
-      setIsLoading(false);
-    }
-  };
-      
 
   useEffect(() => {
     setHashtag(router.query.hashtagName);
-    fetchTweetForHashtag(router.query.hashtagName);
+    fetchTweet();
   }, [router.query.hashtagName]);
+
+  const allMatchingTweets = allTweet?.filter(tweet => {
+    const allMatchingHashtags = tweet.hashtags?.filter(tag => tag.toLowerCase().startsWith(hashtag?.toLowerCase()));
+    return allMatchingHashtags.length > 0;
+  });
+
+  useEffect(()=> {
+    setNbMatch(allMatchingTweets?.length);
+  },[allMatchingTweets])
+
+  const fetchTweet = async () => {
+    setIsLoading(true)
+    try {
+      setAllTweet(null);
+      const res = await fetch(`${URL}tweets/lastTweet`);
+      const data = await res.json();
+      //console.log(data.tweets);
+      setAllTweet(data.tweets.reverse());
+    } catch(error) {
+        console.error("Error in fetchTweet:", error);
+      };
+      setIsLoading(false);
+  };
+
+
+  
 
   const handleLike = (id) => {
     const tweetLiked = tweetsLiked.find((e) => {
@@ -57,11 +68,6 @@ function Hashtag() {
     }
   };
 
-  const handleFindTweetForHashtag = () => {
-    fetchTweetForHashtag(hashtag);
-    //setHashtag("");
-  };
-
   const handleDelete = (id) => {
     fetch(`${URL}tweets/delete`, {
       method: "DELETE",
@@ -71,7 +77,7 @@ function Hashtag() {
       body: JSON.stringify({ id: id }),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then(() => {
         //setTweetsData(tweetsData.filter((e) => e._id !== id));
         fetchAllHashtag();
       });
@@ -105,50 +111,36 @@ function Hashtag() {
       });
   }
 
+ 
+ 
+const afficheTweet = allTweet?.map((tweet, i) => {
+    const isMatchingHashtags = tweet.hashtags?.some(tag => tag.toLowerCase().startsWith(hashtag?.toLowerCase()));
+    if (isMatchingHashtags ) {
+        return (
+          <Tweet
+            {...tweet}
+            key={i}
+            handleLike={handleLike}
+            isLiked={tweetsLiked.some((e) => !!e && e === tweet._id)}
+            handleDelete={handleDelete}
+          />
+        );
+    } 
+});
 
-  const afficheTweet = tweetMatch.map((tweet, i) => (
-    <Tweet
-      {...tweet}
-      key={i}
-      handleLike={handleLike}
-      isLiked={tweetsLiked.some((e) => !!e && e === tweet._id)}
-      handleDelete={handleDelete}
-    />
-  ));
 
   return (
     <div className={styles.PageAcceuil}>
-      
       <div className={`${styles[theme]} ${styles.hashtagPage}`}> 
-        <div>
-          {/* <h3 className={`${styles[theme]} ${styles.titlePage}`}>Recherche par #</h3> */}
-          <div className={`${styles[theme]} ${styles.addTweet}`}>
-            <div className={styles.inputLine}> 
-              <span className={styles.tag}>#</span>
-              <input
-                type="text"
-                value={hashtag}
-                onChange={(e) => setHashtag(e.target.value.replace(/^#/, ""))}
-                className={`${styles[theme]} ${styles.inputLastTweets}`}
-              />
-            </div>
-            <div className={styles.dessousInput}>
-              {/*<span className={styles.lengthText}>{tweet.length}/280</span>*/}
-              <button className={styles.addButton} onClick={handleFindTweetForHashtag}> Rechercher </button>
-            </div>
-          </div>
-
-
-
-          
-        </div>
-       
+      { nbMatch && nbMatch > 0 ? 
+      <h3 className={`${styles[theme]} ${styles.titlePage}`}> {nbMatch} post trouvé{nbMatch > 1 && "s"}</h3> : 
+      !isLoading && <div className={styles.noFound}>Pas de <span className={styles.postNoFound}>post</span> trouvé </div> }
         <div className={styles.tweetContainer}>
-          { isLoading?  <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : 
-            tweetMatch.length > 0 ? afficheTweet : 
-              <div className={styles.noFound}>Pas de <span className={styles.postNoFound}>post</span> trouvé </div>}</div>
+          { 
+            isLoading ? <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : afficheTweet 
+          }
+        </div>
       </div>
-      
     </div>
   );
 }

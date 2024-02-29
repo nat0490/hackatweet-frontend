@@ -1,14 +1,15 @@
 
 .titlePage {
     margin-left: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     /* font-family: Snell Roundhand, cursive; */
     text-align: center;
-    text-decoration:underline overline;
+    /* text-decoration:underline overline; */
     font-size: 20px;
     font-variant-caps: small-caps;
     @media only screen and (max-width: 600px) {
+        margin-top: 1rem;
         margin-bottom: 0.75rem;
     }
 }

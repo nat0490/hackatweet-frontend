@@ -4,6 +4,7 @@
 
 .logoLink{
   transform: rotate(-45deg);
+  cursor: pointer;
 }
 
 .photoProfil {
