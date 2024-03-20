@@ -13,7 +13,7 @@ function Trend() {
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   //console.log(hashtag);
 
-  const [ findTag, setFindTag ] = useState(null);
+  const [ findTag, setFindTag ] = useState(undefined);
   const [ noResult, setNoResult ] = useState(null);
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);
 
@@ -31,8 +31,8 @@ function Trend() {
       if (findTag) {
         if (key.includes(findTag.toLowerCase())) {
           return (
-              <Link href={`/hashtag/${key}`}>
-                 <div key={i} className={styles.oneTweet}>
+              <Link href={`/hashtag/${key}`} key={i}>
+                 <div  className={styles.oneTweet}>
                   <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
                   <p className={styles.totalTweet}>{value} post</p>
                 </div>
@@ -43,9 +43,10 @@ function Trend() {
         return (
           <Link 
             href={`/hashtag/${key}`}
+            key={i}
             // onClick={() => setSaisieEnCours(false)}
             >
-            <div key={i} className={styles.oneTweet}>
+            <div  className={styles.oneTweet}>
               <a className={`${styles[theme]} ${styles.hashtagName}`}> #{key}</a>
               <p className={styles.totalTweet}>{value} post</p>
             </div>
@@ -71,7 +72,10 @@ function Trend() {
           <FontAwesomeIcon
                 icon={faX}
                 size="xs"
-                onClick={() =>setFindTag("")}
+                onClick={() => {
+                  setFindTag("");
+                  setSaisieEnCours(false)
+                }}
                 style={{ cursor: 'pointer', color: "grey" }}
               />  
         </div>
@@ -92,7 +96,7 @@ function Trend() {
           </div>
         )}
       </div>
-      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>{ noResult?<span className={styles.noResult}>Pas de post</span> : hashs }</div>
+      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>{ noResult? "" /*<span className={styles.noResult}>Pas de post</span>*/ : hashs }</div>
     </div>
   );
 }

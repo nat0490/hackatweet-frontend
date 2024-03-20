@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SignUp from './Signup';
 import SignIn from './Signin';
-import styles from '../styles/Login.module.css';
+import styles from '../../styles/Login.module.css';
 import Typewriter from 'typewriter-effect';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

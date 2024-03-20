@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../styles/Signup.module.css";
+import styles from "../../styles/Signup.module.css";
 import Image from "next/image";
-import { login } from "../reducers/user";
-import { addHashtag, removehashTag } from '../reducers/hashtags';
-import { addTheme } from '../reducers/theme';
+import { login } from "../../reducers/user";
+import { addHashtag, removehashTag } from '../../reducers/hashtags';
+import { addTheme } from '../../reducers/theme';
 import { Eye, EyeOff } from 'react-feather';
 
 function SignUp({ closeModal }) {

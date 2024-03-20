@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useState} from 'react';
+import React, {forwardRef, useRef, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/user";
 import Image from "next/image";
@@ -23,6 +23,49 @@ const UserInfo = forwardRef((props, ref) => {
 
   const [openNotifModal, setOpenNotifModal] = useState(false);
   const [ openSettingModal, setOpenSettingModal] = useState(false);
+
+  const notificationContainerRef = useRef(null);
+  const settingContainerRef = useRef(null);
+
+ 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+  //Si il y a selectedPic && onClick en dehors de la zone
+        if (openNotifModal && notificationContainerRef.current && !notificationContainerRef.current.contains(event.target)) {
+          setOpenNotifModal(false);
+        };
+        if (openSettingModal && settingContainerRef.current && !settingContainerRef.current.contains(event.target)) {
+          setOpenSettingModal(false);
+        };
+    };
+    let timeoutId;
+//Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
+    if (openNotifModal) {
+        timeoutId = setTimeout(() => {
+            document.addEventListener('click', handleClickOutside);
+        }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+    } else {
+        document.removeEventListener('click', handleClickOutside);
+    };
+
+
+    if (openSettingModal) {
+      timeoutId = setTimeout(() => {
+          document.addEventListener('click', handleClickOutside);
+      }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+  } else {
+      document.removeEventListener('click', handleClickOutside);
+  };
+
+
+
+    return () => {
+        clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
+        document.removeEventListener('click', handleClickOutside);
+    };
+  }, [openNotifModal, openSettingModal]);
+
+
  
   const handleLogout = () => {
     dispatch(logout());
@@ -61,8 +104,8 @@ const UserInfo = forwardRef((props, ref) => {
                 onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
               /> 
             </div>
-          { openNotifModal && <Notification />}
-          { openSettingModal && <Setting />}
+          { openNotifModal && <Notification ref={notificationContainerRef}/>}
+          { openSettingModal && <Setting ref={settingContainerRef}/>}
             
           </div>
         </div>

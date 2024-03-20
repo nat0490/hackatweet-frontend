@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, forwardRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from "../styles/Notification.module.css";
 import Image from 'next/image';
@@ -6,7 +6,7 @@ import { updateNotification, addNotification, rmvAllNotification} from "../reduc
 import { tempsEcoule } from '../utils';
 
 
-export default function Notification() {
+const Notification = forwardRef((props, ref) => {
 
     const dispatch = useDispatch();
     
@@ -14,12 +14,13 @@ export default function Notification() {
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
     const notification = useSelector((state)=> state.notifications.value.notification);
 
-    // const URL = "http://localhost:3000/";
-  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+    //const URL = "http://localhost:3000/";
+    const URL = "https://hackatweet-backend-iota-three.vercel.app/";
 
     useEffect(()=> {
         fetchMyNotifications();
     }, [])
+
 
     const fetchMyNotifications = async () => {
         try {
@@ -43,25 +44,27 @@ export default function Notification() {
     };
 
     const fetchUpdateRead = async(notif) => {
-        try {
-            const reponse = await fetch(`${URL}notification/updateRead/${notif._id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-type" : "application/json",
-                },
-                body: JSON.stringify(),
-            });
-            if(!reponse.ok) {
-                throw new Errow('Netword response was not ok')
+        if(!notif.isRead){
+            try {
+                const reponse = await fetch(`${URL}notification/updateRead/${notif._id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-type" : "application/json",
+                    },
+                    body: JSON.stringify(),
+                });
+                if(!reponse.ok) {
+                    throw new Errow('Netword response was not ok')
+                }
+                const data = await reponse.json();
+                if(data.result) {
+                    fetchMyNotifications();
+                } else {
+                    console.log(data.error);
+                }
+            } catch {
+                console.error('Error during fetchUpdateRead');
             }
-            const data = await reponse.json();
-            if(data.result) {
-                fetchMyNotifications();
-            } else {
-                console.log(data.error);
-            }
-        } catch {
-            console.error('Error during fetchUpdateRead');
         }
     };
 
@@ -78,7 +81,7 @@ export default function Notification() {
                 key={note._id} 
                 className={`${styles[theme]} ${styles.oneNote} ${ !note.isRead && styles.noteUnread}`}
                 onClick={() => fetchUpdateRead(note)}>
-                {note.isRead && <p className={styles.noteLu}>lu</p> }
+                {!note.isRead && <div className={styles.pastilleLine}><span className={styles.pastille}></span></div> }
                 <div className={styles.photoAndInfo}> 
                     <div className={styles.photoContainer}> 
                         <Image
@@ -100,10 +103,14 @@ export default function Notification() {
     )})
   
   return (
-    <div className={`${styles.modalContainer} ${styles[theme]}`}>
+    <div className={`${styles.modalContainer} ${styles[theme]}`} ref={ref}>
         <h3 className={styles.title}>Notifications</h3>
       <div > {notif}</div>
     </div>
   );
-};
+});
+
+
+
+export default Notification;
 

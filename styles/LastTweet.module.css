@@ -48,9 +48,14 @@
     }
 }
 
+
 .addButton:hover {
     opacity: 70%;
 }
+
+.disabled:hover {
+    opacity: 1; 
+  }
 
 .dessousInput {
     width: 100%;
@@ -107,7 +112,22 @@
 .icon {
     margin-right: 0.75rem;
     padding: 0.25rem;
+    cursor: pointer;
 }
+
+.addPictureContainer{
+    overflow-y: auto;
+    scrollbar-width: 0;
+    width: 100%;
+}
+
+
+
+/* .addPictureContainer::-webkit-scrollbar {
+    /* width: 12px; 
+    display: none;
+  }
+ */
 
 
 /* LIGHT MODE */

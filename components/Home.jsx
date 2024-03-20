@@ -10,7 +10,7 @@ import { fetchAllTags } from '../utils';
 
 function Home() {
 
-  const userRef = useRef(null);
+  //const userRef = useRef(null);
   const dispatch = useDispatch();
   // const URL = "http://localhost:3000/";
   const URL = "https://hackatweet-backend-iota-three.vercel.app/";
@@ -45,7 +45,7 @@ function Home() {
 
   return (
     <div className={styles.PageAcceuil}>
-      <UserInfo customClassName={styles.userInfo} ref={userRef}/>
+      <UserInfo customClassName={styles.userInfo} /*ref={userRef}*//>
       <div className={`${styles[theme]} ${styles.lastTweetsContainer} `}>
         <LastTweets customClassName={`${styles[theme]}  ${styles.lastTweets} `}/>
       </div>

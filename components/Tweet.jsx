@@ -11,41 +11,80 @@ import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/sh
 import { tempsEcoule } from '../utils';
 import Link from 'next/link';
 
-const Tweet = forwardRef((props, ref) => {
+  const Tweet = forwardRef((props, ref) => {
 
-  const commentRef = useRef();
-  const dispatch= useDispatch();
-  // const URL = "http://localhost:3000/";
-  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
-  const user = useSelector(state => state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
-  const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
+    const commentRef = useRef();
+    const dispatch= useDispatch();
+    // const URL = "http://localhost:3000/";
+    const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+    const user = useSelector(state => state.users.value);
+    const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+    const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
+    
+    //const commentILkd = [];
+    //const commentILkd = useSelector(state => state.likes.value.comment);
+    const commentILook = useSelector(state => state.showComment.value);
+
+    //console.log(commentILkd);
+
+    const tweetComment = useSelector(state => state.likes.value); 
+    //console.log("tweet & comment:", tweetComment);
+
+    const [ upLikes, setUpLikes] = useState(0);
+    const [ comment, setComment] = useState(props.comment);
+
+    const [ showInputAddComment, setShowInputAddComment ] = useState(false);
+    const [ textComment, setTextComment] = useState("");
+
   
-  //const commentILkd = [];
-  //const commentILkd = useSelector(state => state.likes.value.comment);
-  const commentILook = useSelector(state => state.showComment.value);
-
-  //console.log(commentILkd);
-
-  const tweetComment = useSelector(state => state.likes.value); 
-  //console.log("tweet & comment:", tweetComment);
-
-  const [ likes, setLikes ] = useState("");
-  const [ upLikes, setUpLikes] = useState(0);
-  const [ comment, setComment] = useState(props.comment);
-
-  const [ showInputAddComment, setShowInputAddComment ] = useState(false);
-  const [ textComment, setTextComment] = useState("");
+    const [ selectedPic, setSelectedPic ] = useState(null);
+    const bigPicContainerRef = useRef(null);
+    
+    
   
-  
-  //console.log(upLikes);
- 
 
   useEffect(() => {
     setShowInputAddComment(commentILook.includes(props._id));
   },[props._id]);
 
-  
+
+ 
+
+  useEffect(() => {
+    //console.log("selected Pic:", selectedPic);
+    const handleClickOutside = (event) => {
+  //Si il y a selectedPic && onClick en dehors de la zone
+        if (selectedPic && bigPicContainerRef.current && !bigPicContainerRef.current.contains(event.target)) {
+            setSelectedPic(null);
+        }
+    };
+    let timeoutId;
+//Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
+    if (selectedPic) {
+        timeoutId = setTimeout(() => {
+          //console.log("add event");
+            document.addEventListener('click', handleClickOutside);
+        }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+    } else {
+      //console.log("remove event");
+        document.removeEventListener('click', handleClickOutside);
+    }
+
+    return () => {
+        clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
+        document.removeEventListener('click', handleClickOutside);
+    };
+  }, [selectedPic]);
+
+
+
+//Ouvrir l'image en grand en cliquant dessus
+  const handleOpenPic = (path) => {
+    console.log("click");
+    setSelectedPic(path);
+    };
+
+//Mettre à jour les commentaire liké de l'utilisateur
   const updateLikedCom = (comId) => {
     if (commentILkd.some(com => com === comId)) { 
       dispatch(rmvLikedComment({user: user.token, comment: comId}));     
@@ -54,14 +93,17 @@ const Tweet = forwardRef((props, ref) => {
     } 
   };
 
+//Recuperer tous les tweet
   const fetchTweet = () => {
     props.fetchTweet();
   };
 
+//Bouton Supprimer un tweet
   const handleDelete = () => {
     props.handleDelete(props._id)
   };
-  
+
+//Bouton Like d'un tweet
   const handleLikeTweet = () => {
     props.updateLikedTweet(props._id);
     //console.log(props);
@@ -177,66 +219,20 @@ const Tweet = forwardRef((props, ref) => {
     )
   });
 
-
-
-  // const formatDescription = (description) => {
-  //   if (!description) {
-  //     return null;
-  //   }
-
-  //   const hashtags = description.match(/#(\w+)/g) || [];
-  //   const formattedText = description
-  //     .split(/[\s,;.!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+/)
-  //     //.split(/\s+/)
-  //     //.split(" ")
-  //     .map((word, index) => {
-  //       console.log(word);
-  //       if (hashtags.includes(`#${word}`)) {
-  //         return <span className="hashtag" key={index}>{` #${word} `}</span>;
-  //       } else {
-  //         return ` ${word} `;
-  //       }
-  //     });
-
-  //   return formattedText;
-  // };
-
-
-
-  // const formatDescription = (description) => {
-  //   if (!description) {
-  //     return null;
-  //   }
-
-  //   const wordsAndPunctuations = description.split(/(\s|[^\w#']+)/);
-    
-
-  //   const formattedText = wordsAndPunctuations.map((wordOrPunctuation, index, array) => {
-  //     const isHashtag = wordOrPunctuation.startsWith('#');
-  //     const isPunctuation = /[,;.!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]+/.test(wordOrPunctuation);
-  //     console.log(wordOrPunctuation);
-
-  //     if (isHashtag) {
-  //       const newWord = wordOrPunctuation.split(/(\s|[^\w#']+)/);
-  //       console.log(newWord);
-
-  //       return (
-  //         <Link key={index} href='#' className={styles.oneTag}>
-  //           <span className="hashtag">{wordOrPunctuation}</span>
-  //         </Link>
-  //       );
-  //     } else if (isPunctuation) {
-  //       return `${wordOrPunctuation} `;
-  //     } else {
-  //       // Ajouter un espace après un hashtag, sauf si c'est le dernier élément du tableau
-  //       const nextIsHashtag = array[index + 1] && array[index + 1].startsWith('#');
-  //       return `${wordOrPunctuation}${isHashtag && !nextIsHashtag ? ' ' : ''}`;
-  //     }
-  //   });
-
-  //   return formattedText;
-  // };
-
+  const allPic = props.pictures?.length > 0 && props.pictures.map((pic, i) => {
+    return (
+      <div style={{display:'flex',}} key={i}> 
+        <img 
+          
+          src={pic}
+          alt={`image ${i}`}
+          name={`image ${i}`}
+          className={styles.picOfTweet}
+          onClick={() => handleOpenPic(pic)}
+        />
+      </div>
+    )
+  })
 
 
 
@@ -244,6 +240,9 @@ const Tweet = forwardRef((props, ref) => {
     if (!description) {
       return null;
     }
+
+    // let tags = tweet.match(/#(\w+)/g) || []; 
+    // let hashtags = tags.map((tag) => tag.substring(1)); //
 
     //const hashtagRegex = /(?:^|\s)(#\w+)/g;
     //const hashtagRegex = /(?:^|\s)(#[^\s,;!?'"%=\)\]]+)/g;
@@ -264,43 +263,7 @@ const Tweet = forwardRef((props, ref) => {
 
     return formattedText;
   };
-
-
-
-//   const formatDescription = (description) => {
-//   if (!description) {
-//     return null;
-//   }
-
-//   // Définir la regex pour extraire les hashtags
-//   const hashtagRegex = /#[^\s,;!?'"%=\)\]]+/g;
-//   const hashtags = description.match(hashtagRegex) || [];
-
-//   // Définir la regex combinée pour diviser la chaîne
-//   const combinedRegex = /(?:^|\s)(#\w+)|(?:^|\s)(#[^\s,;!?'"%=\)\]]+(?=\s|$))/g;
-
-//   // Diviser la chaîne et formater le texte
-//   const formattedText = description.split(combinedRegex).map((segment, index) => {
-//     return (
-//       <React.Fragment key={index}>
-//         {segment}
-//         {index < hashtags.length && (
-//           <Link href='#'>
-//             <span className="hashtag">{hashtags[index]}</span>
-//           </Link>
-//         )}
-//       </React.Fragment>
-//     );
-//   });
-
-//   return formattedText;
-// };
   
-
-
- 
-  
-
 
 
   return (
@@ -340,12 +303,39 @@ const Tweet = forwardRef((props, ref) => {
               }
             })}
           </p> */}
-
           <p className={styles.description}>
             {formatDescription(props.description)}
           </p>
-
         </div>
+        
+          {props.pictures && props.pictures.length > 0 ?
+            <div className={styles.picContainer} style={{ justifyContent: props.pictures?.length > 3 ? 'flex-start': 'center'}}>
+              {allPic}
+            </div> 
+            : ""}
+
+      {selectedPic && (
+        <div className={styles.bigPicContainer} ref={bigPicContainerRef} >
+          <div onClick={()=> setSelectedPic(null)} className={styles.xClosePic}>
+            <FontAwesomeIcon 
+              icon={faXmark} 
+              style={{ 
+                cursor: 'pointer', 
+                color:'#fff',
+                marginRight: '2rem',
+                marginTop:'1rem',
+                }}
+        
+                />
+          </div>
+          <img 
+            src={selectedPic}
+            alt={`image Zoom`}
+            name={`image Zoom`}
+            className={styles.bigPic} />
+        </div>
+      )}
+        
         <div className={styles.logo}>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon

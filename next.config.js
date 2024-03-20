@@ -2,8 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: [],
+    domains: ['res.cloudinary.com'],
   },
+  // compilerOptions: {
+  //   paths: {
+  //     "@/*": ["./src/*"]
+  //   }
+  // },
 };
 
 module.exports = nextConfig;

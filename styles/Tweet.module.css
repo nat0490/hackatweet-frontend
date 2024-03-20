@@ -217,6 +217,79 @@
 }
 
 
+/* PICTURES */
+.picOfTweet{
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin: 0.25rem;
+    width: 200px; 
+    height: 200px;
+    @media only screen and (max-width: 600px) {
+        width: 100px; 
+        height: 100px;
+    }
+}
+
+.picContainer{
+    overflow-x: auto;
+    width: 100%;
+    display: flex;
+    scrollbar-width: thin;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    margin-top: -0.5rem;
+}
+
+.bigPicContainer {
+    background-color: rgba(0, 0, 0, 0.6);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: auto;
+    height: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow: clip;
+    scrollbar-width: 0;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    padding: 2rem;
+}
+
+.bigPicContainer::-webkit-scrollbar {
+    /* width: 12px; */
+    display: none;
+  }
+
+.bigPic{
+    object-fit: contain;
+    width: auto;
+    height: auto;
+    max-width: 95vw;
+    max-height: 95vh;
+}
+
+.xClosePic{
+    width: 100%;
+    text-align: end;
+    position: absolute;
+    top:0;
+    margin-top: -0.5rem;
+    margin-right: -3rem;
+    -webkit-transition: color 0.1s ;
+    transition: color 0.1s;
+}
+
+.xClosePic:hover{
+    opacity: 80%;
+    color: #EA3680;
+}
+
 
 
 

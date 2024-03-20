@@ -45,7 +45,7 @@
     border-radius: 0.5rem;
     width: 90%;
     margin-bottom: 0.5rem;
-    text-indent: 2.5rem;
+    text-indent: 0.5rem;
     @media only screen and (max-width: 600px) {
         margin-bottom: 0.25rem;
         text-indent: 0;
@@ -67,7 +67,8 @@
     align-items: center;
     position: absolute;
     top: 3.5%;
-    right: 20rem;
+    /* right: 20rem; */
+    right: 2rem;
     transform: translateY(-50%);
     width: 1rem;
     transition: all 0.2s;
@@ -82,7 +83,7 @@
     align-items: center;
     position: absolute;
     top: 3.4%;
-    right: 1.5rem;
+    right: 3rem;
     transform: translateY(-50%);
     width: 1rem;
     transition: all 0.2s;
