@@ -98,7 +98,8 @@ function AddPicture(props) {
                 
                 console.log("blob:", blobbURL);
                 // console.log(objectURL.slice(5));
-                const objectURL = blobbURL.slice(5);
+                const objectURL = "'" + blobbURL.slice(5) + "'";
+                //console.log(objectURL);
 
                 // const reader = new FileReader();
                 // reader.readAsDataURL(objectURL); 
