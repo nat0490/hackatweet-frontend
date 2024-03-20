@@ -89,12 +89,21 @@
     border-radius: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    max-height: 90%;
+    /* overflow-y: auto;
+    scrollbar-width: 0; */
+
     @media only screen and (max-width: 600px) {
         padding-top: 0.5rem;
         padding-bottom: 0.25rem;
         margin-bottom: 0.5rem;
     }
 }
+
+.addTweet::-webkit-scrollbar {
+    /* width: 12px; */
+    display: none;
+  }
 
 .tweetPage{
     display: flex;

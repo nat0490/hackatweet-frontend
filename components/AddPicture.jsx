@@ -1,8 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles/AddPicture.module.css';
 import Image from 'next/image';
 import { RiseLoader } from 'react-spinners';
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 function AddPicture(props) {
     
@@ -17,12 +19,79 @@ function AddPicture(props) {
   const [ picPath, setPicPath] = useState([]);
   const [ errorMsg, setErrorMsg] = useState(null);
 
+  
+
+
+ /* TEST2 DROPZONE 
+      vvvvvvvv */
+
+      const [selectedImages, setSelectedImages] = useState([]);
+      const [uploadStatus, setUploadStatus] = useState("");
+      const [ picUpload, setPicUpload ] = useState([]);
+
+
+  const onDrop = useCallback((acceptedFiles, rejectedFiles)=> {
+    acceptedFiles.forEach((file)=> {
+      setSelectedImages((prevState) => [...prevState, file]);
+    });
+   }, []);
+
+   //console.log(selectedImages);
+
  
-  //CLOUDINARY_URL
 
-  //console.log(pic);
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({ onDrop, accept: "image/png", maxFiles: 6 });
 
-  //console.log(props.resetChild);
+  useEffect(() => {
+    if (picUpload.length > 0 && uploadStatus !== "") {
+      // Appel de la fonction de rappel avec les informations nécessaires
+      props.onImagesLoaded(picUpload);
+    }
+  }, [picUpload, uploadStatus]);
+
+
+  const onUpload = async () => {
+    setUploadStatus('Uploading...');
+    const formData = new FormData();
+    selectedImages.forEach((image, i)=>{
+      formData.append(`file`, image);
+    });
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const res = await axios.post(`${URL}tweets/upload2`, formData, config);
+    //   const res = await fetch(`${URL}tweets/upload2`, {
+    //     method: "POST",
+    //     body: formData,
+    // });
+    //console.log(res);
+    console.log(res.data.allCloudinaryRes);
+    setPicUpload(res.data.allCloudinaryRes);
+ 
+    setUploadStatus("upload successful");
+
+    } catch(error) {
+      console.log("imageUpload", error);
+      setUploadStatus("Upload failed..");
+    }
+  };
+
+  
+
+
+
+   /* ^^^^^^^^ 
+  TEST2 DROPZONE */
+
 
   useEffect(()=> {
     {!Array.isArray(picPath) && (() => {setPicPath([]); console.log("reset picpath");})()}
@@ -55,6 +124,7 @@ function AddPicture(props) {
     }
   }, [picPath, isLoading]);
 
+  
   useEffect(() => {
     // Appel de la fonction de rappel avec la nouvelle valeur de isLoading
     props.onLoadingChange(isLoading);
@@ -92,16 +162,21 @@ function AddPicture(props) {
                 
                 const formData = new FormData(); 
                 const file = pic[i];
+                //console.log(file);
 
-                const blobbURL = window.URL.createObjectURL(file);
-                
-                
-                console.log("blob:", blobbURL);
+                const blobURL = window.URL.createObjectURL(file);
+               // console.log("blob:", blobbURL);
                 // console.log(objectURL.slice(5));
-                const objectURL = blobbURL.slice(5);
+                const objectURL = blobURL.slice(5);
                 //console.log(objectURL);
 
+                //webkitRelativePath
+                file.url = objectURL;
+                //console.log(file);
+
                 // const reader = new FileReader();
+                // reader.readAsArrayBuffer(file);
+                // console.log(reader.result);
                 // reader.readAsDataURL(objectURL); 
                 // reader.onloadend = function() {
                 //   const base64data = reader.result;                
@@ -112,9 +187,9 @@ function AddPicture(props) {
 
                 const imageType = /image.*/;
                 if (!file.type.match(imageType)) return;
-                formData.append(`files[${i}]`, (file, objectURL));
+                formData.append(`files[${i}]`, file );
                 // console.log("before fetch");
-
+                
                 // console.log("file:", file);
                 // console.log("pic:", pic);
                 // console.log("formData:",formData);
@@ -133,7 +208,7 @@ function AddPicture(props) {
                 // }
 
                 window.URL.revokeObjectURL(blobbURL);
-                console.log("blob after revoc:", blobbURL);
+                //console.log("blob after revoc:", blobbURL);
             };
           } catch (error) {
                 console.log(error)
@@ -160,6 +235,48 @@ function AddPicture(props) {
  
   return (
     <div className={styles.addPictureContainer} picPath={picPath}>
+
+      {/* TEST2 DROPZONE */}
+        {/* vvvvvvvv */}
+        <form encType =" multipart/form-data " action='/upload' method="POST"/>
+
+      <div className={styles.container}>
+
+        
+
+          <div className={styles.dropzone} {...getRootProps()}>
+            <input {...getInputProps()} name="file" type='file' />
+            {isDragActive ? (
+              <p>Drop file(s) here ...</p>
+            ) : (
+              <p>Drag and drop file(s) here, or click to select files</p>
+            )}
+          </div>
+
+          <div className={styles.images}>
+          {selectedImages.length > 0 &&
+            selectedImages.map((image, index) => (
+              <img src={`${window.URL.createObjectURL(image)}`} key={index} alt="" />
+            ))}
+        </div>
+
+        {selectedImages.length > 0 && (
+          <div className={styles.btn}>
+            <button onClick={onUpload}>Upload to Cloudinary</button>
+            <p>{uploadStatus}</p>
+          </div>
+        )}
+
+        
+
+      </div>
+
+      <form/>
+
+          {/* ^^^^^^^^ */}
+       {/* TEST2 DROPZONE */}
+
+{/* 
         <label 
           for="files" 
           className={styles.drop_container} 
@@ -209,7 +326,7 @@ function AddPicture(props) {
           </div>
          
          
-        </label>
+        </label> */}
           
     </div>
 

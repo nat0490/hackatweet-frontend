@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faCommentDots, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faCommentDots, faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -286,11 +286,11 @@ import Link from 'next/link';
                 {props.user.username} - {tempsEcoule(props.date)}
               </span>
             </p>
-            {user.id === props.user._id && (
+            {/* {user.id === props.user._id && (
               <div onClick={handleDelete} className={styles.xDelete}>
                 <FontAwesomeIcon icon={faXmark} style={{ cursor: 'pointer'}}/>
               </div>
-            )}
+            )} */}
           </div>
         </div>
         <div>
@@ -353,6 +353,17 @@ import Link from 'next/link';
               style={{ cursor: 'pointer'}}
             />   <span className={styles.likesText}>    {   props.comment.length > 0 ? props.comment.length : ""} </span>
           </div> 
+
+           {user.id === props.user._id && (
+              <div className={styles.oneLogo} onClick={handleDelete}>
+              <FontAwesomeIcon
+                icon={faTrash}
+                size="xs"
+                style={{ cursor: 'pointer'}}
+              />   
+            </div> 
+            )}
+          
         </div>
       </div>
       

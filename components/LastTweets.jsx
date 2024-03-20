@@ -32,6 +32,8 @@ function LastTweets() {
   const [ addPic, setAddPic ] = useState(false);
   const [ loadPic, setLoadPic ] = useState([]);
 
+  //console.log("loadpic:", loadPic);
+
   const [ resetChild, setResetChild ] = useState(false);
 
 
@@ -92,7 +94,12 @@ function LastTweets() {
    //A MODIFIER pour séparer 2 # collé "actuellement #manger#boire s'envoie sur un hash manger#boire en BDD"
     let tags = tweet.match(/#(\w+)/g) || []; 
     let hashtags = tags.map((tag) => tag.substring(1)); 
-    let pictures = loadPic[0].length>0 ? loadPic[0] : "";
+    let pictures = loadPic[0].length > 0 ?  loadPic[0] : [];
+   
+    console.log(pictures);
+      
+      
+      //{loadPic[0] : "";
 
     const newPost = {
       user: user.id,
