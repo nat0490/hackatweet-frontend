@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState, useCallback} from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles/AddPicture.module.css';
-import Image from 'next/image';
 import { RiseLoader } from 'react-spinners';
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -192,7 +191,7 @@ function AddPicture(props) {
           </div>
         )}
       <div >
-        <p className={styles.maxPicText}>Téléchargement: {selectedImages.length > 0 ? selectedImages.length: 0}/6</p> 
+        <p className={styles.maxPicText}>Images: {selectedImages.length > 0 ? selectedImages.length: 0}/6</p> 
       </div>
           
 
