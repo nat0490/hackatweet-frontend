@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear, faBell } from "@fortawesome/free-solid-svg-icons";
 import Notification from './Notification';
 import Setting from './Setting';
+import { detectClickOutside } from '../utils';
 
 
 const UserInfo = forwardRef((props, ref) => {
@@ -27,6 +28,10 @@ const UserInfo = forwardRef((props, ref) => {
   const notificationContainerRef = useRef(null);
   const settingContainerRef = useRef(null);
 
+
+  
+
+ 
  
   useEffect(() => {
     const handleClickOutside = (event) => {

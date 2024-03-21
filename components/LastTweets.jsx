@@ -9,6 +9,7 @@ import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
 import { faImage, faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { RiseLoader } from 'react-spinners';
 
 
 
@@ -24,7 +25,6 @@ function LastTweets() {
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
   //const tweetILkd = [];
-  const tweetComment = useSelector(state => state.likes.value); 
 
   const [ tweetsData, setTweetsData] = useState([]);
   const [ tweet, setTweet] = useState("");
@@ -32,30 +32,29 @@ function LastTweets() {
   const [ addPic, setAddPic ] = useState(false);
   const [ loadPic, setLoadPic ] = useState([]);
 
-  //console.log("loadpic:", loadPic);
-
   const [ resetChild, setResetChild ] = useState(false);
-
-
-
   const [ isLoadingChild, setIsLoadingChild] = useState(false);
 
-
-
-  //console.log("isLoadingPic:", isLoadingChild);
-
-//AU CHARGEMENT DES IMAGE CHEZ L'ENFANT: isLoading change de status
-  const handleLoadingChange = (loading) => {
-    setIsLoadingChild(loading);
-  };
+  const [ start, setStart ] = useState(false);
+  const [activeToggle, setActiveToggle] = useState(false);
 
 
   useEffect(() => {
+//Charger les tweets au chargemet de la page
     fetchTweet();
   }, []);
 
+  useEffect(()=>{
+    //Quand il y a des données dans loadPic (envoyé de la page addPic après le téléchargement sur cloudy), poster la publication
+        if(loadPic.length > 0){
+          //console.log("lancer le post")
+          postTweet()
+        }
+      },[loadPic])
+
 
   const fetchTweet = () => {
+//Fetcher les tweets
     fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
       .then((data) => {
@@ -73,33 +72,36 @@ function LastTweets() {
 
 //A LE FIN DU CHARGEMENT DES IMAGES
   const onImagesLoaded = (picPath) => {
-    //console.log("image chargé:", picPath);
     setResetChild(false);
-    setLoadPic(prevLoadPic => [...prevLoadPic, picPath]);
-    // setLoadPic([picPath])
+    setLoadPic(picPath)
   };
 
-
+// Changez la valeur de resetChild à false après que les actions sont terminées
   const handleChildReset = () => {
-    // Effectuez les actions nécessaires ici, par exemple, changez la valeur de resetChild
-    setResetChild(false); // Changez la valeur de resetChild à false après que les actions sont terminées
+    setResetChild(false); 
   };
  
+//AU CHARGEMENT DES IMAGE CHEZ L'ENFANT: isLoading change de status
+const handleLoadingChange = (loading) => {
+  setIsLoadingChild(loading);
+};
 
-
-  const handleAddTweet = () => {
+  
+//Poster un tweet
+  const postTweet = () => {
     //let hashtags = tweet.split(" ").filter((e) => new RegExp("#").test(e));
    // let tags = tweet.split(/[ ,;.!@$%^&*()_+{}\[\]:;<>,.?~\\/-]+/).filter((e) => e.startsWith("#"));
 
    //A MODIFIER pour séparer 2 # collé "actuellement #manger#boire s'envoie sur un hash manger#boire en BDD"
     let tags = tweet.match(/#(\w+)/g) || []; 
     let hashtags = tags.map((tag) => tag.substring(1)); 
-    let pictures = loadPic[0].length > 0 ?  loadPic[0] : [];
-   
-    console.log(pictures);
-      
-      
-      //{loadPic[0] : "";
+    let pictures = [];
+
+    if(loadPic.length > 0) {
+      loadPic.forEach((pic=>{
+        pictures.push(pic.toString())
+      }))
+    };
 
     const newPost = {
       user: user.id,
@@ -118,7 +120,6 @@ function LastTweets() {
       .then((res) => res.json())
       .then((createdTweet) => {
         //console.log(createdTweet);
-        
         if (createdTweet.result) {
           fetchTweet();
           setTweet("");
@@ -126,16 +127,29 @@ function LastTweets() {
           setPrivat(false);
           setResetChild(true);
           setAddPic(false);
+          if (createdTweet.tweet.hashtags.length > 0) {
+            fetchAllTags(dispatch);
+          };
         } else {
-          console.log("erreur")
+          console.log(createdTweet.error);
+          setActiveToggle(!activeToggle);
         }
-        if (createdTweet.tweet.hashtags.length > 0) {
-          fetchAllTags(dispatch);
-        }
+       
       });
+      setStart(false);
   };
 
-
+//Appuie sur le boutton POST
+//ATTENTION:: Manque le cas ou la page est ouverte mais sans photo!!!! Rien ne se passe actuellement!!! 
+  const handlePost = () => {
+    //Si page addPic ouvert, passer start à true pour lancer le téléchargement des pic sur cloudy
+    if (addPic) {
+      setStart(true)
+    //Si la page addPic est fermé, poster le tweet
+    } else {
+      postTweet()
+    }
+  };
   
 
   const handleDelete = (id) => {
@@ -185,7 +199,7 @@ function LastTweets() {
 
   return (
     <div className={`${styles[theme]} ${styles.tweetPage}`}>
-      <h3 className={styles.titlePage}>Flower New's</h3>
+      <h3 className={styles.titlePage}>Flowst</h3>
       <div className={`${styles[theme]} ${styles.addTweet}`}>
         <input
           type="text"
@@ -193,21 +207,28 @@ function LastTweets() {
           value={tweet}
           onChange={(e) => setTweet(e.target.value)}
           className={`${styles[theme]} ${styles.inputLastTweets}`}
-          // maxLength={280}
         />
         <div className={styles.addPictureContainer}> 
+
           { addPic && 
             <AddPicture
+            //Appuie sur boutton POST
+              onStart={start}
               onImagesLoaded={onImagesLoaded}
+              //Changement du status is Loading
               onLoadingChange={handleLoadingChange}
+            //Post effectué, mettre à blanc toutes les données pictures
               resetChild={resetChild}
+            //Communication pic => lastTweet pour les données mise à vide
               onChildReset={handleChildReset}
+              //Activité de l'affichage de la page addPicture
               onAddPic={addPic}
+              onHandleAddTweet={postTweet}
+
             />}  
         </div>
+
         <div className={styles.dessousInput}>
-          
-          {/* <span className={styles.lengthText}>{tweet.length}/280</span> */}
           <FontAwesomeIcon
                 icon={faImage}
                 size="lg"
@@ -229,20 +250,35 @@ function LastTweets() {
                 style={{ cursor: 'pointer', color: privat ? '' : "#EA3680" }}
                 className={styles.icon}
               /> 
-
            
             <button 
-              onClick={isLoadingChild ? null : handleAddTweet} 
-              className={`${styles.addButton} `} 
-              style={isLoadingChild ? { cursor: 'progress' } : {}}
+              onClick={handlePost} 
+              className={`${styles.addButton} `}
               >
             Post
           </button> 
           
         </div>
+
+        { activeToggle && 
+          <section className={`${styles[theme]} ${styles.popAlert}`} >
+            <aside>
+                <h4 className={styles.titleAlert}>Vous devez mettre quelque chose à poster...</h4>
+                <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggle(!activeToggle)}>Ok</button>
+            </aside>
+          </section>
+
+        }
         
       </div>
-      <div className={styles.lastTweetsContainer}>{tweetsData.length === 0 ? <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : tweets}</div>
+      <div className={styles.lastTweetsContainer}>
+        {tweetsData.length === 0 ? 
+          <div className={styles.spinner}><BeatLoader color="#EA3680"/>
+          </div> : 
+          tweets}
+      </div>
+
+      
     </div>
   );
 }

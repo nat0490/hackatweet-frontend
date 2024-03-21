@@ -38,13 +38,20 @@
     margin-right: 1.5rem;
 }
 
-.xDelete {
-    margin-right: 0.25rem;
-}
-
 .oneLogo:hover {
     opacity: 50%;
 }
+
+.xDelete {
+    margin-right: 1.5rem;
+}
+
+.xDelete:hover {
+    opacity: 60%;
+    color:red;
+}
+
+
 
 .userNameAndDelete {
     width: 100%;
@@ -290,6 +297,40 @@
     color: #EA3680;
 }
 
+/* POP ALERTE */
+.popAlert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    height: 20vh;
+    width: 50vw;
+    z-index: 1;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.popAlert:hover{
+    box-shadow: rgba(227, 2, 145, 0.35) 0px 0px 15px;
+}
+
+.btnAlert{
+    background-color: #ea3681a1;
+    margin: 0 1rem;
+}
+
+.btnAlert:hover{
+   opacity: 0.5;
+   cursor: pointer;
+}
+
+.titleAlert{
+    font-variant-caps: small-caps;
+}
 
 
 
@@ -321,6 +362,12 @@
     border-bottom: 1px double #EA3680 ;
 }
 
+.light.popAlert {
+    background-color: rgba(255, 255, 255);
+    box-shadow: rgba(31, 1, 20, 0.35) 0px 0px 15px;
+}
+
+
 /* DARK MODE */
 .dark.oneTweet {
     border-top: 1px, solid, #57616E;    
@@ -347,4 +394,9 @@
 
 .dark.unTrait{
     border-bottom: 1px double #000 ;
+}
+
+.dark.popAlert {
+    background-color: rgb(0, 0, 0);
+    box-shadow: rgba(109, 90, 102, 0.35) 0px 0px 15px;
 }

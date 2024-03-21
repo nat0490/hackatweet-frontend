@@ -8,7 +8,7 @@ import styles from "../styles/Tweet.module.css";
 import Comment from './Comment';
 import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
 import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
-import { tempsEcoule } from '../utils';
+import { tempsEcoule, detectClickOutside } from '../utils';
 import Link from 'next/link';
 
   const Tweet = forwardRef((props, ref) => {
@@ -20,25 +20,18 @@ import Link from 'next/link';
     const user = useSelector(state => state.users.value);
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
     const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
-    
-    //const commentILkd = [];
-    //const commentILkd = useSelector(state => state.likes.value.comment);
     const commentILook = useSelector(state => state.showComment.value);
-
-    //console.log(commentILkd);
-
-    const tweetComment = useSelector(state => state.likes.value); 
-    //console.log("tweet & comment:", tweetComment);
 
     const [ upLikes, setUpLikes] = useState(0);
     const [ comment, setComment] = useState(props.comment);
-
+//Commentaire d'un post
     const [ showInputAddComment, setShowInputAddComment ] = useState(false);
     const [ textComment, setTextComment] = useState("");
-
-  
+//Image en grand
     const [ selectedPic, setSelectedPic ] = useState(null);
     const bigPicContainerRef = useRef(null);
+//Popup d'alert
+    const [activeToggle, setActiveToggle] = useState(false);
     
     
   
@@ -46,8 +39,6 @@ import Link from 'next/link';
   useEffect(() => {
     setShowInputAddComment(commentILook.includes(props._id));
   },[props._id]);
-
-
  
 
   useEffect(() => {
@@ -76,11 +67,15 @@ import Link from 'next/link';
     };
   }, [selectedPic]);
 
+  // useEffect(()=>{
+  //   detectClickOutside(selectedPic, setSelectedPic, null, bigPicContainerRef);
+  // }, [selectedPic])
+
 
 
 //Ouvrir l'image en grand en cliquant dessus
   const handleOpenPic = (path) => {
-    console.log("click");
+    //console.log("click");
     setSelectedPic(path);
     };
 
@@ -265,6 +260,11 @@ import Link from 'next/link';
   };
   
 
+//   const togglePop = () => {
+//     let popup = document.getElementById('popAlert');
+//     popup.classList.toggle('active');
+// }
+  
 
   return (
     <> 
@@ -355,7 +355,7 @@ import Link from 'next/link';
           </div> 
 
            {user.id === props.user._id && (
-              <div className={styles.oneLogo} onClick={handleDelete}>
+              <div className={styles.xDelete} onClick={()=>setActiveToggle(!activeToggle)} /*onClick={handleDelete}*/>
               <FontAwesomeIcon
                 icon={faTrash}
                 size="xs"
@@ -393,6 +393,18 @@ import Link from 'next/link';
 
       </div>  }
       
+{ activeToggle && 
+  <section className={`${styles[theme]} ${styles.popAlert}`} >
+    <aside>
+        <h4 className={styles.titleAlert}>Voulez vous vraiment supprimer ce post?</h4>
+        <p>Cette action est définitive</p>
+        <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={handleDelete}>Oui</button>
+        <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggle(!activeToggle)}>Non</button>
+    </aside>
+  </section>
+
+}
+     
 
     </>
   );
