@@ -45,8 +45,8 @@
 
 @media only screen and (max-width: 600px){
   .PageAcceuil {
-    width: 100%;
-    height: 90%;
+    width: 110%;
+    height: 70%;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(8, 1fr);
