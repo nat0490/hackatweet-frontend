@@ -55,17 +55,17 @@
     width: 100vw;
     height: 100vh;
     display: grid;
-    row-gap: 0;
-    column-gap: 0;
+    /* row-gap: 0;
+    column-gap: 0; */
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(8, 1fr);
   }
   .userInfo {
     flex: 1;
     grid-column-start: 1;
-    grid-column-end: 8;
+    grid-column-end: 9;
     grid-row-start: 1;
-    grid-row-end: 3;
+    grid-row-end: 2;
     background-color: red;
   }
   .lastTweetsContainer {
