@@ -22,11 +22,11 @@
     padding-left: 3rem;
     padding-right: 1rem;
     /* max-width: 20%; */
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         flex-direction: row;
         align-items: center;
         padding: 0;
-    }
+    } */
 }
 
 .bottom{
@@ -36,11 +36,11 @@
     align-items: center;
     width: 100%;
     height: 100%;  
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         align-items: center;
         flex-direction: row;
         justify-content: center;
-    }
+    } */
 }
 
 /* USER */
@@ -48,10 +48,10 @@
     display: flex;
     margin-bottom: 1rem;
     margin-right: 1rem;
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         margin-right: 1rem;
         display: flex;
-    }
+    } */
 }
 .photoProfil {
     border-radius: 5rem;
@@ -63,12 +63,12 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items:flex-start;
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         margin-left: 0.25rem;
         max-width: 100%; 
         word-wrap: break-word; 
         font-size: 12px;
-    }
+    } */
 }
 .username{
     color: #57616E;
@@ -89,11 +89,11 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     cursor: pointer;
-    @media only screen and (max-width: 600px) {
-        max-width: 100%; /* Permet à l'élément de prendre la pleine largeur sur les petits écrans */
-        word-wrap: break-word; /* Permet le passage à la ligne à l'intérieur des mots */
+    /* @media only screen and (max-width: 600px) {
+        max-width: 100%; 
+        word-wrap: break-word; 
         margin-bottom: 1rem;
-    }
+    } */
 }
 
 /* .englobButton {
@@ -123,20 +123,20 @@
     justify-content:flex-end;
     align-items: center;
     margin-top: 1rem;
-    @media only screen and (max-width:600px) {
-        flex-direction: row;
-        justify-content:space-around;
-        align-items: center;
-    }
+/* @media only screen and (max-width: 600px) {
+    flex-direction: row;
+    justify-content:space-around;
+    align-items: center;
+} */
     
 }
 
 .oneLogo {
     margin-bottom: 0.5rem;
     padding: 0.25rem;
-    @media only screen and (max-width:600px) {
+    /* @media only screen and (max-width:600px) {
         margin: 0.75rem;
-    }
+    } */
 }
 .oneLogo:hover {
     opacity: 50%;
@@ -148,9 +148,9 @@
     justify-content:center;
     align-items:flex-end;
     width: 100%;
-    @media only screen and (max-width:600px) {
+    /* @media only screen and (max-width:600px) {
         flex-direction: row;
-    }
+    } */
 }
 
 .topPage2 {
@@ -158,10 +158,10 @@
     flex-direction: column;
     width: 100%;
     
-    @media only screen and (max-width:600px) {
+    /* @media only screen and (max-width:600px) {
         flex-direction: row;
         align-items: center;
-    }
+    } */
 }
 
 .nbrNotif {
@@ -230,9 +230,9 @@
     width: 100%; 
     justify-content: space-around;
     align-items: center;
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         flex-direction: row;
-    }
+    } */
 }
 
 
@@ -246,5 +246,51 @@
     background-color: #222;
     color: #fefefe;
     border-right: 1px solid grey;
+}
+
+@media only screen and (max-width: 600px) {
+    .noUser{
+        flex-direction: row;
+    }
+    .topPage2 {
+        flex-direction: row;
+        align-items: center;
+    }
+    .topPage {
+        flex-direction: row;
+    }
+    .oneLogo {
+        margin: 0.75rem;
+    }
+    .logo {
+        flex-direction: row;
+        justify-content:space-around;
+        align-items: center;
+    }
+    .logoutButton {
+        max-width: 100%; 
+        word-wrap: break-word; 
+        margin-bottom: 1rem;
+    }
+    .userLog {
+        margin-left: 0.25rem;
+        max-width: 100%; 
+        word-wrap: break-word; 
+        font-size: 12px;
+    }
+    .blocUser {
+        margin-right: 1rem;
+        display: flex;
+    }
+    .bottom{
+        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+    }
+    .userInfoPage {
+        flex-direction: row;
+        align-items: center;
+        padding: 0;
+    }
 }
 
