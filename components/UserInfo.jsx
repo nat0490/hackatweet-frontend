@@ -124,8 +124,8 @@ useEffect(() => {
             src={"/Logo2.png"}
             name="logo"
             alt="logo" 
-            width={100} 
-            height={100} 
+            // width={100} 
+            // height={100} 
             className={styles.logoLink} 
           />
         </Link>
@@ -200,10 +200,12 @@ useEffect(() => {
 // PAS DUTILISATEUR CONNECTE
   <section className={styles.noUser}>
     <Link href="/">
-      <Image 
-        src={"/Logo2.png"} 
-        width={100} 
-        height={100} 
+      <img 
+        src={"/Logo2.png"}
+        name="logo"
+        alt="logo" 
+        // width={100} 
+        // height={100} 
         className={styles.logoLink} 
       />
     </Link>
