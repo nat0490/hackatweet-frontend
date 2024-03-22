@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styles from "../../styles/Signin.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { addHashtag, removehashTag } from "../../reducers/hashtags";
 import { addTheme } from "../../reducers/theme";
 import { Eye, EyeOff } from 'react-feather';
 
-function SignIn({ closeModal }) {
+const SignIn = forwardRef((props, ref) => {
   const [signInUsername, setSignInUsername] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [ showEye, setShowEye] = useState(true);
@@ -88,8 +88,8 @@ function SignIn({ closeModal }) {
 
   return (
       
-        <div className={styles.modalContainer}>
-
+        <div className={styles.modalContainer} ref={ref}>
+           
           <div className={styles.topPage}> 
             <div className={styles.blockLogo}>
               <Image
@@ -103,7 +103,7 @@ function SignIn({ closeModal }) {
             
               <button 
                 className={styles.btnToClose} 
-                onClick={() => closeModal(false)}
+                onClick={() => props.closeModal(false)}
               >X</button>
             
           </div>
@@ -129,6 +129,7 @@ function SignIn({ closeModal }) {
                   borderRadius: '5px', 
                   width: '80%'}}
               />
+              
               <input
                 type={showEye? "password": "text"}
                 placeholder="Mots de passe"
@@ -141,14 +142,13 @@ function SignIn({ closeModal }) {
                   borderRadius: '5px', 
                   width: '80%'}}
               />
-              
-            
-
-              <div class="password-icon3">
-                  {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> }
+             <div className={styles.password_icon3}>
+              {showEye ? <Eye onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> : <EyeOff onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> }
+                  {/* {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> } */}
               </div>
 
               </label>
+              
               { errorMsg && <span className={styles.errorMsg}>*{errorMsg}</span>}
               <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Se connecter </button>
               </div>
@@ -159,6 +159,6 @@ function SignIn({ closeModal }) {
    
 
   );
-};
+});
 
 export default SignIn;

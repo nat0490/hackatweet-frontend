@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/Signup.module.css";
@@ -8,7 +8,7 @@ import { addHashtag, removehashTag } from '../../reducers/hashtags';
 import { addTheme } from '../../reducers/theme';
 import { Eye, EyeOff } from 'react-feather';
 
-function SignUp({ closeModal }) {
+const SignUp = forwardRef((props,ref) => {
   const [signUpFirstname, setSignUpFirstname] = useState("");
   const [signUpUsername, setSignUpUsername] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
@@ -104,7 +104,7 @@ function SignUp({ closeModal }) {
 
   return (
     
-      <div className={styles.modalContainer}>
+      <div className={styles.modalContainer} ref={ref}>
 
         <div className={styles.topPage}> 
           <div className={styles.blockLogo}> 
@@ -119,7 +119,7 @@ function SignUp({ closeModal }) {
           
             <button 
               className={styles.btnToClose} 
-              onClick={() => closeModal(false)}
+              onClick={() => props.closeModal(false)}
             >X</button>
           
         </div>
@@ -169,8 +169,9 @@ function SignUp({ closeModal }) {
                   fontStyle: errorMsgPw? 'italic': 'none',}}
               />
 
-              <div class="password-icon">
-                  {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> }
+              <div className={styles.password_icon}>
+              {showEye ? <Eye onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> : <EyeOff onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> }
+                  {/* {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> } */}
               </div>
               
               
@@ -190,8 +191,9 @@ function SignUp({ closeModal }) {
                   fontStyle: errorMsgPw? 'italic': 'none',}}
               />
 
-              <div class="password-icon2">
-                  {showEye2 ? <Eye onClick={() => setShowEye2(!showEye2)}/> : <EyeOff onClick={() => setShowEye2(!showEye2)}/> }
+              <div className={styles.password_icon2}>
+              {showEye2 ? <Eye onClick={(e) => { e.stopPropagation(); setShowEye2(!showEye2); }} /> : <EyeOff onClick={(e) => { e.stopPropagation(); setShowEye2(!showEye2); }} /> }
+                  {/* {showEye2 ? <Eye onClick={() => setShowEye2(!showEye2)}/> : <EyeOff onClick={() => setShowEye2(!showEye2)}/> } */}
               </div>
 
             
@@ -213,6 +215,6 @@ function SignUp({ closeModal }) {
       </div>
     
   );
-}
+});
 
 export default SignUp;

@@ -12,9 +12,10 @@
     left:50%;
     margin: 0;
     padding: 0;
-    transform: translate(-50%, 45%);
+    transform: translate(-50%, 30%);
     position: absolute;
     z-index: 1;
+    /* transition: opacity 0.3s ease-in-out; Ajout de la transition pour l'opacité */
     /* @media only screen and (max-width: 600px) {
         width: 90%;
         height: 90%;
@@ -105,5 +106,24 @@
 .errorMsg {
     font-size: 12px;
 }
+
+/*YEUX*/
+
+.password_icon3 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 66%;
+    right: 3rem;
+    transform: translateY(-50%);
+    width: 1rem;
+    color: #969595;
+    transition: all 0.2s;
+  }
+.password_icon3:hover{
+    cursor: pointer;
+    color: #ff4754;
+}
+
 
 

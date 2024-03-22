@@ -1,35 +1,63 @@
 
 .PageAcceuil {
   display: flex;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow-y:hidden;
 }
-
-.userInfo {
+ .userInfo {
   width: 10%;
   height: 100vh;
 }
-
 .lastTweetsContainer {
   width: 60%;
   height: 100vh;
 }
-
-/* .Hashtag {
-  width: 30%;
-} */
-
 .trend {
   width: 30%;
 }
 
-.dark.lastTweetsContainer {
-  background-color: #222;
+@media only screen and (max-width: 600px){
+  .PageAcceuil {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+  .userInfo {
+    grid-column-start: 1;
+    grid-column-end: 8;
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+  .lastTweetsContainer {
+    grid-column-start: 1;
+    grid-column-end: 8;
+    grid-row-start: 2;
+    grid-row-end: 9;
+  }
+  .trend {
+    grid-column-start: 8;
+    grid-column-end: 11;
+    grid-row-start: 1; 
+    grid-row-end: 9;
+  }
 }
 
 .lastTweets {
   height: 100%;
 }
+
+/* DARK MODE */
+
+.dark.PageAcceuil {
+  background-color: #222;
+}
+.dark.lastTweetsContainer {
+  background-color: #222;
+}
+
 
 
 

@@ -1,11 +1,11 @@
-import React, {useEffect, useRef, useState, useCallback} from 'react';
+import React, {useEffect, useRef, useState, useCallback, forwardRef} from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles/AddPicture.module.css';
 import { RiseLoader } from 'react-spinners';
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 
-function AddPicture(props) {
+const AddPicture = forwardRef((props, ref) =>{
     
     const user = useSelector((state)=> state.users.value);
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
@@ -152,7 +152,7 @@ function AddPicture(props) {
  
  
   return (
-    <div className={styles.addPictureContainer} >
+    <div className={styles.addPictureContainer} ref={ref} >
 
 {/* TEST2 DROPZONE */}
   {/* vvvvvvvv */}
@@ -208,6 +208,6 @@ function AddPicture(props) {
 
 
   );
-}
+});
 
 export default AddPicture;

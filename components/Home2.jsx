@@ -12,12 +12,17 @@ function Home2() {
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
 
   return (
-    <div className={styles.PageAcceuil}>
-      <UserInfo customClassName={styles.userInfo} ref={userRef}/>
-      <div className={`${styles[theme]} ${styles.lastTweetsContainer}`}>
+    <div className={`${styles[theme]} ${styles.PageAcceuil}`}>
+      <div className={styles.userInfo}>
+        <UserInfo /*customClassName={styles.userInfo} */ref={userRef}/>
+      </div>
+      
+      <div className={`${styles[theme]} ${styles.lastTweetsContainer} `}>
         <Hashtag className={styles.Hashtag}/>
       </div>
-      <Trend className={styles.trend}/>
+      <div className={styles.trend}>
+        <Trend />
+      </div>
     </div>
   );
 }

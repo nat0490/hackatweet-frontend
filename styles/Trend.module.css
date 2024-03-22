@@ -1,4 +1,7 @@
-
+.trendPage {
+    flex-grow: 1;
+    /* max-width: 25%; */
+}
 .totalTweet {
     color: #EA3680;
     font-size: 0.75rem;
@@ -12,10 +15,7 @@
     cursor: pointer;
 }
 
-.trendPage {
-    flex-grow: 1;
-    max-width: 25%;
-}
+
 
 .hashtagContainer {
     margin: 1rem;

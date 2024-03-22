@@ -17,10 +17,12 @@
 } */
 
 .lastTweetsContainer {
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
     overflow-y: auto;
     scrollbar-width: 0;
     padding: 0;
+    padding-bottom: 5rem;
+    margin-top: 0.5rem;
     width: 100%; 
     @media only screen and (max-width: 600px) {
         margin-bottom: 2.5rem;
@@ -87,7 +89,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: left;
-    margin-bottom: 1rem;
+    margin-top: 0.5rem;
     border-radius: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -98,7 +100,7 @@
     @media only screen and (max-width: 600px) {
         padding-top: 0.5rem;
         padding-bottom: 0.25rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
     }
 }
 

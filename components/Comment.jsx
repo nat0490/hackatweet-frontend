@@ -64,7 +64,7 @@ const Comment = forwardRef((props, ref) => {
   
 //console.log(props.userFrom);
   return (
-    <> 
+    <section ref={ref}> 
       <div className={`${styles[theme]} ${styles.oneCom}`}>
         <div className={styles.blocPhoto}> 
           <Image
@@ -96,7 +96,7 @@ const Comment = forwardRef((props, ref) => {
               <div className={`${styles[theme]} ${styles.unTrait}`}></div>
         </div>
       </div>
-    </>
+    </section>
   );
 });
 

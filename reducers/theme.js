@@ -15,9 +15,7 @@ export const themeSlice = createSlice({
           user: action.payload,
           style: "light",
         });
-      } else {
-        console.log("user déjà existant");
-      }
+      } ;
     },
     changeTheme: (state, action) => {
       const userIndex = state.value.findIndex(e => e.user === action.payload);

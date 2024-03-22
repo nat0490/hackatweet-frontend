@@ -15,7 +15,7 @@ import { RiseLoader } from 'react-spinners';
 
 function LastTweets() {
 
-  const tweetRef = useRef();
+  const tweetRef = useRef(null);
   const dispatch = useDispatch();
 
   // const URL = "http://localhost:3000/";
@@ -199,7 +199,9 @@ const handleLoadingChange = (loading) => {
 
   return (
     <div className={`${styles[theme]} ${styles.tweetPage}`}>
-      <h3 className={styles.titlePage}>Flowst</h3>
+      {/* <h3 className={styles.titlePage}>Flowst</h3> */}
+
+    { user.token &&
       <div className={`${styles[theme]} ${styles.addTweet}`}>
         <input
           type="text"
@@ -259,7 +261,7 @@ const handleLoadingChange = (loading) => {
           </button> 
           
         </div>
-
+          
         { activeToggle && 
           <section className={`${styles[theme]} ${styles.popAlert}`} >
             <aside>
@@ -271,6 +273,10 @@ const handleLoadingChange = (loading) => {
         }
         
       </div>
+        
+      }  
+
+
       <div className={styles.lastTweetsContainer}>
         {tweetsData.length === 0 ? 
           <div className={styles.spinner}><BeatLoader color="#EA3680"/>

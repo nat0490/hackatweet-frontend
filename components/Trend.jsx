@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from "next/link";
 import styles from "../styles/Trend.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchAllTags } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faX } from "@fortawesome/free-solid-svg-icons";
 
 function Trend() {
+
+  const dispatch = useDispatch();
 
   const hashtag = useSelector((state) => state.hashtags.value);
   const user = useSelector(state => state.users.value);
@@ -17,15 +19,23 @@ function Trend() {
   const [ noResult, setNoResult ] = useState(null);
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);
 
-  useEffect(()=> {
-    if (hashs.every(e => e === undefined)) {
-      setNoResult(true);
-     } else {
-       setNoResult(false);
-     }
-  }, [hashs, findTag])
+  // useEffect(()=> {
+  //   if (hashs.every(e => e === undefined)) {
+  //     setNoResult(true);
+  //    } else {
+  //      setNoResult(false);
+  //    }
+  // }, [hashs, findTag]);
 
-  const hashs = Object.entries(hashtag[0])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     dispatch(fetchAllTags()); // Dispatch an action to fetch updated hashtag data
+  //   }, 60000); // Fetch data every minute (adjust as needed)
+
+  //   return () => clearInterval(interval); // Clear interval on component unmount
+  // }, []);
+
+  const hashs =  Object.entries(hashtag[0])
     .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     .map(([key, value], i) => {
       if (findTag) {
@@ -96,7 +106,11 @@ function Trend() {
           </div>
         )}
       </div>
-      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>{ noResult? "" /*<span className={styles.noResult}>Pas de post</span>*/ : hashs }</div>
+      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>
+        {/* { noResult? "" /*<span className={styles.noResult}>Pas de post</span> :  */}
+        {hashs} 
+        {/* } */}
+        </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ import Link from 'next/link';
 
   const Tweet = forwardRef((props, ref) => {
 
-    const commentRef = useRef();
+    const commentRef = useRef(null);
     const dispatch= useDispatch();
     // const URL = "http://localhost:3000/";
     const URL = "https://hackatweet-backend-iota-three.vercel.app/";
@@ -32,6 +32,8 @@ import Link from 'next/link';
     const bigPicContainerRef = useRef(null);
 //Popup d'alert
     const [activeToggle, setActiveToggle] = useState(false);
+
+    const [activeToggleConnection, setActiveToggleConnection] = useState(false);
     
     
   
@@ -267,11 +269,11 @@ import Link from 'next/link';
   
 
   return (
-    <> 
+    <section ref={ref}> 
 
 
 
-    <div className={`${styles[theme]} ${styles.oneTweet}`} ref={ref}>
+    <div className={`${styles[theme]} ${styles.oneTweet}`} >
         <div className={styles.blocUser}>
           <Image
             src={"/user.jpg"}
@@ -342,14 +344,15 @@ import Link from 'next/link';
               icon={faHeart}
               size="xs"
               style={{ cursor: 'pointer', ...(props.isLiked && { color: '#EA3680' }) }}
-              onClick={handleLikeTweet}
+              onClick={user.token? handleLikeTweet : ()=>setActiveToggleConnection(!activeToggleConnection)}
             />   <span className={styles.likesText}>    {   props.nbLike + upLikes } </span>
           </div>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon
               icon={faCommentDots}
               size="xs"
-              onClick={handleShowAddComment}
+              onClick={user.token? handleShowAddComment : ()=>setActiveToggleConnection(!activeToggleConnection)}
+              // onClick={handleShowAddComment}
               style={{ cursor: 'pointer'}}
             />   <span className={styles.likesText}>    {   props.comment.length > 0 ? props.comment.length : ""} </span>
           </div> 
@@ -402,11 +405,19 @@ import Link from 'next/link';
         <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggle(!activeToggle)}>Non</button>
     </aside>
   </section>
+}
 
+{ activeToggleConnection && 
+  <section className={`${styles[theme]} ${styles.popAlert}`} >
+    <aside>
+        <h4 className={styles.titleAlert}>Vous devez vous connecter</h4>
+        <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggleConnection(!activeToggleConnection)}>Ok</button>
+    </aside>
+  </section>
 }
      
 
-    </>
+    </ section>
   );
 });
 

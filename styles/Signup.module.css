@@ -12,9 +12,12 @@
     left:50%;
     margin: 0;
     padding: 0;
-    transform: translate(-50%, 45%);
+    transform: translate(-50%, -10%);
     position: absolute;
     z-index: 1;
+    @media only screen and (max-width: 600px) {
+        transform: translate(-50%, 30%);
+    }
 }
 
 .modalContainer .title {
@@ -107,6 +110,40 @@
 .errorMsg {
     font-size: 12px;
 }
+
+
+/*YEUX*/
+.password_icon {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 58%;
+    right: 3rem;
+    transform: translateY(-50%);
+    width: 1rem;
+    color: #969595;
+    transition: all 0.2s;
+  }
+  .password_icon:hover{
+    cursor: pointer;
+    color: #ff4754;
+  }
+  .password_icon2 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 84%;
+    right: 3rem;
+    transform: translateY(-50%);
+    width: 1rem;
+    color: #969595;
+    transition: all 0.2s;
+  }
+.password_icon2:hover{
+    cursor: pointer;
+    color: #ff4754;
+}
+  
 
 
 
