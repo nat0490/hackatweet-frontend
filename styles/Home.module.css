@@ -51,6 +51,8 @@
     width: 100vw;
     height: 100vh;
     display: grid;
+    row-gap: 0;
+    column-gap: 0;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(8, 1fr);
   }
