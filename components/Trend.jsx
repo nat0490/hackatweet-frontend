@@ -35,7 +35,7 @@ function Trend() {
   //   return () => clearInterval(interval); // Clear interval on component unmount
   // }, []);
 
-  const hashs =  Object.entries(hashtag[0])
+  const hashs =  hashtag && Object.entries(hashtag[0])
     .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     .map(([key, value], i) => {
       if (findTag) {
