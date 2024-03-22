@@ -5,6 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchAllTags } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faX } from "@fortawesome/free-solid-svg-icons";
+import { ErrorBoundary } from "react-error-boundary";
+
+
+
 
 function Trend() {
 
@@ -66,6 +70,9 @@ function Trend() {
   });
 
   return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+
+
     <div className={`${styles[theme]} ${styles.trendPage}`}>
       <div className={styles.findHashtag}> 
         <input
@@ -112,6 +119,7 @@ function Trend() {
         {/* } */}
         </div>
     </div>
+    </ErrorBoundary>
   );
 }
 

@@ -10,6 +10,9 @@ import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/lik
 import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
 import { tempsEcoule, detectClickOutside } from '../utils';
 import Link from 'next/link';
+import { ErrorBoundary } from "react-error-boundary";
+
+
 
   const Tweet = forwardRef((props, ref) => {
 
@@ -265,9 +268,11 @@ import Link from 'next/link';
 //     let popup = document.getElementById('popAlert');
 //     popup.classList.toggle('active');
 // }
-  
+ 
+
 
   return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
     <section ref={ref}> 
 
 
@@ -417,6 +422,7 @@ import Link from 'next/link';
      
 
     </ section>
+    </ErrorBoundary>
   );
 });
 

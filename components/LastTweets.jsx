@@ -9,7 +9,8 @@ import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
 import { faImage, faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RiseLoader } from 'react-spinners';
+import { ErrorBoundary } from "react-error-boundary";
+
 
 
 
@@ -53,20 +54,31 @@ function LastTweets() {
       },[loadPic])
 
 
-  const fetchTweet = () => {
+  const fetchTweet = async() => {
 //Fetcher les tweets
-    fetch(`${URL}tweets/lastTweet`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.tweets) {
-          setTweetsData(data.tweets.reverse());
-        } else {
-          console.error("Error in fetchTweet: Response is missing 'tweets' field", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error in fetchTweet:", error);
-      });
+try {
+  const res = await fetch(`${URL}tweets/lastTweet`);
+  const data = await res.json();
+  if (data.tweets) {
+    setTweetsData(data.tweets.reverse());
+  } else {
+    console.error("Error lors du fetchTweet:", data);
+  }
+} catch(error) {
+  console.log("Erreur serveur")
+}
+    // fetch(`${URL}tweets/lastTweet`)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.tweets) {
+    //       setTweetsData(data.tweets.reverse());
+    //     } else {
+    //       console.error("Error in fetchTweet: Response is missing 'tweets' field", data);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error in fetchTweet:", error);
+    //   });
   };
 
 
@@ -88,7 +100,7 @@ const handleLoadingChange = (loading) => {
 
   
 //Poster un tweet
-  const postTweet = () => {
+  const postTweet = async() => {
     //let hashtags = tweet.split(" ").filter((e) => new RegExp("#").test(e));
    // let tags = tweet.split(/[ ,;.!@$%^&*()_+{}\[\]:;<>,.?~\\/-]+/).filter((e) => e.startsWith("#"));
 
@@ -110,6 +122,35 @@ const handleLoadingChange = (loading) => {
       pictures: pictures,
       hashtags: hashtags,
     }
+
+    // try {
+    //   const res = await fetch(`${URL}tweets/create`, {
+    //                       method: "POST",
+    //                       headers: {
+    //                         "Content-Type": "application/json",
+    //                       },
+    //                       body: JSON.stringify(newPost),
+    //                     });
+    //   const data = await res.json();
+    //   if (data.result) {
+    //     fetchTweet();
+    //     setTweet("");
+    //     setLoadPic([]);
+    //     setPrivat(false);
+    //     setResetChild(true);
+    //     setAddPic(false);
+    //     if (data.tweet.hashtags.length > 0) {
+    //       fetchAllTags(dispatch);
+    //     };
+    //   } else {
+    //     console.log(createdTweet.error);
+    //     setActiveToggle(!activeToggle);
+    //   };
+    //   setStart(false);
+
+    // }catch(error) {
+    //   console.log("erreur lors du post")
+    // }
     fetch(`${URL}tweets/create`, {
       method: "POST",
       headers: {
@@ -137,7 +178,7 @@ const handleLoadingChange = (loading) => {
        
       });
       setStart(false);
-  };
+ };
 
 //Appuie sur le boutton POST
 //ATTENTION:: Manque le cas ou la page est ouverte mais sans photo!!!! Rien ne se passe actuellement!!! 
@@ -152,19 +193,37 @@ const handleLoadingChange = (loading) => {
   };
   
 
-  const handleDelete = (id) => {
-    fetch(`${URL}tweets/delete`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+  const handleDelete = async(id) => {
+    try {
+      const res = await fetch(`${URL}tweets/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+      const data = await res.json();
+      if (data.result){
         setTweetsData(tweetsData.filter((e) => e._id !== id));
         fetchAllTags(dispatch);
-      });
+      } else {
+        console.log("erreur lors de la suppression:",data.error)
+      }
+    } catch(error){
+      console.log("erreur lors de la suppression:", error)
+    }
+    // fetch(`${URL}tweets/delete`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ id: id }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setTweetsData(tweetsData.filter((e) => e._id !== id));
+    //     fetchAllTags(dispatch);
+    //   });
   };
 
   const updateLikedTweet = (tweetId) => {
@@ -183,14 +242,14 @@ const handleLoadingChange = (loading) => {
     setAddPic(!addPic);
   };
 
-  const tweets = tweetsData.map((tweet) => {
+  const tweets = tweetsData.length > 0 && tweetsData.map((tweet) => {
     return (
       <Tweet
         ref={tweetRef}
         key={tweet._id}
         {...tweet}
         updateLikedTweet={updateLikedTweet}
-        isLiked={tweetILkd?.some( e => e === tweet._id )}        
+        // isLiked={tweetILkd?.some( e => e === tweet._id )}        
         handleDelete={handleDelete}
         fetchTweet={fetchTweet}
       />
@@ -198,6 +257,10 @@ const handleLoadingChange = (loading) => {
   });
 
   return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+
+
+
     <div className={`${styles[theme]} ${styles.tweetPage}`}>
       {/* <h3 className={styles.titlePage}>Flowst</h3> */}
 
@@ -286,6 +349,7 @@ const handleLoadingChange = (loading) => {
 
       
     </div>
+    </ErrorBoundary>
   );
 }
 

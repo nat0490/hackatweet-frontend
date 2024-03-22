@@ -11,6 +11,7 @@ import Notification from './Notification';
 import Setting from './Setting';
 import SignUp from './login/Signup';
 import SignIn from './login/Signin';
+import { ErrorBoundary } from "react-error-boundary";
 // import { fetchAllTags } from '../utils';
 
 const UserInfo = forwardRef((props, ref) => {
@@ -112,6 +113,9 @@ useEffect(() => {
   };
 
   return (
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+
+
     <div className={`${styles[theme]} ${styles.userInfoPage} ${customClassName}`} ref={ref}>
 { user.token ?
 // UTILISATEUR CONNECTE
@@ -253,6 +257,7 @@ useEffect(() => {
 
 }
     </div>
+    </ErrorBoundary>
   );
 });
 

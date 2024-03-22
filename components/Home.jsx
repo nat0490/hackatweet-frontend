@@ -15,18 +15,18 @@ function Home() {
   // const URL = "http://localhost:3000/";
   const URL = "https://hackatweet-backend-iota-three.vercel.app/";
   const user = useSelector((state)=> state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
+  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
 
   //console.log("them:",theme);
-  
+
   useEffect(()=> {
     getMyNotif();
     fetchAllTags(dispatch);
-    
+
   }, []);
 
-  const getMyNotif = () => {
-    (async()=> {
+  const getMyNotif = async() => {
+    // (async()=> {
       try {
           const res = await fetch(`${URL}notification/findNotification/${user.id}`);
           const data = await res.json();
@@ -40,22 +40,23 @@ function Home() {
           }
       } catch(error) {
           console.log(error.message , "Failed to fetch");
-  }})();
-};
+  }};
+  // )();
+//};
 
   return (
     <div className={`${styles[theme]} ${styles.PageAcceuil}`}>
       <div className={styles.userInfo}>
         <UserInfo /*customClassName={styles.userInfo} */ref={userRef}/>
       </div>
-      
+
       <div className={`${styles[theme]} ${styles.lastTweetsContainer} `}>
-        <LastTweets /*customClassName={`${styles[theme]}  ${styles.lastTweets} `}*//>
+        <LastTweets />
       </div>
       <div className={styles.trend}>
         <Trend />
       </div>
-      
+
     </div>
   );
 };
