@@ -15,7 +15,7 @@
     justify-content: space-between;
     align-items: flex-start;
 /* ATTENTION A CETTE EFFECT SUR TELEPHONE */
-    height: 100%;
+    /* height: 100%; */
     /* flex-grow: 1; */
     padding-top: 1rem;
     padding-bottom: 3rem;
