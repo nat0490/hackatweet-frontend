@@ -1,3 +1,15 @@
+.tweetPage{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 100%;
+    @media only screen and (max-width: 600px) {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+}
 
 .titlePage {
     margin: 1.5rem 1rem;
@@ -109,18 +121,7 @@
     display: none;
   }
 
-.tweetPage{
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: 100%;
-    @media only screen and (max-width: 600px) {
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-    }
-}
+
 
 .icon {
     margin-right: 0.75rem;
