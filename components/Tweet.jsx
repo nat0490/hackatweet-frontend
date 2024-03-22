@@ -220,7 +220,6 @@ import Link from 'next/link';
     return (
       <div style={{display:'flex',}} key={i}> 
         <img 
-          
           src={pic}
           alt={`image ${i}`}
           name={`image ${i}`}
