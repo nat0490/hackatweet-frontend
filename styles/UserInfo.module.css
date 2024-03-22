@@ -5,10 +5,6 @@
 .logoLink{
   transform: rotate(-45deg);
   cursor: pointer;
-    @media only screen and (max-width: 600px) {
-        width: 2rem;
-        height: 2rem;
-    }
 }
 
 
@@ -64,8 +60,8 @@
     width: 4rem;
     height: 4rem;
     @media only screen and (max-width: 600px) {
-        width: 2rem;
-        height: 2rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
 .userLog {
@@ -301,6 +297,10 @@
         flex-direction: row;
         align-items: center;
         padding: 0;
+    }
+    .photoProfil{
+        width: 2.5rem;
+        height: 2.5rem;
     }
 }
 
