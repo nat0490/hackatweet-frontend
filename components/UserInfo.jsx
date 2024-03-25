@@ -6,7 +6,7 @@ import Link from "next/link";
 import {} from "@fortawesome/free-solid-svg-icons";
 import styles from '../styles/UserInfo.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faBell, faUser, faUserPlus, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faGear, faBell, faUser, faUserPlus, faRightFromBracket, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 import Notification from './Notification';
 import Setting from './Setting';
 import SignUp from './login/Signup';
@@ -113,7 +113,15 @@ useEffect(() => {
   };
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary fallback={
+      <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
+      <div className="errorMsg">Oups, il y a eu un soucis ...</div>
+      <FontAwesomeIcon
+                icon={faFaceSadTear}
+                size="8x"
+              /> 
+    </section>}>
+
 
 
     <div className={`${styles[theme]} ${styles.userInfoPage} ${customClassName}`} ref={ref}>

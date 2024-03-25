@@ -7,7 +7,7 @@ import styles from "../styles/LastTweet.module.css";
 import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from '../reducers/likes';
 import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
-import { faImage, faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faLock, faLockOpen, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from "react-error-boundary";
 
@@ -256,13 +256,19 @@ const handleLoadingChange = (loading) => {
   });
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary fallback={
+      <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
+      <div className="errorMsg">Oups, il y a eu un soucis ...</div>
+      <FontAwesomeIcon
+                icon={faFaceSadTear}
+                size="8x"
+              /> 
+    </section>}>
 
 
 
     <div className={`${styles[theme]} ${styles.tweetPage}`}>
       {/* <h3 className={styles.titlePage}>Flowst</h3> */}
-
     { user.token &&
       <div className={`${styles[theme]} ${styles.addTweet}`}>
         <input

@@ -1,6 +1,6 @@
 import React, { forwardRef, useRef } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faCommentDots, faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faCommentDots, faXmark, faTrash, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -293,7 +293,20 @@ const getContainerStyle = () => {
 };
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary fallback={
+      <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
+      <div className="errorMsg">Oups, il y a eu un soucis ...</div>
+      <FontAwesomeIcon
+                icon={faFaceSadTear}
+                size="8x"
+              /> 
+    </section>}>
+
+
+
+
+
+
     <section ref={ref}> 
 
 

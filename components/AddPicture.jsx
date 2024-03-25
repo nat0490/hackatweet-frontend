@@ -4,6 +4,8 @@ import styles from '../styles/AddPicture.module.css';
 import { RiseLoader } from 'react-spinners';
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
+import { ErrorBoundary } from 'react-error-boundary';
+import { faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 
 const AddPicture = forwardRef((props, ref) =>{
     
@@ -144,6 +146,15 @@ const getDownPicStyle = () => {
 };
  
   return (
+    <ErrorBoundary fallback={
+      <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
+      <div className="errorMsg">Oups, il y a eu un soucis ...</div>
+      <FontAwesomeIcon
+                icon={faFaceSadTear}
+                size="8x"
+              /> 
+    </section>}>
+
     <div className={styles.addPictureContainer} ref={ref} >
         <div className={styles.container}>
           {/* <form encType="multipart/form-data" action='/upload' method="POST"> */}
@@ -179,6 +190,7 @@ const getDownPicStyle = () => {
         </div>
       </div>
     </div>
+    </ErrorBoundary>
   );
 });
 

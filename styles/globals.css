@@ -5,8 +5,6 @@
   src: url('../public/mont-heavy.ttf');
 }
 
-
-
 /* @media (prefers-color-scheme: light) { */
   body {
     padding: 0;
@@ -43,7 +41,6 @@ button {
   padding-left: 1rem;
   padding-right: 1rem;
   height: 1.5rem;
-  
 }
 
 input {
@@ -72,8 +69,6 @@ input[type=file]::file-selector-button {
   border: 1px solid #222245;
 }
 
-
-
 input[type=file]::file-selector-button:hover {
   background: #EA3680 ;
 }
@@ -95,6 +90,13 @@ label input {
 /* ne fonctionne pas */
 label input:focus {
   border-color: #ff4754;
+}
+
+.errorMsg{
+  font-weight: 900;
+  margin-top: 15rem;
+  margin-bottom: 5rem;
+  text-align: center;
 }
 
 
