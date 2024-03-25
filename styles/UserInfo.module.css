@@ -141,12 +141,14 @@
 .oneLogo {
     margin-bottom: 0.5rem;
     padding: 0.25rem;
+    text-align: center;
     /* @media only screen and (max-width:600px) {
         margin: 0.75rem;
     } */
 }
 .oneLogo:hover {
     opacity: 50%;
+    font-style: italic;
 }
 
 .topPage {
@@ -242,6 +244,13 @@
     } */
 }
 
+.connection{
+    font-size: 12px;
+    border: none;
+    border-top: 1px solid #EA3680;
+    padding-top: 0.5rem;
+}
+
 
 /* LIGHT MODE */
 .light.userInfoPage {
@@ -250,9 +259,9 @@
 
 /* DARK MODE */
 .dark.userInfoPage {
-    background-color: #222;
-    color: #fefefe;
-    border-right: 1px solid grey;
+    /* background-color: #222; */
+    /* color: #fefefe; */
+    border-right: 1px solid black;
 }
 
 @media only screen and (max-width: 600px) {
@@ -306,6 +315,9 @@
     .photoProfil{
         width: 2.5rem;
         height: 2.5rem;
+    }
+    .connection{
+        margin-bottom: 0.2rem;
     }
 }
 

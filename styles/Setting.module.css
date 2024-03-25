@@ -6,14 +6,14 @@
     flex-direction: column;
     margin: 0;
     padding: 1rem;
-    transform: translate(60%, 30%);
     position: absolute;
     z-index: 1;
     overflow-y: auto; /* activer le défilement vertical si nécessaire */    
     scrollbar-width:none;
+    /* transform: translate(60%, 30%);
     @media only screen and (max-width: 600px) {
         transform: translate(40%, 55%);
-    }
+    } */
 }
 
 .title {
@@ -83,6 +83,7 @@
 .dark.modalContainer {
     background-color: #171717;
     box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
+    color:#fff;
 }
 
 .dark.btnTheme {

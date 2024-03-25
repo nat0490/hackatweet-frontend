@@ -101,9 +101,23 @@ const Notification = forwardRef((props, ref) => {
                 <div className={styles.contenteLine}><div className={styles.bottomLine}></div></div>               
              </div>
     )})
+
+    //Dimension écran
+  const getScreenWidth = () => {
+    return window.innerWidth;
+  };
+  
+  //Position de la modale en fonction de l'écran
+    const getModaleStyle = () => {
+      if(getScreenWidth() < 600) {
+        return { transform: 'translate(30%, 60%)'}
+      } else {
+        return { transform: 'translate(105%, -10%)'}
+      }
+    };
   
   return (
-    <div className={`${styles.modalContainer} ${styles[theme]}`} ref={ref}>
+    <div className={`${styles.modalContainer} ${styles[theme]}`} style={getModaleStyle()} ref={ref}>
         <h3 className={styles.title}>Notifications</h3>
       <div > {notif}</div>
     </div>

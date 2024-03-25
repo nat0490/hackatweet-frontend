@@ -123,8 +123,8 @@
 
 /* DARK MODE */
 .dark.trendPage {
-    background-color: #222;
-    border-left: 1px solid grey;
+    /* background-color: #222; */
+    border-left: 1px solid black;
 }
 
 .dark.hashtagContainer {

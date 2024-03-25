@@ -222,33 +222,36 @@ useEffect(() => {
       />
     </Link>
 
-    Se connecter
+   
 
     {openModalSignUp && 
     <aside>
        {/* <button className={styles.btnSignIn} onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}>Connexion</button> */}
-       <div className={styles.oneLogo}>
-       
-
-       <FontAwesomeIcon
-        icon={faUser}
-        size="xl"
+       <div 
+        className={styles.oneLogo} 
         onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}
         style={{ cursor: 'pointer'}}
-      />
+        >
+        <p className={styles.connection}>Se connecter</p>
+        <FontAwesomeIcon
+          icon={faUser}
+          size="xl"
+        />
       </div>
        <SignUp ref={signUpModalRef} closeModal={setOpenModalSignUp} />
     </aside>}
     {openModalSignIn && 
     <aside>
       {/* <button className={styles.btnSignUp} onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}>Inscription</button> */}
-      <div className={styles.oneLogo}>
-      <FontAwesomeIcon
-        icon={faUserPlus}
-        size="xl"
+      <div 
+        className={styles.oneLogo}
         onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}
-        style={{ cursor: 'pointer'}}
-      />
+        style={{ cursor: 'pointer'}}>
+        <p className={styles.connection}>S'inscrire</p>
+        <FontAwesomeIcon
+          icon={faUserPlus}
+          size="xl"
+        />
     </div> 
       <SignIn ref={signInModalRef} closeModal={setOpenModalSignIn} />
     </aside>}
@@ -256,13 +259,16 @@ useEffect(() => {
     {/* <button className={styles.btnSignUp} onClick={() => setOpenModalSignUp(true)}>Inscription</button> */}
     {!openModalSignUp && !openModalSignIn && 
       // <button className={styles.btnSignIn} onClick={() => setOpenModalSignIn(true)}>Connexion</button>
-      <div className={styles.oneLogo}>
-      <FontAwesomeIcon
-        icon={faUser}
-        size="xl"
+      <div 
+        className={styles.oneLogo}
         onClick={() => setOpenModalSignIn(true)}
         style={{ cursor: 'pointer'}}
-      />
+        >
+        <p className={styles.connection}>Se connecter</p>
+        <FontAwesomeIcon
+          icon={faUser}
+          size="xl"
+        />
     </div> }
 
   </section>

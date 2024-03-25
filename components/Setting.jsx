@@ -14,9 +14,23 @@ const Setting = forwardRef((props, ref) => {
     const handleTheme = () => {
       dispatch(changeTheme(user.token));    
     };
+
+//Dimension écran
+  const getScreenWidth = () => {
+  return window.innerWidth;
+};
+
+//Position de la modale en fonction de l'écran
+  const getModaleStyle = () => {
+    if(getScreenWidth() < 600) {
+      return { transform: 'translate(30%, 60%)'}
+    } else {
+      return { transform: 'translate(105%, -10%)'}
+    }
+  };
   
   return (
-    <div className={`${styles.modalContainer} ${styles[theme]}`} ref={ref}>
+    <div className={`${styles.modalContainer} ${styles[theme]}`} style={getModaleStyle()} ref={ref}>
         <h3 className={styles.title}>Settings</h3>
       <div >
         <div className={styles.lineTheme}> 

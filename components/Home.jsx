@@ -46,6 +46,12 @@ function Home() {
 
   return (
     <div className={`${styles[theme]} ${styles.PageAcceuil}`}>
+      <img
+        src={theme === "light" ? "/background.jpg" :"/backgroundBW.jpg" }
+        name="background"
+        alt="background" 
+        className={`background ${theme}`}
+      />
       <div className={styles.userInfo}>
         <UserInfo /*customClassName={styles.userInfo} */ref={userRef}/>
       </div>

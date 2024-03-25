@@ -20,24 +20,8 @@ function Trend() {
   //console.log(hashtag);
 
   const [ findTag, setFindTag ] = useState(undefined);
-  const [ noResult, setNoResult ] = useState(null);
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);
 
-  // useEffect(()=> {
-  //   if (hashs.every(e => e === undefined)) {
-  //     setNoResult(true);
-  //    } else {
-  //      setNoResult(false);
-  //    }
-  // }, [hashs, findTag]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     dispatch(fetchAllTags()); // Dispatch an action to fetch updated hashtag data
-  //   }, 60000); // Fetch data every minute (adjust as needed)
-
-  //   return () => clearInterval(interval); // Clear interval on component unmount
-  // }, []);
 
 
 
