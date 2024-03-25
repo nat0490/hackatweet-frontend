@@ -135,12 +135,12 @@ const AddPicture = forwardRef((props, ref) =>{
               </div>
             </div>
           {/* </form> */}
-          {/* <div className={styles.images}>
+          <div className={styles.images}>
             {selectedImages.length > 0 &&
               selectedImages.map((image, index) => (
                   <img src={`${window.URL.createObjectURL(image)}`} key={index} alt="" />
               ))}
-          </div> */}
+          </div>
           {selectedImages.length > 0 && (
             <div className={styles.btn}>
 
