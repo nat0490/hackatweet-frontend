@@ -99,7 +99,7 @@ const AddPicture = forwardRef((props, ref) =>{
     if(props.resetChild) {
       // setPicToLoad([]);
       setPicUpload([]);
-      setErrorMsg(null);
+      // setErrorMsg(null);
       props.onChildReset();
     }
   },[props.resetChild])
@@ -109,7 +109,7 @@ const AddPicture = forwardRef((props, ref) =>{
     if(!props.onAddPic) {
       // setPicToLoad([]);
       setPicUpload([]);
-      setErrorMsg(null);
+      // setErrorMsg(null);
     }
   },[props.onAddPic])
 
@@ -119,6 +119,29 @@ const AddPicture = forwardRef((props, ref) =>{
       props.onImagesLoaded(picUpload);
     }
   }, [picUpload, isLoading]);
+
+//Dimension écran
+const getScreenWidth = () => {
+  return window.innerWidth;
+};
+
+//Position du text "images télécharge" en fonction taille écran et photo téléchargé
+const getDownPicStyle = () => {
+  let nbrDownImg = selectedImages?.length;
+  if (getScreenWidth() < 600) {
+    if (nbrDownImg > 0) {
+      return { top: "37rem"}
+      } else {
+        return { top: "21.5rem"}
+      };
+    } else {
+      if (nbrDownImg > 0) {
+        return { top: "34rem"}
+        } else {
+          return { top: "18.5rem"}
+        };
+    }
+};
  
   return (
     <div className={styles.addPictureContainer} ref={ref} >
@@ -152,7 +175,7 @@ const AddPicture = forwardRef((props, ref) =>{
             </div>
           )}
         <div >
-          <p className={styles.maxPicText}>Images: {selectedImages.length > 0 ? selectedImages.length: 0}/6</p> 
+          <p className={styles.maxPicText} style={getDownPicStyle()}>Images: {selectedImages.length > 0 ? selectedImages.length: 0}/6</p> 
         </div>
       </div>
     </div>
