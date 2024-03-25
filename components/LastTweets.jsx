@@ -181,7 +181,6 @@ const handleLoadingChange = (loading) => {
  };
 
 //Appuie sur le boutton POST
-//ATTENTION:: Manque le cas ou la page est ouverte mais sans photo!!!! Rien ne se passe actuellement!!! 
   const handlePost = () => {
     //Si page addPic ouvert, passer start à true pour lancer le téléchargement des pic sur cloudy
     if (addPic) {
