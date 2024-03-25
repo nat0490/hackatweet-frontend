@@ -39,7 +39,9 @@ function Trend() {
   //   return () => clearInterval(interval); // Clear interval on component unmount
   // }, []);
 
-  const hashs =  hashtag && Object.entries(hashtag[0])
+
+
+  const hashs =  hashtag.length > 0 && Object.entries(hashtag[0])
     .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
     .map(([key, value], i) => {
       if (findTag) {
@@ -70,9 +72,7 @@ function Trend() {
   });
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-
-
+  <ErrorBoundary fallback={<div>Something went wrong</div>}>
     <div className={`${styles[theme]} ${styles.trendPage}`}>
       <div className={styles.findHashtag}> 
         <input
