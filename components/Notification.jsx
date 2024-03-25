@@ -15,7 +15,7 @@ const Notification = forwardRef((props, ref) => {
     const notification = useSelector((state)=> state.notifications.value.notification);
 
     //const URL = "http://localhost:3000/";
-    const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+    const URL = "https://flowst-backend.vercel.app/";
 
     useEffect(()=> {
         fetchMyNotifications();

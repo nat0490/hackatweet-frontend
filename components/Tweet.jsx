@@ -19,7 +19,7 @@ import { ErrorBoundary } from "react-error-boundary";
     const commentRef = useRef(null);
     const dispatch= useDispatch();
     // const URL = "http://localhost:3000/";
-    const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+    const URL = "https://flowst-backend.vercel.app/";
     const user = useSelector(state => state.users.value);
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
     const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
@@ -269,19 +269,15 @@ import { ErrorBoundary } from "react-error-boundary";
 //     popup.classList.toggle('active');
 // }
 
+//Dimension écran
 const getScreenWidth = () => {
   return window.innerWidth;
 };
-
-console.log(getScreenWidth());
-
-
-
+//Style des images en fonction de la taille de l'écran
 const getContainerStyle = () => {
   let nbrImage = props.pictures?.length;
   let longueurImg;
   let widthTweet;
-
   if (getScreenWidth() < 600) {
     longueurImg = nbrImage * 200;
     widthTweet = getScreenWidth()*0.8;
@@ -289,15 +285,12 @@ const getContainerStyle = () => {
     longueurImg = nbrImage * 400;
     widthTweet = getScreenWidth()*0.6;
   };
-
   if (longueurImg > widthTweet) {
     return { justifyContent: 'flex-start'}
   } else {
     return { justifyContent: 'center'}
   };
 };
- 
-
 
   return (
     <ErrorBoundary fallback={<div>Something went wrong</div>}>

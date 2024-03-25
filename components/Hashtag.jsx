@@ -16,7 +16,7 @@ function Hashtag() {
   const dispatch = useDispatch();
 
   // const URL = "http://localhost:3000/";
-  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+  const URL = "https://flowst-backend.vercel.app/";
 
   const [ hashtag, setHashtag] = useState(null);
   const [ tweetsLiked, setTweetsLiked] = useState([]);

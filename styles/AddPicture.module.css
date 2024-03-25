@@ -115,9 +115,9 @@ TEST2 DROPZONE */
     font-size: 12px;
     font-style: italic;
     position: absolute;
-    top: 8rem;
+    top: 18.5rem;
     @media only screen and (max-width: 600px) {
-        top: 6rem;
+        top: 21.5rem;
     }
 }
 

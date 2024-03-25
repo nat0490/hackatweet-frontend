@@ -2,7 +2,7 @@ import { addHashtag, removehashTag } from "../reducers/hashtags";
 
 export const fetchAllTags = async (dispatch) => {
   // const URL = "http://localhost:3000/";
-  const URL = "https://hackatweet-backend-iota-three.vercel.app/";
+  const URL = "https://flowst-backend.vercel.app/";
 
   const nbrOccurrence = (tab) => {
     const occurrences = {};
