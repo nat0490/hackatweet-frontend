@@ -4,7 +4,7 @@ import styles from "../styles/Trend.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchAllTags } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faX } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faX, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 import { ErrorBoundary } from "react-error-boundary";
 
 
@@ -72,7 +72,14 @@ function Trend() {
   });
 
   return (
-  <ErrorBoundary fallback={<div>Something went wrong</div>}>
+    <ErrorBoundary fallback={
+      <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
+      <div className="errorMsg">Oups, il y a eu un soucis ...</div>
+      <FontAwesomeIcon
+                icon={faFaceSadTear}
+                size="8x"
+              /> 
+    </section>}>
     <div className={`${styles[theme]} ${styles.trendPage}`}>
       <div className={styles.findHashtag}> 
         <input

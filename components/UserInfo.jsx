@@ -222,10 +222,14 @@ useEffect(() => {
       />
     </Link>
 
+    Se connecter
+
     {openModalSignUp && 
     <aside>
        {/* <button className={styles.btnSignIn} onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}>Connexion</button> */}
        <div className={styles.oneLogo}>
+       
+
        <FontAwesomeIcon
         icon={faUser}
         size="xl"

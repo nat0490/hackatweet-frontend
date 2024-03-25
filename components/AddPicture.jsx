@@ -5,6 +5,7 @@ import { RiseLoader } from 'react-spinners';
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { ErrorBoundary } from 'react-error-boundary';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 
 const AddPicture = forwardRef((props, ref) =>{
