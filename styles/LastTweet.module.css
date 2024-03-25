@@ -37,9 +37,6 @@
     padding-bottom: 5rem;
     margin-top: 0.5rem;
     width: 100%; 
-    @media only screen and (max-width: 600px) {
-        margin-bottom: 2.5rem;
-    } 
   }
   
   .lastTweetsContainer::-webkit-scrollbar {

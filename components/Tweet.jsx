@@ -268,6 +268,34 @@ import { ErrorBoundary } from "react-error-boundary";
 //     let popup = document.getElementById('popAlert');
 //     popup.classList.toggle('active');
 // }
+
+const getScreenWidth = () => {
+  return window.innerWidth;
+};
+
+console.log(getScreenWidth());
+
+
+
+const getContainerStyle = () => {
+  let nbrImage = props.pictures?.length;
+  let longueurImg;
+  let widthTweet;
+
+  if (getScreenWidth() < 600) {
+    longueurImg = nbrImage * 200;
+    widthTweet = getScreenWidth()*0.8;
+  } else {
+    longueurImg = nbrImage * 400;
+    widthTweet = getScreenWidth()*0.6;
+  };
+
+  if (longueurImg > widthTweet) {
+    return { justifyContent: 'flex-start'}
+  } else {
+    return { justifyContent: 'center'}
+  };
+};
  
 
 
@@ -315,7 +343,8 @@ import { ErrorBoundary } from "react-error-boundary";
         </div>
         
           {props.pictures && props.pictures.length > 0 ?
-            <div className={styles.picContainer} style={{ justifyContent: props.pictures?.length > 3 ? 'flex-start': 'center'}}>
+            // <div className={styles.picContainer} style={{ justifyContent: props.pictures?.length > 3 ? 'flex-start': 'center'}}>
+               <div className={styles.picContainer} style={getContainerStyle()}>
               {allPic}
             </div> 
             : ""}
