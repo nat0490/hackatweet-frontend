@@ -7,7 +7,8 @@ import {
   faTrash, 
   faFaceSadTear, 
   faChevronRight, 
-  faChevronLeft 
+  faChevronLeft,
+  faCircleXmark 
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -411,7 +412,7 @@ const handlePrevpic = () => {
             </div>
           {/* </div> */}
           <FontAwesomeIcon 
-              icon={faXmark} 
+              icon={faCircleXmark} 
               size="xl"
               onClick={()=> setSelectedPic(null)} 
               className={styles.xClosePic}

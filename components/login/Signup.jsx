@@ -7,6 +7,8 @@ import { login } from "../../reducers/user";
 import { addHashtag, removehashTag } from '../../reducers/hashtags';
 import { addTheme } from '../../reducers/theme';
 import { Eye, EyeOff } from 'react-feather';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const SignUp = forwardRef((props,ref) => {
   const [signUpFirstname, setSignUpFirstname] = useState("");
@@ -106,22 +108,34 @@ const SignUp = forwardRef((props,ref) => {
     
       <div className={styles.modalContainer} ref={ref}>
 
-        <div className={styles.topPage}> 
-          <div className={styles.blockLogo}> 
-            <Image
-              src="/Logo2.png"
-              width={100}
-              height={100}
-              alt="logo"
-              className={styles.logoStyle}
-              />
-          </div>
-          
-            <button 
-              className={styles.btnToClose} 
+      <img
+            src="/sign.jpg"
+            name="background"
+            alt="background" 
+            className={styles.imageFond}
+          />
+
+      <div className={styles.topPage}> 
+
+        <div 
+          className={styles.oneLogo}
+          onClick={() =>{ props.closeModal(false), props.openOtherModal() }}
+          >
+          <p className={styles.connection}>Se connecter</p>
+          <FontAwesomeIcon
+            icon={faUser}
+            size="lg"
+          />
+        </div>
+
+
+        
+          <FontAwesomeIcon 
+              icon={faCircleXmark} 
+              size="xl"
               onClick={() => props.closeModal(false)}
-            >X</button>
-          
+              className={styles.btnToClose}
+                />
         </div>
 
 
@@ -204,7 +218,7 @@ const SignUp = forwardRef((props,ref) => {
           { errorMsgPw && <span className={styles.errorMsg}>*{errorMsgPw}</span>}
             
             <button className={styles.btnSign} onClick={() => handleRegister()}>
-              Crée ton compte
+              S'inscrire
             </button>
 
           

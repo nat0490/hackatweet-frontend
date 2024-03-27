@@ -234,9 +234,9 @@ const handleLogout = () => {
     <aside>
        {/* <button className={styles.btnSignIn} onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}>Connexion</button> */}
        <div 
-        className={styles.oneLogo} 
+        className={styles.oneLogoConnection} 
         onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}
-        style={{ cursor: 'pointer'}}
+        // style={{ cursor: 'pointer'}}
         >
         <p className={styles.connection}>Se connecter</p>
         <FontAwesomeIcon
@@ -244,29 +244,37 @@ const handleLogout = () => {
           size="xl"
         />
       </div>
-       <SignUp ref={signUpModalRef} closeModal={setOpenModalSignUp} />
+       <SignUp 
+        ref={signUpModalRef} 
+        closeModal={setOpenModalSignUp}
+        openOtherModal={() => setOpenModalSignIn(true)}
+         />
     </aside>}
     {openModalSignIn && 
     <aside>
       {/* <button className={styles.btnSignUp} onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}>Inscription</button> */}
       <div 
-        className={styles.oneLogo}
+        className={styles.oneLogoConnection}
         onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}
         style={{ cursor: 'pointer'}}>
-        <p className={styles.connection}>S'inscrire</p>
+        <p className={styles.connection2}>S'inscrire</p>
         <FontAwesomeIcon
           icon={faUserPlus}
           size="xl"
         />
     </div> 
-      <SignIn ref={signInModalRef} closeModal={setOpenModalSignIn} />
+      <SignIn 
+        ref={signInModalRef} 
+        closeModal={setOpenModalSignIn} 
+        openOtherModal={() => setOpenModalSignUp(true)}
+        />
     </aside>}
 
     {/* <button className={styles.btnSignUp} onClick={() => setOpenModalSignUp(true)}>Inscription</button> */}
     {!openModalSignUp && !openModalSignIn && 
       // <button className={styles.btnSignIn} onClick={() => setOpenModalSignIn(true)}>Connexion</button>
       <div 
-        className={styles.oneLogo}
+        className={styles.oneLogoConnection}
         onClick={() => setOpenModalSignIn(true)}
         style={{ cursor: 'pointer'}}
         >
