@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState, useCallback, forwardRef} from 'react';
 import { useSelector } from 'react-redux';
 import styles from '../styles/AddPicture.module.css';
-import { RiseLoader } from 'react-spinners';
+import { PropagateLoader } from 'react-spinners';
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { ErrorBoundary } from 'react-error-boundary';
@@ -42,7 +42,7 @@ const AddPicture = forwardRef((props, ref) =>{
   useEffect(() => {
     if (picUpload.length > 0 && uploadStatus !== "") {
       props.onImagesLoaded(picUpload);
-      console.log(picUpload);
+      // console.log(picUpload);
     }
   }, [picUpload, uploadStatus]);
 
@@ -133,15 +133,15 @@ const getDownPicStyle = () => {
   let nbrDownImg = selectedImages?.length;
   if (getScreenWidth() < 600) {
     if (nbrDownImg > 0) {
-      return { top: "37rem"}
+      return { top: "29rem"}
       } else {
-        return { top: "21.5rem"}
+        return { top: "14rem"}
       };
     } else {
       if (nbrDownImg > 0) {
-        return { top: "34rem"}
+        return { top: "29.5rem"}
         } else {
-          return { top: "18.5rem"}
+          return { top: "14.5rem"}
         };
     }
 };
@@ -176,16 +176,16 @@ const getDownPicStyle = () => {
                   <img src={`${window.URL.createObjectURL(image)}`} key={index} alt="" />
               ))}
           </div>
-          {selectedImages.length > 0 && (
-            <div className={styles.btn}>
+          {selectedImages.length > 0 && isLoading &&  
+          <div className={`${styles[theme]} ${styles.btn}`}>
+              <PropagateLoader
+                size="16px"
+                color="#EA3680" 
+                />
+          </div>}
 
-            {isLoading && <RiseLoader
-                              size="12px"
-                              color="#EA3680" 
-                              />}
-              
-            </div>
-          )}
+            
+          
         <div >
           <p className={styles.maxPicText} style={getDownPicStyle()}>Images: {selectedImages.length > 0 ? selectedImages.length: 0}/6</p> 
         </div>

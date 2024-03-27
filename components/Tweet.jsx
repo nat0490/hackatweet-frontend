@@ -1,6 +1,14 @@
 import React, { forwardRef, useRef } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faCommentDots, faXmark, faTrash, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
+import { 
+  faHeart, 
+  faCommentDots, 
+  faXmark, 
+  faTrash, 
+  faFaceSadTear, 
+  faChevronRight, 
+  faChevronLeft 
+} from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +22,15 @@ import { ErrorBoundary } from "react-error-boundary";
 
 
 
+
   const Tweet = forwardRef((props, ref) => {
 
     const commentRef = useRef(null);
     const dispatch= useDispatch();
+
     // const URL = "http://localhost:3000/";
     const URL = "https://flowst-backend.vercel.app/";
+
     const user = useSelector(state => state.users.value);
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
     const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
@@ -78,11 +89,7 @@ import { ErrorBoundary } from "react-error-boundary";
 
 
 
-//Ouvrir l'image en grand en cliquant dessus
-  const handleOpenPic = (path) => {
-    //console.log("click");
-    setSelectedPic(path);
-    };
+
 
 //Mettre à jour les commentaire liké de l'utilisateur
   const updateLikedCom = (comId) => {
@@ -100,8 +107,11 @@ import { ErrorBoundary } from "react-error-boundary";
 
 //Bouton Supprimer un tweet
   const handleDelete = () => {
-    props.handleDelete(props._id)
+    props.handleDelete(props._id);
+    // props.handleDeletePic(props.pictures);
   };
+
+
 
 //Bouton Like d'un tweet
   const handleLikeTweet = () => {
@@ -149,12 +159,13 @@ import { ErrorBoundary } from "react-error-boundary";
     };
   };
 
+//Afficher les commentaire et pouvoir commenter
   const handleShowAddComment = () => {
     showInputAddComment ? dispatch(rmvShowComment(props._id)) : dispatch(addShowComment(props._id));
     setShowInputAddComment(!showInputAddComment);
   };  
 
-
+//Ajouter un commentaire
   const handleAddComment = () => {
     const newCom = {
       userId: user.id,
@@ -183,6 +194,7 @@ import { ErrorBoundary } from "react-error-boundary";
     })
   };
 
+//Supprimer un commentaire
   const handleDeleteComment = (id) => {
     fetch(`${URL}tweets/${props._id}/removeComment/${id}`, {
       method: "DELETE",
@@ -203,7 +215,7 @@ import { ErrorBoundary } from "react-error-boundary";
       })
   };
 
-
+//Tous les commentaires d'un post
   const allComment2 = props.comment.length > 0 && props.comment.map((com,i) => {
     //console.log(com);
     return (
@@ -219,22 +231,31 @@ import { ErrorBoundary } from "react-error-boundary";
     )
   });
 
+//Ouvrir l'image en grand en cliquant dessus
+// const handleOpenPic = (path) => {
+//   //console.log("click");
+//   setSelectedPic(path);
+//   };
+
+//Toutes les images d'un post
   const allPic = props.pictures?.length > 0 && props.pictures.map((pic, i) => {
+   const indexOfPic = props.pictures.indexOf(pic);
+  //  console.log(props.pictures[selectedPic]?.url);
     return (
       <div style={{display:'flex',}} key={i}> 
         <img 
-          src={pic}
-          alt={`image ${i}`}
+          src={pic.url ? pic.url : pic}
+          alt={pic.cloudId ? pic.cloudId : `image ${i}`}
           name={`image ${i}`}
           className={styles.picOfTweet}
-          onClick={() => handleOpenPic(pic)}
+          onClick={() => setSelectedPic(indexOfPic)}
         />
       </div>
     )
   })
 
 
-
+//Mise en forme pour les # 
   const formatDescription = (description) => {
     if (!description) {
       return null;
@@ -264,10 +285,7 @@ import { ErrorBoundary } from "react-error-boundary";
   };
   
 
-//   const togglePop = () => {
-//     let popup = document.getElementById('popAlert');
-//     popup.classList.toggle('active');
-// }
+
 
 //Dimension écran
 const getScreenWidth = () => {
@@ -292,24 +310,36 @@ const getContainerStyle = () => {
   };
 };
 
+
+//Grande image suivante
+const handleNextPic = () => {
+  if(selectedPic < props.pictures?.length - 1) {
+    setSelectedPic(selectedPic + 1);
+  }
+};
+
+//grande image précédente
+const handlePrevpic = () => {
+  if (selectedPic > 0) {
+    setSelectedPic(selectedPic -1)
+  }
+};
+
+// console.log(props.pictures.length);
+// console.log(selectedPic);
+
   return (
     <ErrorBoundary fallback={
       <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
-      <div className="errorMsg">Oups, il y a eu un soucis ...</div>
-      <FontAwesomeIcon
-                icon={faFaceSadTear}
-                size="8x"
-              /> 
-    </section>}>
-
-
-
-
-
+        <div className="errorMsg">Oups, il y a eu un soucis ...</div>
+        <FontAwesomeIcon
+                  icon={faFaceSadTear}
+                  size="8x"
+                /> 
+      </section>}
+      >
 
     <section ref={ref}> 
-
-
 
     <div className={`${styles[theme]} ${styles.oneTweet}`} >
         <div className={styles.blocUser}>
@@ -326,11 +356,6 @@ const getContainerStyle = () => {
                 {props.user.username} - {tempsEcoule(props.date)}
               </span>
             </p>
-            {/* {user.id === props.user._id && (
-              <div onClick={handleDelete} className={styles.xDelete}>
-                <FontAwesomeIcon icon={faXmark} style={{ cursor: 'pointer'}}/>
-              </div>
-            )} */}
           </div>
         </div>
         <div>
@@ -355,25 +380,48 @@ const getContainerStyle = () => {
             </div> 
             : ""}
 
-      {selectedPic && (
-        <div className={styles.bigPicContainer} ref={bigPicContainerRef} >
-          <div onClick={()=> setSelectedPic(null)} className={styles.xClosePic}>
-            <FontAwesomeIcon 
+      {selectedPic !== null && (
+        <div className={styles.bigPicContainer} style={{ }} ref={bigPicContainerRef} >
+          {/* <div className={styles.bigPicCenter}> */}
+            <div 
+              className={`${styles[theme]} ${styles.navigationBtn}`}
+              style={{left: 0}} 
+              onClick={handlePrevpic} 
+              >
+              <FontAwesomeIcon 
+              icon={faChevronLeft}
+              size="xl"
+                />
+            </div>
+            <img 
+              src={props.pictures[selectedPic].url}
+              alt={`image Zoom`}
+              name={`image Zoom`}
+              className={styles.bigPic} 
+              />
+            <div 
+              className={`${styles[theme]} ${styles.navigationBtn}`} 
+              style={{right: 0}}
+              onClick={handleNextPic} 
+              >
+              <FontAwesomeIcon 
+              icon={faChevronRight}
+              size="xl"
+                />
+            </div>
+          {/* </div> */}
+          <FontAwesomeIcon 
               icon={faXmark} 
+              size="xl"
+              onClick={()=> setSelectedPic(null)} 
+              className={styles.xClosePic}
               style={{ 
                 cursor: 'pointer', 
                 color:'#fff',
-                marginRight: '2rem',
-                marginTop:'1rem',
+                // marginRight: '2rem',
+                // marginTop:'1rem',
                 }}
-        
                 />
-          </div>
-          <img 
-            src={selectedPic}
-            alt={`image Zoom`}
-            name={`image Zoom`}
-            className={styles.bigPic} />
         </div>
       )}
         
@@ -440,6 +488,8 @@ const getContainerStyle = () => {
     <aside>
         <h4 className={styles.titleAlert}>Voulez vous vraiment supprimer ce post?</h4>
         <p>Cette action est définitive</p>
+
+
         <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={handleDelete}>Oui</button>
         <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggle(!activeToggle)}>Non</button>
     </aside>

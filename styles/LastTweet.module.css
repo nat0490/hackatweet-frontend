@@ -103,7 +103,8 @@
     border-radius: 1rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    max-height: 90%;
+    /* height: 100%; */
+    /* max-height: 90%; */
     /* overflow-y: auto;
     scrollbar-width: 0; */
 
@@ -128,8 +129,8 @@
 }
 
 .addPictureContainer{
-    overflow-y: auto;
-    scrollbar-width: 0;
+    /* overflow-y: auto; */
+    /* scrollbar-width: 0; */
     width: 100%;
 }
 
@@ -213,5 +214,6 @@
 
 .dark.popAlert {
     background-color: rgb(0, 0, 0);
+    color: #fff;
     box-shadow: rgba(109, 90, 102, 0.35) 0px 0px 15px;
 }

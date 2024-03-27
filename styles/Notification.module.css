@@ -10,6 +10,7 @@
     z-index: 1;
     overflow-y: auto; /* activer le défilement vertical si nécessaire */    
     scrollbar-width:none;
+    transition: margin-right;
     
     /* transform: translate(60%, 30%);
     @media only screen and (max-width: 600px) {

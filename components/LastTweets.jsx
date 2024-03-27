@@ -7,9 +7,10 @@ import styles from "../styles/LastTweet.module.css";
 import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from '../reducers/likes';
 import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
-import { faImage, faLock, faLockOpen, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faLock, faLockOpen, faFaceSadTear, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from "react-error-boundary";
+// import axios from "axios";
 
 
 
@@ -17,6 +18,7 @@ import { ErrorBoundary } from "react-error-boundary";
 function LastTweets() {
 
   const tweetRef = useRef(null);
+  const toggleSuccesPostRef = useRef(null);
   const dispatch = useDispatch();
 
   // const URL = "http://localhost:3000/";
@@ -37,7 +39,8 @@ function LastTweets() {
   const [ isLoadingChild, setIsLoadingChild] = useState(false);
 
   const [ start, setStart ] = useState(false);
-  const [activeToggle, setActiveToggle] = useState(false);
+  const [ activeToggle, setActiveToggle] = useState(false);
+  const [ activeToggleSuccesPost, setActiveToggleSuccesPost] = useState(false);
 
 
   useEffect(() => {
@@ -45,13 +48,23 @@ function LastTweets() {
     fetchTweet();
   }, []);
 
+//Quand il y a des données dans loadPic (envoyé de la page addPic après le téléchargement sur cloudy), poster la publication
   useEffect(()=>{
-    //Quand il y a des données dans loadPic (envoyé de la page addPic après le téléchargement sur cloudy), poster la publication
-        if(loadPic.length > 0){
-          //console.log("lancer le post")
-          postTweet()
-        }
-      },[loadPic])
+    if(loadPic.length > 0){
+      postTweet()
+    }
+  },[loadPic]);
+
+//Ecoute pour détecter le click en dehors du toggle SuccesPost
+  useEffect(() => {
+    let timeoutId;
+    if (activeToggleSuccesPost) {
+      timeoutId = setTimeout(()=> {
+        document.addEventListener('click', () => setActiveToggleSuccesPost(false))
+      }, 100);
+    }
+  }, [activeToggleSuccesPost]);
+
 
 
   const fetchTweet = async() => {
@@ -60,26 +73,14 @@ try {
   const res = await fetch(`${URL}tweets/lastTweet`);
   const data = await res.json();
   if (data.tweets) {
-    setTweetsData(data.tweets.reverse());
-  } else {
-    console.error("Error lors du fetchTweet:", data);
+      setTweetsData(data.tweets.reverse());
+    } else {
+      console.error("Error lors du fetchTweet:", data);
+    }
+  } catch(error) {
+    console.log("Erreur serveur")
   }
-} catch(error) {
-  console.log("Erreur serveur")
-}
-    // fetch(`${URL}tweets/lastTweet`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data.tweets) {
-    //       setTweetsData(data.tweets.reverse());
-    //     } else {
-    //       console.error("Error in fetchTweet: Response is missing 'tweets' field", data);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error in fetchTweet:", error);
-    //   });
-  };
+};
 
 
 //A LE FIN DU CHARGEMENT DES IMAGES
@@ -110,10 +111,13 @@ const handleLoadingChange = (loading) => {
     let pictures = [];
 
     if(loadPic.length > 0) {
-      loadPic.forEach((pic=>{
-        pictures.push(pic.toString())
-      }))
+      // loadPic.forEach((pic=>{
+      //   pictures.push(pic)
+      // }))
+      pictures = loadPic;
     };
+
+    // console.log(pictures);
 
     const newPost = {
       user: user.id,
@@ -121,36 +125,8 @@ const handleLoadingChange = (loading) => {
       privat: privat,
       pictures: pictures,
       hashtags: hashtags,
-    }
+    };
 
-    // try {
-    //   const res = await fetch(`${URL}tweets/create`, {
-    //                       method: "POST",
-    //                       headers: {
-    //                         "Content-Type": "application/json",
-    //                       },
-    //                       body: JSON.stringify(newPost),
-    //                     });
-    //   const data = await res.json();
-    //   if (data.result) {
-    //     fetchTweet();
-    //     setTweet("");
-    //     setLoadPic([]);
-    //     setPrivat(false);
-    //     setResetChild(true);
-    //     setAddPic(false);
-    //     if (data.tweet.hashtags.length > 0) {
-    //       fetchAllTags(dispatch);
-    //     };
-    //   } else {
-    //     console.log(createdTweet.error);
-    //     setActiveToggle(!activeToggle);
-    //   };
-    //   setStart(false);
-
-    // }catch(error) {
-    //   console.log("erreur lors du post")
-    // }
     fetch(`${URL}tweets/create`, {
       method: "POST",
       headers: {
@@ -168,6 +144,7 @@ const handleLoadingChange = (loading) => {
           setPrivat(false);
           setResetChild(true);
           setAddPic(false);
+          setActiveToggleSuccesPost(true);
           if (createdTweet.tweet.hashtags.length > 0) {
             fetchAllTags(dispatch);
           };
@@ -191,10 +168,10 @@ const handleLoadingChange = (loading) => {
     }
   };
   
-
+//Supprimer un post
   const handleDelete = async(id) => {
     try {
-      const res = await fetch(`${URL}tweets/delete`, {
+      const res = await fetch(`${URL}tweets/delete2`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -211,19 +188,29 @@ const handleLoadingChange = (loading) => {
     } catch(error){
       console.log("erreur lors de la suppression:", error)
     }
-    // fetch(`${URL}tweets/delete`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ id: id }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setTweetsData(tweetsData.filter((e) => e._id !== id));
-    //     fetchAllTags(dispatch);
-    //   });
   };
+
+
+
+// //Supprimer les images d'un post
+//  const handleDeletePic = async(allPic) => {
+//   // console.log(allPic);
+//   allPic?.forEach(async (pic) => {
+//     // console.log(pic);
+//     const encodedCloudId = encodeURIComponent(pic.cloudId);
+//   try {
+//     const res = await axios.post(`${URL}tweets/destroy/${encodedCloudId}`);
+//     // console.log("ok:", res.status);
+//     if(res.status === 200) {
+//       console.log("picture delete from cloudinary")
+//     } else {
+//       console.log("error: failed to delete picture from cloudinary")
+//     }
+//   } catch(error) {
+//     console.log({error: error});
+//   }
+//   })
+//  };
 
   const updateLikedTweet = (tweetId) => {
     //dispatch(rmvAlltweet());
@@ -339,7 +326,23 @@ const handleLoadingChange = (loading) => {
           </section>
 
         }
-        
+
+        { activeToggleSuccesPost &&
+          <section className={`${styles[theme]} ${styles.popAlert}`} ref={toggleSuccesPostRef}>
+          <aside>
+              <h4 className={styles.titleAlert}>Post publié!</h4>
+              <FontAwesomeIcon
+                icon={faCheck}
+                size="2x"
+                onClick={() =>setPrivat(false)}
+                style={{ color: "#EA3680" }}
+                className={styles.icon}
+              /> 
+          </aside>
+        </section>
+         }  
+
+
       </div>
         
       }  

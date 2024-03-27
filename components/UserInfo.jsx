@@ -33,7 +33,7 @@ const UserInfo = forwardRef((props, ref) => {
   const signInModalRef = useRef(null);
   const signUpModalRef = useRef(null);
  
-//Ecoute pour détecter le click en dehors dees notif/setting pour fermer les onglets 
+//Ecoute pour détecter le click en dehors des notif/setting pour fermer les onglets 
   useEffect(() => {
     const handleClickOutside = (event) => {
   //Si il y a selectedPic && onClick en dehors de la zone
@@ -105,12 +105,14 @@ useEffect(() => {
 }, [openModalSignIn, openModalSignUp]);
 
 
- 
-  const handleLogout = () => {
-    dispatch(logout());
-    // window.location.assign('/');
-    // fetchAllTags(dispatch);
-  };
+const handleLogout = () => {
+  dispatch(logout());
+  // window.location.assign('/');
+  // fetchAllTags(dispatch);
+};
+
+
+
 
   return (
     <ErrorBoundary fallback={
@@ -169,8 +171,12 @@ useEffect(() => {
                 onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
               /> 
             </div>
-          { openNotifModal && <Notification ref={notificationContainerRef}/>}
-          { openSettingModal && <Setting ref={settingContainerRef}/>}
+          { openNotifModal && 
+              <Notification ref={notificationContainerRef}/>
+            }
+          { openSettingModal && 
+           <Setting  ref={settingContainerRef}/>
+           }
             
           </div>
         </div>

@@ -132,9 +132,9 @@ const afficheTweet = allTweet?.map((tweet, i) => {
   return (
     <div className={styles.PageAcceuil}>
       <div className={`${styles[theme]} ${styles.hashtagPage}`}> 
-      { nbMatch && nbMatch > 0 ? 
+      {/* { nbMatch && nbMatch > 0 ? 
       <h3 className={`${styles[theme]} ${styles.titlePage}`}> {nbMatch} post{nbMatch > 1 && "s"}</h3> : 
-      !isLoading && <div className={styles.noFound}>Pas de <span className={styles.postNoFound}>post</span> trouvé </div> }
+      !isLoading && <div className={styles.noFound}>Pas de <span className={styles.postNoFound}>post</span> trouvé </div> } */}
         <div className={styles.tweetContainer}>
           { 
             isLoading ? <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : afficheTweet 
