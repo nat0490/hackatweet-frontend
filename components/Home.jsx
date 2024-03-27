@@ -21,9 +21,15 @@ function Home() {
 
   useEffect(()=> {
     getMyNotif();
-    fetchAllTags(dispatch);
-
+    if(getScreenWidth > 600) {
+      fetchAllTags(dispatch);
+    }
   }, []);
+
+  //Dimension écran
+const getScreenWidth = () => {
+  return window.innerWidth;
+};
 
   const getMyNotif = async() => {
     // (async()=> {

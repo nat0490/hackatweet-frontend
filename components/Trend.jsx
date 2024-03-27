@@ -19,9 +19,16 @@ function Trend() {
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   //console.log(hashtag);
 
-  const [ findTag, setFindTag ] = useState(undefined);
+  const [ findTag, setFindTag ] = useState("");
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);
+  const [activeToggleConnection, setActiveToggleConnection] = useState(false);
 
+
+  //Dimension écran
+const getScreenWidth = () => {
+  return window.innerWidth;
+};
+//Style des images en fonction de la taille de l'écran
 
 
 
@@ -70,11 +77,23 @@ function Trend() {
           type="text"
           name="rechercheTag"
           value={findTag}
+          // onChange={user.token? (e) => setFindTag(e.target.value) :()=>setActiveToggleConnection(!activeToggleConnection)}
           onChange={e => setFindTag(e.target.value)}
-          onFocus={() => setSaisieEnCours(true)}
+          onFocus={user.token? () => setSaisieEnCours(true) :()=>setActiveToggleConnection(!activeToggleConnection) }
           onBlur={() => { !findTag && setSaisieEnCours(false)}}
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
+
+{ activeToggleConnection && 
+  <section className={`${styles[theme]} ${styles.popAlert}`} >
+    <aside>
+        <h4 className={styles.titleAlert}>Vous devez vous connecter</h4>
+        <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggleConnection(!activeToggleConnection)}>Ok</button>
+    </aside>
+  </section>
+}
+
+
         { findTag && 
         <div className={styles.icon}>
           <FontAwesomeIcon
@@ -105,9 +124,10 @@ function Trend() {
         )}
       </div>
       <div className={`${styles[theme]} ${styles.hashtagContainer}`}>
-        {/* { noResult? "" /*<span className={styles.noResult}>Pas de post</span> :  */}
-        {hashs} 
-        {/* } */}
+       
+        {(getScreenWidth() < 600 && findTag === "" )? null : hashs }
+    
+       
         </div>
     </div>
     </ErrorBoundary>

@@ -6,7 +6,15 @@ import Link from "next/link";
 import {} from "@fortawesome/free-solid-svg-icons";
 import styles from '../styles/UserInfo.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear, faBell, faUser, faUserPlus, faRightFromBracket, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
+import { 
+  faGear, 
+  faBell, 
+  faUser, 
+  faUserPlus, 
+  faRightFromBracket, 
+  faFaceSadTear, 
+  faHome 
+} from "@fortawesome/free-solid-svg-icons";
 import Notification from './Notification';
 import Setting from './Setting';
 import SignUp from './login/Signup';
@@ -133,24 +141,28 @@ const handleLogout = () => {
       <div className={styles.topPage}> 
         <div className={styles.topPage2}> 
         
-        <Link href="/">
+       
+        <div className={styles.blocUser}>
           <img 
-            src={"/Logo2.png"}
-            name="logo"
-            alt="logo" 
-            // width={100} 
-            // height={100} 
-            className={styles.logoLink} 
-          />
-        </Link>
+            className={styles.photoProfil} 
+            name="profil picture"
+            alt="profil picture"
+            src={"/user.jpg"} 
+            // width={50} 
+            // height={50} 
+            />
+          <p className={styles.username}> @{user.username && user.username.slice(0, 8) }</p>
+         
+        </div>
+
+
         <div className={styles.logo}>
-            <div className={`${styles.oneLogo} ${styles.logoWithNotif}`}>
+            <div className={styles.oneLogo}>
             {/* <div className={{marginRight: "-0.25rem", ...styles.oneLogo }}> */}
               <FontAwesomeIcon
                 icon={faBell}
                 size="xl"
                 onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
-                style={{ cursor: 'pointer'}}
               /> {notifNonLues > 0 && <span className={styles.nbrNotif}></span> }
             </div> 
 
@@ -159,7 +171,6 @@ const handleLogout = () => {
                 icon={faUser}
                 size="xl"
                 // onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
-                style={{ cursor: 'pointer'}}
               />
             </div> 
             
@@ -167,9 +178,18 @@ const handleLogout = () => {
               <FontAwesomeIcon
                 icon={faGear}
                 size="xl"
-                style={{ cursor: 'pointer' }}
                 onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
               /> 
+            </div>
+
+            <div className={styles.oneLogo}>
+            <Link href="/">
+              <FontAwesomeIcon
+                icon={faHome}
+                size="lg"
+                // onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
+              /> 
+              </Link> 
             </div>
           { openNotifModal && 
               <Notification ref={notificationContainerRef}/>
@@ -184,7 +204,7 @@ const handleLogout = () => {
 
       
       <div className={styles.bottom}> 
-        <div className={styles.blocUser}>
+        {/* <div className={styles.blocUser}>
           <img 
             className={styles.photoProfil} 
             name="profil picture"
@@ -193,17 +213,16 @@ const handleLogout = () => {
             width={50} 
             height={50} />
           <div className={styles.userLog} >
-            {/* <span>{user.firstname && user.firstname.slice(0, 8)}</span> */}
+    
             <span className={styles.username}> @{user.username && user.username.slice(0, 8) }</span>
           </div>
-        </div>
+        </div> */}
         {/* <div className={styles.englobButton}>  */}
         <div className={styles.logo}>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon
               icon={faRightFromBracket}
               size="xl"
-              style={{ cursor: 'pointer' }}
               onClick={handleLogout}
             /> 
           </div>
@@ -217,17 +236,7 @@ const handleLogout = () => {
 
 // PAS DUTILISATEUR CONNECTE
   <section className={styles.noUser}>
-    <Link href="/">
-      <img 
-        src={"/Logo2.png"}
-        name="logo"
-        alt="logo" 
-        // width={100} 
-        // height={100} 
-        className={styles.logoLink} 
-      />
-    </Link>
-
+   
    
 
     {openModalSignUp && 

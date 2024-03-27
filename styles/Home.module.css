@@ -9,11 +9,11 @@
     height: 100vh;
   }
   .lastTweetsContainer {
-    width: 65%;
+    width: 70%;
     height: 100vh;
   }
   .trend {
-    width: 25%;
+    width: 20%;
   }
 }
 
@@ -26,10 +26,11 @@
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(13, 1fr);
+    grid-template-rows: repeat(15, 1fr);
   }
   .userInfo {
     flex: 1;
+    margin: 0;
     grid-column-start: 1;
     grid-column-end: 9;
     grid-row-start: 1;
@@ -37,17 +38,18 @@
   }
   .lastTweetsContainer {
     flex:1;
+    margin: 0;
     grid-column-start: 1;
-    grid-column-end: 9;
+    grid-column-end: 11;
     grid-row-start: 2;
-    grid-row-end: 14;
+    grid-row-end: 16;
   }
   .trend {
     flex:1;
     grid-column-start: 9;
     grid-column-end: 11;
     grid-row-start: 1; 
-    grid-row-end: 14;
+    grid-row-end: 2;
   }
 }
 

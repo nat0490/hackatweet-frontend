@@ -1,7 +1,6 @@
 
 .modalContainer {
     background-color: #fff;
-    /* opacity: 0.9; */
     width: 500px;
     height: 500px;
     border-radius: 20px;
@@ -19,6 +18,8 @@
     /* transition: opacity 0.3s ease-in-out; Ajout de la transition pour l'opacité */
     @media only screen and (max-width: 600px) {
         transform: translate(-50%, 30%);
+        width: 350px;
+        height: 400px;
     }
 }
 

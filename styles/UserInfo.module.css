@@ -1,117 +1,109 @@
-.logoLink:hover {
-    opacity: 50%;
-}
-
-.logoLink{
-  transform: rotate(-45deg);
-  cursor: pointer;
-  width: 8rem;
-  height: 8rem;
-}
-
-
-
+/* MISE EN FORME PAGE  */
 .userInfoPage {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-
-    /* flex-grow: 1; */
-    
-    /* max-width: 20%; */
-    /* @media only screen and (max-width: 600px) {
-        flex-direction: row;
-        align-items: center;
-        padding: 0;
-    } */
     @media only screen and (min-width: 601px) {
         height: 100%;
-    } 
+    };
+    @media only screen and (max-width: 600px){
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+        max-height: 80%;
+        /* height: 4rem; */
+     };
+}
+.light.userInfoPage {
+    border-right: 1px solid grey;
+    @media only screen and (max-width: 600px){
+        border:none;
+     }
+}
+.dark.userInfoPage {
+    border-right: 1px solid black;
+    @media only screen and (max-width: 600px){
+       border:none;
+    }
 }
 
+/* HAUT DE PAGE */
+.topPage {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    width: 100%;
+    @media only screen and (max-width:600px) {
+        flex-direction: row;
+    }
+}
+.topPage2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    @media only screen and (max-width:600px) {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+/* BAS DE PAGE */
 .bottom{
     display: flex;
     flex-direction: column; 
     justify-content: flex-end;  
     align-items: center;
-    width: 100%;
-    height: 100%;  
-    /* @media only screen and (max-width: 600px) {
+    
+    @media only screen and (max-width: 600px) {
         align-items: center;
         flex-direction: row;
         justify-content: center;
-    } */
+    };
+    @media only screen and (min-width: 601px) {
+        width: 100%;
+        height: 100%;  
+    };
 }
 
 /* USER */
 .blocUser {
     display: flex;
-    margin-bottom: 1rem;
-    margin-right: 1rem;
-    /* @media only screen and (max-width: 600px) {
-        margin-right: 1rem;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    @media only screen and (max-width: 600px) {
+        margin-bottom: 0;
         display: flex;
-    } */
+    }
 }
 .photoProfil {
     border-radius: 5rem;
-    width: 4rem;
-    height: 4rem;
+    width: 6rem;
+    height: 6rem;
     @media only screen and (max-width: 600px) {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 3rem;
+        height: 3rem;
+     
     }
 }
-.userLog {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items:flex-start;
-    /* @media only screen and (max-width: 600px) {
-        margin-left: 0.25rem;
-        max-width: 100%; 
-        word-wrap: break-word; 
-        font-size: 12px;
-    } */
-}
+
 .username{
     color: #57616E;
     font-size: 0.75rem;
+    text-align: left;
+    width: 100%;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    margin-left: 0.5rem;
+    /* margin-left: 0.5rem; */
+   
 }
 
 
-
-
-.logoutButton {
-    background-color: #EA3680;
-    max-width: 20rem; 
-    text-decoration: none;
-    font-variant-caps: small-caps;
-    font-size: 10px;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    cursor: pointer;
-    /* @media only screen and (max-width: 600px) {
-        max-width: 100%; 
-        word-wrap: break-word; 
-        margin-bottom: 1rem;
-    } */
-}
-
-/* .englobButton {
-    max-width: 100%;
-} */
-
-.logoutButton:hover {
-    opacity: 70%;
-}
-
-
-
-
+/* BOUTON */
 .btnTheme {
     cursor: pointer;
     border-radius: 50%;    
@@ -119,59 +111,45 @@
     height: 70px;    
 }
 
-/* LOGO ICON */
 
+/* FONT AWESOME */
 .logo {
     display: flex;
-    width: 100%;
     flex-direction: column;
     justify-content:space-between;
     align-items: flex-end;
     margin-top: 0.5rem;
+    margin-right: 1rem;
     margin-bottom: 1rem;
-    padding-right: 1rem;
-/* @media only screen and (max-width: 600px) {
+    /* padding-right: 1rem; */
+@media only screen and (max-width: 600px) {
     flex-direction: row;
     justify-content:space-around;
     align-items: center;
-} */
-    
+    margin:0;
+};
+@media only screen and (min-width: 601px) {
+    width: 90%;
+};
 }
 
 .oneLogo {
     margin-bottom: 0.5rem;
     padding: 0.25rem;
-    text-align: center;
-    /* @media only screen and (max-width:600px) {
-        margin: 0.75rem;
-    } */
+    /* width: 1rem; */
+    cursor: pointer;
+    /* justify-content: center; */
+    /* text-align: center; */
+    @media only screen and (max-width:600px) {
+        margin: 0.5rem;
+        padding: 0.5rem;
+    }
 }
 .oneLogo:hover {
     opacity: 50%;
     font-style: italic;
 }
 
-.topPage {
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    align-items:center;
-    width: 100%;
-    /* @media only screen and (max-width:600px) {
-        flex-direction: row;
-    } */
-}
-
-.topPage2 {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    
-    /* @media only screen and (max-width:600px) {
-        flex-direction: row;
-        align-items: center;
-    } */
-}
 
 .nbrNotif {
     border-radius: 50%;
@@ -231,6 +209,7 @@
     box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 40px;
 }
 
+
 /* NO USER */
 .noUser{
     display: flex;
@@ -239,17 +218,12 @@
     width: 100%; 
     justify-content: space-around;
     align-items: center;
-    /* @media only screen and (max-width: 600px) {
+    @media only screen and (max-width: 600px) {
         flex-direction: row;
-    } */
+        margin:1rem;
+    }
 }
 
-/* .connection{
-    font-size: 12px;
-    border: none;
-    border-top: 1px solid #EA3680;
-    padding-top: 0.5rem;
-} */
 
 /* BOUTTON CONNEXION */
 .oneLogoConnection {
@@ -258,10 +232,17 @@
     cursor: pointer;
     font-style: italic;
     margin-left: 1rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
     border-bottom: 1px solid #EA3680;
     border-right: 1px solid #EA3680;
     border-radius: 50%;
+    @media only screen and (max-width: 600px){
+        margin-top: 0.5rem;
+        margin-left: 0;
+        padding: 0.2rem;
+        width: 7rem;
+        height: 4rem;
+    }
 }
 
 .oneLogoConnection:hover{
@@ -272,8 +253,10 @@
 .connection{
     font-size: 12px;
     border: none;
-    /* padding-left: 0.75rem;
-    padding-right: 0.75rem; */
+    padding: 0;
+    @media only screen and (max-width: 600px){
+        margin-bottom: 0.2rem;
+    }
 }
 
 .connection2{
@@ -281,75 +264,17 @@
     border: none;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+    @media only screen and (max-width: 600px){
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 0.25rem;
+    }
 }
 
 
-/* LIGHT MODE */
-.light.userInfoPage {
-    border-right: 1px solid grey;
-}
 
-/* DARK MODE */
-.dark.userInfoPage {
-    /* background-color: #222; */
-    /* color: #fefefe; */
-    border-right: 1px solid black;
-}
 
-@media only screen and (max-width: 600px) {
-    .noUser{
-        flex-direction: row;
-    }
-    .topPage2 {
-        flex-direction: row;
-        align-items: center;
-    }
-    .topPage {
-        flex-direction: row;
-    }
-    .logoLink{
-        width: 3rem;
-        height: 3rem;
-    }
-    .oneLogo {
-        margin: 0.75rem;
-    }
-    .logo {
-        flex-direction: row;
-        justify-content:space-around;
-        align-items: center;
-    }
-    .logoutButton {
-        max-width: 100%; 
-        word-wrap: break-word; 
-        margin-bottom: 1rem;
-    }
-    .userLog {
-        margin-left: 0.25rem;
-        max-width: 100%; 
-        word-wrap: break-word; 
-        font-size: 12px;
-    }
-    .blocUser {
-        margin-right: 1rem;
-        display: flex;
-    }
-    .bottom{
-        align-items: center;
-        flex-direction: row;
-        justify-content: center;
-    }
-    .userInfoPage {
-        flex-direction: row;
-        align-items: center;
-        padding: 0;
-    }
-    .photoProfil{
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-    .connection{
-        margin-bottom: 0.2rem;
-    }
-}
+
+
+
 
