@@ -204,20 +204,6 @@ const handleLogout = () => {
 
       
       <div className={styles.bottom}> 
-        {/* <div className={styles.blocUser}>
-          <img 
-            className={styles.photoProfil} 
-            name="profil picture"
-            alt="profil picture"
-            src={"/user.jpg"} 
-            width={50} 
-            height={50} />
-          <div className={styles.userLog} >
-    
-            <span className={styles.username}> @{user.username && user.username.slice(0, 8) }</span>
-          </div>
-        </div> */}
-        {/* <div className={styles.englobButton}>  */}
         <div className={styles.logo}>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon

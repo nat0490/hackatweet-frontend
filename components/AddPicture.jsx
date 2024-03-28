@@ -39,6 +39,7 @@ const AddPicture = forwardRef((props, ref) =>{
                             'image/*': ['.jpeg', '.jpg', '.png'],
                           }, maxFiles: 6});
 
+//Chargement des images du composant enfant une fois téléchargé sur cloudinary                      
   useEffect(() => {
     if (picUpload.length > 0 && uploadStatus !== "") {
       props.onImagesLoaded(picUpload);

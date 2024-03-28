@@ -23,7 +23,7 @@ const Setting = forwardRef((props, ref) => {
 //Position de la modale en fonction de l'écran
   const getModaleStyle = () => {
     if(getScreenWidth() < 600) {
-      return { transform: 'translate(15%, 60%)'}
+      return { transform: 'translate(5%, 60%)'}
     } else {
       return { transform: 'translate(105%, -10%)'}
     }

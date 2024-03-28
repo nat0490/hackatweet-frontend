@@ -20,6 +20,7 @@ import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/sh
 import { tempsEcoule, detectClickOutside } from '../utils';
 import Link from 'next/link';
 import { ErrorBoundary } from "react-error-boundary";
+import SwipeListener from "swipe-listener";
 
 
 
@@ -47,53 +48,74 @@ import { ErrorBoundary } from "react-error-boundary";
     const bigPicContainerRef = useRef(null);
 //Popup d'alert
     const [activeToggle, setActiveToggle] = useState(false);
-
     const [activeToggleConnection, setActiveToggleConnection] = useState(false);
     
     
   
-
   useEffect(() => {
     setShowInputAddComment(commentILook.includes(props._id));
   },[props._id]);
- 
 
-  useEffect(() => {
-    //console.log("selected Pic:", selectedPic);
-    const handleClickOutside = (event) => {
-  //Si il y a selectedPic && onClick en dehors de la zone
-        if (selectedPic && bigPicContainerRef.current && !bigPicContainerRef.current.contains(event.target)) {
-            setSelectedPic(null);
+//Detection d'un swipe
+  useEffect(()=>{
+    const container = document.querySelector("#bigPicContainer");
+    const listener = SwipeListener(container);
+    if(getScreenWidth() <600){
+      container.addEventListener('swipe', function(e){
+        const directions = e.detail.directions;
+        const x = e.detail.x;
+        const y = e.detail.y;
+
+        if (directions.left) {
+          console.log('Swiped left.');
         }
-    };
-    let timeoutId;
-//Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
-    if (selectedPic) {
-        timeoutId = setTimeout(() => {
-          //console.log("add event");
-            document.addEventListener('click', handleClickOutside);
-        }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
-    } else {
-      //console.log("remove event");
-        document.removeEventListener('click', handleClickOutside);
+       
+        if (directions.right) {
+          console.log('Swiped right.');
+        }
+       
+        if (directions.top) {
+          console.log('Swiped top.');
+        }
+       
+        if (directions.bottom) {
+          console.log('Swiped bottom.');
+        }
+      });
+
     }
+  },[selectedPic])
+ 
+//NE SERT PLUS A RIEN CAR LIMAGE PREND TOUS LECRAN MAINTENANT
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//         if (selectedPic && bigPicContainerRef.current && !bigPicContainerRef.current.contains(event.target)) {
+//             setSelectedPic(null);
+//         }
+//     };
+//     let timeoutId;
+// //Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
+//     if (selectedPic) {
+//         timeoutId = setTimeout(() => {
+//           //console.log("add event");
+//             document.addEventListener('click', handleClickOutside);
+//         }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+//     } else {
+//       //console.log("remove event");
+//         document.removeEventListener('click', handleClickOutside);
+//     }
 
-    return () => {
-        clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
-        document.removeEventListener('click', handleClickOutside);
-    };
-  }, [selectedPic]);
-
-  // useEffect(()=>{
-  //   detectClickOutside(selectedPic, setSelectedPic, null, bigPicContainerRef);
-  // }, [selectedPic])
-
-
+//     return () => {
+//         clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
+//         document.removeEventListener('click', handleClickOutside);
+//     };
+//   }, [selectedPic]);
 
 
 
 //Mettre à jour les commentaire liké de l'utilisateur
-  const updateLikedCom = (comId) => {
+  
+const updateLikedCom = (comId) => {
     if (commentILkd.some(com => com === comId)) { 
       dispatch(rmvLikedComment({user: user.token, comment: comId}));     
     } else {   
@@ -231,13 +253,6 @@ import { ErrorBoundary } from "react-error-boundary";
       />
     )
   });
-
-//Ouvrir l'image en grand en cliquant dessus
-// const handleOpenPic = (path) => {
-//   //console.log("click");
-//   setSelectedPic(path);
-//   };
-
 //Toutes les images d'un post
   const allPic = props.pictures?.length > 0 && props.pictures.map((pic, i) => {
    const indexOfPic = props.pictures.indexOf(pic);
@@ -382,7 +397,7 @@ const handlePrevpic = () => {
             : ""}
 
       {selectedPic !== null && (
-        <div className={styles.bigPicContainer} style={{ }} ref={bigPicContainerRef} >
+        <div className={styles.bigPicContainer} id="bigPicContainer" ref={bigPicContainerRef} >
           {/* <div className={styles.bigPicCenter}> */}
             <div 
               className={`${styles[theme]} ${styles.navigationBtn}`}
