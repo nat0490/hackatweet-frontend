@@ -60,19 +60,19 @@ import SwipeListener from "swipe-listener";
   useEffect(()=>{
     const container = document.querySelector("#bigPicContainer");
     const listener = SwipeListener(container);
-    if(getScreenWidth() <600 && selectedPic){
+    if(getScreenWidth() <600 && selectedPic !== null){
       container.addEventListener('swipe', function(e){
         const directions = e.detail.directions;
         const x = e.detail.x;
         const y = e.detail.y;
 
         if (directions.left) {
-          console.log('Swiped left.');
+          // console.log('Swiped left.');
           handleNextPic();
         }
        
         if (directions.right) {
-          console.log('Swiped right.');
+          // console.log('Swiped right.');
           handlePrevpic();
         }
        
@@ -401,7 +401,7 @@ const handlePrevpic = () => {
       {selectedPic !== null && (
         <div className={styles.bigPicContainer} id="bigPicContainer" ref={bigPicContainerRef} >
           {/* <div className={styles.bigPicCenter}> */}
-            <div 
+            { getScreenWidth() >= 600 &&<div 
               className={`${styles[theme]} ${styles.navigationBtn}`}
               style={{left: 0}} 
               onClick={handlePrevpic} 
@@ -410,14 +410,14 @@ const handlePrevpic = () => {
               icon={faChevronLeft}
               size="xl"
                 />
-            </div>
+            </div>}
             <img 
               src={props.pictures[selectedPic].url}
               alt={`image Zoom`}
               name={`image Zoom`}
               className={styles.bigPic} 
               />
-            <div 
+            { getScreenWidth() >= 600 &&<div 
               className={`${styles[theme]} ${styles.navigationBtn}`} 
               style={{right: 0}}
               onClick={handleNextPic} 
@@ -426,7 +426,7 @@ const handlePrevpic = () => {
               icon={faChevronRight}
               size="xl"
                 />
-            </div>
+            </div> }
           {/* </div> */}
           <FontAwesomeIcon 
               icon={faCircleXmark} 
