@@ -46,6 +46,7 @@ import SwipeListener from "swipe-listener";
 //Image en grand
     const [ selectedPic, setSelectedPic ] = useState(null);
     const bigPicContainerRef = useRef(null);
+    const bigPicRef = useRef(null);
 //Popup d'alert
     const [activeToggle, setActiveToggle] = useState(false);
     const [activeToggleConnection, setActiveToggleConnection] = useState(false);
@@ -56,62 +57,49 @@ import SwipeListener from "swipe-listener";
     setShowInputAddComment(commentILook.includes(props._id));
   },[props._id]);
 
-//Detection d'un swipe
+//Detection & action d'un swipe
   useEffect(()=>{
     const container = document.querySelector("#bigPicContainer");
     const listener = SwipeListener(container);
     if(getScreenWidth() <600 && selectedPic !== null){
       container.addEventListener('swipe', function(e){
         const directions = e.detail.directions;
-        const x = e.detail.x;
-        const y = e.detail.y;
-
+        // const x = e.detail.x;
+        // const y = e.detail.y;
         if (directions.left) {
-          // console.log('Swiped left.');
-          handleNextPic();
-        }
+          handleNextPic();}
        
         if (directions.right) {
-          // console.log('Swiped right.');
           handlePrevpic();
         }
-       
-        // if (directions.top) {
-        //   console.log('Swiped top.');
-        // }
-       
-        // if (directions.bottom) {
-        //   console.log('Swiped bottom.');
-        // }
       });
-
     }
   },[selectedPic])
  
-//NE SERT PLUS A RIEN CAR LIMAGE PREND TOUS LECRAN MAINTENANT
-//   useEffect(() => {
-//     const handleClickOutside = (event) => {
-//         if (selectedPic && bigPicContainerRef.current && !bigPicContainerRef.current.contains(event.target)) {
-//             setSelectedPic(null);
-//         }
-//     };
-//     let timeoutId;
-// //Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
-//     if (selectedPic) {
-//         timeoutId = setTimeout(() => {
-//           //console.log("add event");
-//             document.addEventListener('click', handleClickOutside);
-//         }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
-//     } else {
-//       //console.log("remove event");
-//         document.removeEventListener('click', handleClickOutside);
-//     }
+//Detection du click en dehors de la photo pour les mobiles
+  useEffect(() => {
+    if(getScreenWidth() <600 && selectedPic !== null){
+    const handleClickOutside = (event) => {
+      // console.log("click");
+        if (selectedPic !== null && bigPicRef.current && !bigPicRef.current.contains(event.target)) {
+            setSelectedPic(null);
+        }
+    };
+    let timeoutId;
+    if (selectedPic !== null) {
+        timeoutId = setTimeout(() => {
+            document.addEventListener('click', handleClickOutside);
+        }, 100); 
+    } else {
+        document.removeEventListener('click', handleClickOutside);
+    }
 
-//     return () => {
-//         clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
-//         document.removeEventListener('click', handleClickOutside);
-//     };
-//   }, [selectedPic]);
+    return () => {
+        clearTimeout(timeoutId); 
+        document.removeEventListener('click', handleClickOutside);
+    };
+  }
+  }, [selectedPic]);
 
 
 
@@ -412,6 +400,8 @@ const handlePrevpic = () => {
                 />
             </div>}
             <img 
+              id="bigPic" 
+              ref={bigPicRef}
               src={props.pictures[selectedPic].url}
               alt={`image Zoom`}
               name={`image Zoom`}

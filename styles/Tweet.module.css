@@ -249,7 +249,7 @@
 
 .bigPicContainer {
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.85);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     width: 100vw;
     height: 100vh;
