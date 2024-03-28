@@ -68,19 +68,21 @@ import SwipeListener from "swipe-listener";
 
         if (directions.left) {
           console.log('Swiped left.');
+          handleNextPic();
         }
        
         if (directions.right) {
           console.log('Swiped right.');
+          handlePrevpic();
         }
        
-        if (directions.top) {
-          console.log('Swiped top.');
-        }
+        // if (directions.top) {
+        //   console.log('Swiped top.');
+        // }
        
-        if (directions.bottom) {
-          console.log('Swiped bottom.');
-        }
+        // if (directions.bottom) {
+        //   console.log('Swiped bottom.');
+        // }
       });
 
     }
