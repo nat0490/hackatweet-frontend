@@ -228,8 +228,7 @@ const handleLogout = () => {
           </div>
         </div>
 
-        {/* <button onClick={handleLogout} className={styles.logoutButton}>Quitter</button>  */}
-        {/* </div> */}
+
       </div>
       </>
 : 

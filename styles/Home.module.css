@@ -26,7 +26,7 @@
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(15, 1fr);
+    grid-template-rows: repeat(18, 1fr);
   }
   .userInfo {
     flex: 1;
@@ -42,7 +42,7 @@
     grid-column-start: 1;
     grid-column-end: 11;
     grid-row-start: 2;
-    grid-row-end: 16;
+    grid-row-end: 19;
   }
   .trend {
     flex:1;

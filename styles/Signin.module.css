@@ -17,9 +17,12 @@
     z-index: 1;
     /* transition: opacity 0.3s ease-in-out; Ajout de la transition pour l'opacité */
     @media only screen and (max-width: 600px) {
-        transform: translate(-50%, 30%);
+        /* transform: translate(-50%, 30%);
         width: 350px;
-        height: 400px;
+        height: 400px; */
+        height: 110vh;
+        width: 110vw;
+        padding: 2rem;
     }
 }
 
@@ -36,6 +39,9 @@
     height: 100%;
     border-radius: 1rem;
     background-size: cover;
+    @media only screen and (max-width:600px) {
+        background-size: contain;
+    }
 }
 
 

@@ -123,12 +123,15 @@ const getScreenWidth = () => {
           </div>
         )}
       </div>
-      <div className={`${styles[theme]} ${styles.hashtagContainer}`}>
+      
        
-        {(getScreenWidth() < 600 && findTag === "" )? null : hashs }
+        {(getScreenWidth() < 600 && findTag === "" )? null : 
+          <div className={`${styles[theme]} ${styles.hashtagContainer}`}>
+            {hashs}
+            </div>}
     
        
-        </div>
+        
     </div>
     </ErrorBoundary>
   );

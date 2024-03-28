@@ -139,6 +139,8 @@ const SignIn = forwardRef((props, ref) => {
               <input
                 type="text"
                 placeholder="Nom d'utilisateur"
+                name="Nom d'utilisateur"
+                id="Nom d'utilisateur"
                 onChange={(e) => setSignInUsername(e.target.value)}
                 value={signInUsername}
                 style={{ 
@@ -152,6 +154,8 @@ const SignIn = forwardRef((props, ref) => {
               <input
                 type={showEye? "password": "text"}
                 placeholder="Mots de passe"
+                name="Mots de passe"
+                id="Mots de passe"
                 onChange={(e) => setSignInPassword(e.target.value)}
                 value={signInPassword}
                 style={{ 

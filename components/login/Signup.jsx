@@ -145,6 +145,8 @@ const SignUp = forwardRef((props,ref) => {
               <input
                 type="text"
                 placeholder="Prenom"
+                name="Prenom"
+                id="Prenom"
                 onChange={(e) => setSignUpFirstname(e.target.value)}
                 value={signUpFirstname}
                 style={{ 
@@ -157,6 +159,8 @@ const SignUp = forwardRef((props,ref) => {
               <input
                 type="text"
                 placeholder="Nom d'utilisateur"
+                name="Nom d'utilisateur"
+                id="Nom d'utilisateur"
                 onChange={(e) => setSignUpUsername(e.target.value)}
                 value={signUpUsername}
                 style={{ 
@@ -170,6 +174,8 @@ const SignUp = forwardRef((props,ref) => {
               <input
                 type={showEye? "password": "text"}
                 placeholder="Mot de passe"
+                name="Mots de passe"
+                id="Mots de passe"
                 onChange={(e) => setSignUpPassword(e.target.value)}
                 value={signUpPassword}
                 style={{ 
@@ -192,6 +198,8 @@ const SignUp = forwardRef((props,ref) => {
               <input
                  type={showEye2? "password": "text"}
                 placeholder="Vérification du Mot de passe"
+                name="Vérification du Mot de passe"
+                id="Vérification du Mot de passe"
                 onChange={(e) => setSignUpCheckPassword(e.target.value)}
                 value={signUpCheckPassword}
                 style={{ 
