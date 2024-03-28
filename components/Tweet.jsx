@@ -60,7 +60,7 @@ import SwipeListener from "swipe-listener";
   useEffect(()=>{
     const container = document.querySelector("#bigPicContainer");
     const listener = SwipeListener(container);
-    if(getScreenWidth() <600){
+    if(getScreenWidth() <600 && selectedPic){
       container.addEventListener('swipe', function(e){
         const directions = e.detail.directions;
         const x = e.detail.x;
