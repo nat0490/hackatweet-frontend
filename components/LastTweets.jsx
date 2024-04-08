@@ -159,7 +159,9 @@ const handleLoadingChange = (loading) => {
 
 //Appuie sur le boutton POST
   const handlePost = () => {
-    //Si page addPic ouvert, passer start à true pour lancer le téléchargement des pic sur cloudy
+    // console.log("click");
+    // console.log(start);
+        //Si page addPic ouvert, passer start à true pour lancer le téléchargement des pic sur cloudy
     if (addPic) {
       setStart(true)
     //Si la page addPic est fermé, poster le tweet
@@ -242,6 +244,10 @@ const handleLoadingChange = (loading) => {
     );
   });
 
+  const updateFailedStart = () => {
+    setStart(!start);
+  }
+
   return (
     <ErrorBoundary fallback={
       <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
@@ -268,9 +274,12 @@ const handleLoadingChange = (loading) => {
         <div className={styles.addPictureContainer}> 
 
           { addPic && 
+          // <div style={{height: start ? "10rem" : ""}}>
             <AddPicture
+              
             //Appuie sur boutton POST
               onStart={start}
+              updateFailedStart={updateFailedStart}
               onImagesLoaded={onImagesLoaded}
               //Changement du status is Loading
               onLoadingChange={handleLoadingChange}
@@ -282,7 +291,9 @@ const handleLoadingChange = (loading) => {
               onAddPic={addPic}
               onHandleAddTweet={postTweet}
 
-            />}  
+            />
+            // </div>
+            }  
         </div>
 
         <div className={styles.dessousInput}>

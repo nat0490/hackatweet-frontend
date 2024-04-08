@@ -6,7 +6,7 @@ import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { ErrorBoundary } from 'react-error-boundary';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
+import { faFaceSadTear, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 const AddPicture = forwardRef((props, ref) =>{
     
@@ -21,6 +21,8 @@ const AddPicture = forwardRef((props, ref) =>{
   const [ selectedImages, setSelectedImages] = useState([]);
   const [ uploadStatus, setUploadStatus] = useState("");
   const [ picUpload, setPicUpload ] = useState([]);
+
+  const [ popUpError, setPopUpError ] = useState(false);
 
    
   const onDrop = useCallback((acceptedFiles, rejectedFiles)=> {
@@ -47,27 +49,82 @@ const AddPicture = forwardRef((props, ref) =>{
     }
   }, [picUpload, uploadStatus]);
 
+//Ecoute pour détecter le click en dehors du toggle SuccesPost
+useEffect(() => {
+  let timeoutId;
+  if (popUpError) {
+    timeoutId = setTimeout(()=> {
+      document.addEventListener('click', () => setPopUpError(false))
+    }, 100);
+  }
+}, [popUpError]);
 
+// Fonction pour redimensionner une image côté client
+function resizeImage(file, maxSizeInMB, callback) {
+  var maxSizeInBytes = maxSizeInMB * 1024 * 1024; // Convertir en octets
+  if (file.size <= maxSizeInBytes) {
+      // Si la taille du fichier est inférieure ou égale à la limite, pas besoin de redimensionner
+      callback(file);
+      return;
+  }
+  // Sinon, redimensionner l'image
+  var img = new Image();
+  img.src = URL.createObjectURL(file);
+  img.onload = function() {
+      var width = img.width;
+      var height = img.height;
+
+      var scaleFactor = Math.min(1, maxSizeInBytes / (width * height));
+
+      var canvas = document.createElement('canvas');
+      canvas.width = width * scaleFactor;
+      canvas.height = height * scaleFactor;
+
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+      canvas.toBlob(function(blob) {
+          callback(blob);
+      }, file.type);
+  };
+}
+
+
+
+// console.log(selectedImages);
+
+//Télécharger les images sur Cloudinary
   const onUpload = async () => {
     setIsLoading(true);
     setUploadStatus('Uploading...');
     const formData = new FormData();
+
+    // selectedImages.forEach((image, i) => {
+    //   resizeImage(image, 5, (resizedBlob) => {
+    //     // console.log(resizedBlob);
+    //     formData.append(`file`, resizedBlob);
+    //   });
+    // });
+    
+
     selectedImages.forEach((image, i)=>{
       formData.append(`file`, image);
     });
     try {
+      console.log("start")
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       };
     const res = await axios.post(`${URL}tweets/upload2`, formData, config);
-    //console.log(res.data.allCloudinaryRes);
+    console.log(res.data.allCloudinaryRes);
     setPicUpload(res.data.allCloudinaryRes);
     setUploadStatus("Success");
     } catch(error) {
       console.log("imageUpload", error);
       setUploadStatus("Failed..");
+      props.updateFailedStart();
     }
     setIsLoading(false);
   };
@@ -76,8 +133,13 @@ const AddPicture = forwardRef((props, ref) =>{
   useEffect(()=>{
     if(uploadStatus) {
       console.log(uploadStatus);
+    };
+    if(uploadStatus === "Failed.." ) {
+      setPopUpError(true);
     }
   },[uploadStatus])
+
+ 
 
 //Lors d'appuie sur le boutton POST, lance le téléchargement sur Cloudy
   useEffect(()=>{
@@ -134,14 +196,20 @@ const getDownPicStyle = () => {
   let nbrDownImg = selectedImages?.length;
   if (getScreenWidth() < 600) {
     if (nbrDownImg > 0) {
-      return { top: "29rem"}
+      if(isLoading){
+        return { top: "15rem"}
       } else {
+        return { top: "29rem"}
+      }} else {
         return { top: "14rem"}
       };
     } else {
       if (nbrDownImg > 0) {
-        return { top: "29.5rem"}
+        if(isLoading){
+          return { top: "16rem"}
         } else {
+          return { top: "29.5rem"}
+        }} else {
           return { top: "14.5rem"}
         };
     }
@@ -160,6 +228,7 @@ const getDownPicStyle = () => {
     <div className={styles.addPictureContainer} ref={ref} >
         <div className={styles.container}>
           {/* <form encType="multipart/form-data" action='/upload' method="POST"> */}
+          {!isLoading && 
             <div className={styles.babyContainer}>
               <div className={styles.dropzone} {...getRootProps()}>
                 <input {...getInputProps()} name="file" type='file' accept="image/*" />
@@ -170,6 +239,7 @@ const getDownPicStyle = () => {
                 )}
               </div>
             </div>
+          }
           {/* </form> */}
           <div className={styles.images}>
             {selectedImages.length > 0 &&
@@ -184,6 +254,21 @@ const getDownPicStyle = () => {
                 color="#EA3680" 
                 />
           </div>}
+
+          { popUpError &&
+              <section className={`${styles[theme]} ${styles.popAlert}`} >
+              <aside>
+                  <h4 className={styles.titleAlert}>Erreur lors du chargement, Veuillez réessayer.</h4>
+                  <FontAwesomeIcon
+                    icon={faTriangleExclamation}
+                    size="2x"
+                    onClick={() =>setPrivat(false)}
+                    style={{ color: "#EA3680" }}
+                    className={styles.icon}
+                  /> 
+              </aside>
+            </section>
+            }  
 
             
           

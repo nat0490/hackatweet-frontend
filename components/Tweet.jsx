@@ -8,13 +8,15 @@ import {
   faFaceSadTear, 
   faChevronRight, 
   faChevronLeft,
-  faCircleXmark 
+  faCircleXmark,
+  faEllipsisVertical
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Tweet.module.css";
 import Comment from './Comment';
+import MenuTweets from './MenuTweets';
 import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
 import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
 import { tempsEcoule, detectClickOutside } from '../utils';
@@ -50,6 +52,9 @@ import SwipeListener from "swipe-listener";
 //Popup d'alert
     const [activeToggle, setActiveToggle] = useState(false);
     const [activeToggleConnection, setActiveToggleConnection] = useState(false);
+//Modale action Tweet
+    const [ openMenuTweet, setOpenMenuTweet] = useState(false);
+    const menuTweetContainerRef = useRef(null);
     
     
   
@@ -123,8 +128,6 @@ const updateLikedCom = (comId) => {
     props.handleDelete(props._id);
     // props.handleDeletePic(props.pictures);
   };
-
-
 
 //Bouton Like d'un tweet
   const handleLikeTweet = () => {
@@ -364,16 +367,22 @@ const handlePrevpic = () => {
             </p>
           </div>
         </div>
+
+        {/* <div 
+          className={styles.menuFont}
+          onClick={()=>setOpenMenuTweet(!openMenuTweet)}>
+          <FontAwesomeIcon 
+              icon={faEllipsisVertical}
+              size="lg"
+                />
+
+        { openMenuTweet && 
+           <MenuTweets  ref={menuTweetContainerRef}/>
+           }
+        </div> */}
+          
+
         <div>
-          {/* <p className={styles.description}>
-            {props.description?.split(" ").map((e, i) => {
-              if (new RegExp("#").test(e)) {
-                return <span className="hashtag" key={i}> {e} </span>;
-              } else {
-                return ` ${e} `;
-              }
-            })}
-          </p> */}
           <p className={styles.description}>
             {formatDescription(props.description)}
           </p>
@@ -389,7 +398,7 @@ const handlePrevpic = () => {
       {selectedPic !== null && (
         <div className={styles.bigPicContainer} id="bigPicContainer" ref={bigPicContainerRef} >
           {/* <div className={styles.bigPicCenter}> */}
-            { getScreenWidth() >= 600 &&<div 
+            { getScreenWidth() >= 600 && selectedPic > 0 && <div 
               className={`${styles[theme]} ${styles.navigationBtn}`}
               style={{left: 0}} 
               onClick={handlePrevpic} 
@@ -407,7 +416,7 @@ const handlePrevpic = () => {
               name={`image Zoom`}
               className={styles.bigPic} 
               />
-            { getScreenWidth() >= 600 &&<div 
+            { getScreenWidth() >= 600 && selectedPic < props.pictures?.length - 1 && <div 
               className={`${styles[theme]} ${styles.navigationBtn}`} 
               style={{right: 0}}
               onClick={handleNextPic} 
@@ -484,7 +493,7 @@ const handlePrevpic = () => {
             onChange={(e) => setTextComment(e.target.value)}
             className={`${styles[theme]} ${styles.inputComment}`}            
           />
-          <div className={styles.dessousInput}>            
+          <div >            
             <button className={styles.addButton} onClick={handleAddComment}> Post </button>
           </div>
         </div>

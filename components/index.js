@@ -11,3 +11,4 @@ export * from "./Trend";
 export * from "./Tweet";
 export * from "./UserInfo";
 export * from "./AddPicture";
+export * from "./MenuTweets";
