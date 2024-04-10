@@ -59,75 +59,89 @@ useEffect(() => {
   }
 }, [popUpError]);
 
-// Fonction pour redimensionner une image côté client
-function resizeImage(file, maxSizeInMB, callback) {
-  var maxSizeInBytes = maxSizeInMB * 1024 * 1024; // Convertir en octets
-  if (file.size <= maxSizeInBytes) {
-      // Si la taille du fichier est inférieure ou égale à la limite, pas besoin de redimensionner
-      callback(file);
-      return;
-  }
-  // Sinon, redimensionner l'image
-  var img = new Image();
-  img.src = URL.createObjectURL(file);
-  img.onload = function() {
-      var width = img.width;
-      var height = img.height;
+//Fonction pour redimensionner une image
+function resizeImageToTargetSize(image, targetSizeInKB) {
+  return new Promise((resolve, reject) => {
+      const MAX_QUALITY = 1;
+      const MIN_QUALITY = 0;
 
-      var scaleFactor = Math.min(1, maxSizeInBytes / (width * height));
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      const imageElement = new Image();
 
-      var canvas = document.createElement('canvas');
-      canvas.width = width * scaleFactor;
-      canvas.height = height * scaleFactor;
+      const reader = new FileReader();
+      reader.onload = function(event) {
+          imageElement.onload = function() {
+              let quality = MAX_QUALITY;
+              let dataURL = null;
+              let blobSizeInKB = 0;
 
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              do {
+                  canvas.width = imageElement.width;
+                  canvas.height = imageElement.height;
+                  context.clearRect(0, 0, canvas.width, canvas.height);
+                  context.drawImage(imageElement, 0, 0);
 
-      canvas.toBlob(function(blob) {
-          callback(blob);
-      }, file.type);
-  };
+                  dataURL = canvas.toDataURL('image/jpeg', quality);
+                  blobSizeInKB = Math.round(dataURL.length / 1024);
+
+                  if (blobSizeInKB <= targetSizeInKB) {
+                      resolve(dataURL);
+                      return;
+                  }
+
+                  quality -= 0.01;
+              } while (quality > MIN_QUALITY);
+
+              reject(new Error('Cannot resize image to target size.'));
+          };
+          imageElement.src = event.target.result;
+      };
+
+      reader.readAsDataURL(image);
+  });
 }
-
 
 
 // console.log(selectedImages);
 
-//Télécharger les images sur Cloudinary
+
+
   const onUpload = async () => {
     setIsLoading(true);
     setUploadStatus('Uploading...');
     const formData = new FormData();
 
-    // selectedImages.forEach((image, i) => {
-    //   resizeImage(image, 5, (resizedBlob) => {
-    //     // console.log(resizedBlob);
-    //     formData.append(`file`, resizedBlob);
-    //   });
-    // });
-    
+    // Utiliser Promise.all pour attendre que toutes les images soient redimensionnées
+    await Promise.all(selectedImages.map(async (image, i) => {
+        try {
+            // Redimensionner l'image
+            const resizedDataUrl = await resizeImageToTargetSize(image, 500); // 500 Ko comme taille cible
+            // Convertir l'URL de données en Blob
+            const blob = await fetch(resizedDataUrl).then(res => res.blob());
+            // Ajouter le blob à FormData
+            formData.append(`file`, blob);
+        } catch (error) {
+            console.error("Error resizing image:", error);
+        }
+    }));
 
-    selectedImages.forEach((image, i)=>{
-      formData.append(`file`, image);
-    });
     try {
-      console.log("start")
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-    const res = await axios.post(`${URL}tweets/upload2`, formData, config);
-    console.log(res.data.allCloudinaryRes);
-    setPicUpload(res.data.allCloudinaryRes);
-    setUploadStatus("Success");
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        const res = await axios.post(`${URL}tweets/upload2`, formData, config);
+        setPicUpload(res.data.allCloudinaryRes);
+        setUploadStatus("Success");
     } catch(error) {
-      console.log("imageUpload", error);
-      setUploadStatus("Failed..");
-      props.updateFailedStart();
+        console.error("imageUpload", error);
+        setUploadStatus("Failed..");
+        props.updateFailedStart();
     }
     setIsLoading(false);
-  };
+};
 
 //Loger le status du téléchargement
   useEffect(()=>{
