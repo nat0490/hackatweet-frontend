@@ -243,9 +243,10 @@
     font-style: italic;
     margin-left: 1rem;
     margin-top: 2rem;
-    border-bottom: 1px solid #EA3680;
-    border-right: 1px solid #EA3680;
-    border-radius: 50%;
+    border: none;
+    /* border-bottom: 1px solid #EA3680;
+    border-right: 1px solid #EA3680;*/
+    border-radius: 2rem; 
     @media only screen and (max-width: 600px){
         /* margin-top: 0.5rem;
         margin-left: 0; */
@@ -256,9 +257,12 @@
     }
 }
 
+
 .oneLogoConnection:hover{
     opacity: 0.7;
-    box-shadow: rgba(227, 2, 145, 0.35) 0px 0px 15px;
+    font-weight: 800;
+    font-size: 20px;
+    /* box-shadow: rgba(26, 0, 16, 0.35) 0px 0px 15px; */
 }
 
 .connection{

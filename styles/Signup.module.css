@@ -1,6 +1,6 @@
 
 .modalContainer {
-    background-color: #fff;
+    background-color: #f8ecf4;
     width: 500px;
     height: 500px;
     border-radius: 20px;
@@ -44,9 +44,7 @@
 /* HAUT DE PAGE: FERMETURE FENETRER */
 .topPage {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* align-items: center; */
+    flex-direction: row-reverse;
     width: 100%;
 }
 
@@ -64,14 +62,13 @@
     font-style: italic;
     margin-left: 1rem;
     margin-top: 1rem;
-    border-bottom: 1px solid #EA3680;
-    border-right: 1px solid #EA3680;
-    border-radius: 50%;
+    border-radius: 2rem;
 }
 
 .oneLogo:hover{
     opacity: 0.7;
-    box-shadow: rgba(227, 2, 145, 0.35) 0px 0px 15px;
+    font-weight: 800;
+    /* font-size: 20px; */
 }
 
 .connection{
@@ -102,7 +99,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
 }
 
 .onlyInputs {

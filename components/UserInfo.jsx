@@ -174,7 +174,7 @@ const handleLogout = () => {
               />
             </div> 
             
-            <div className={styles.oneLogo}>
+            <div className={styles.oneLogo} style={{marginRight:"-0.1rem"}}>
               <FontAwesomeIcon
                 icon={faGear}
                 size="xl"

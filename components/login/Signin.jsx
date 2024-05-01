@@ -94,16 +94,14 @@ const SignIn = forwardRef((props, ref) => {
   return (
       
         <div className={styles.modalContainer} ref={ref}>
-
-        <img
-            src="/sign.jpg"
-            name="background"
-            alt="background" 
-            className={styles.imageFond}
-          />
-           
           <div className={styles.topPage}> 
-
+            <FontAwesomeIcon 
+              icon={faCircleXmark} 
+              size="xl"
+              onClick={() => props.closeModal(false)}
+              className={styles.btnToClose}
+                />
+          </div>
           <div 
             className={styles.oneLogo}
             onClick={() =>{ props.closeModal(false), props.openOtherModal() }}
@@ -115,25 +113,9 @@ const SignIn = forwardRef((props, ref) => {
             />
           </div> 
 
-
-
-            <FontAwesomeIcon 
-              icon={faCircleXmark} 
-              size="xl"
-              onClick={() => props.closeModal(false)}
-              className={styles.btnToClose}
-                />
-            
-          </div>
-
          
 
           <div className={styles.body}>
-            
-            {/* <div className={styles.title}>
-              <h1>Connexion</h1>
-            </div> */}
-            
             <div className={styles.inputs}>
               <label className={styles.onlyInputs}> 
               <input
