@@ -236,6 +236,7 @@ const getDownPicStyle = () => {
       <FontAwesomeIcon
                 icon={faFaceSadTear}
                 size="8x"
+                color="#000"
               /> 
     </section>}>
 

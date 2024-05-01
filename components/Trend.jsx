@@ -69,10 +69,41 @@ const getScreenWidth = () => {
       <FontAwesomeIcon
                 icon={faFaceSadTear}
                 size="8x"
+                color="#000"
               /> 
     </section>}>
     <div className={`${styles[theme]} ${styles.trendPage}`}>
       <div className={styles.findHashtag}> 
+      { findTag && 
+        <div className={styles.icon}>
+          <FontAwesomeIcon
+                icon={faX}
+                size="xs"
+                onClick={() => {
+                  setFindTag("");
+                  setSaisieEnCours(false)
+                }}
+                style={{ cursor: 'pointer', color: "grey" }}
+              />  
+        </div>
+        
+        }   
+        { saisieEnCours && (window.innerWidth <= 600) ? "" :
+          <div className={styles.oneLogo}>
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              size="xl"
+              color="#000"
+            /> 
+          </div>
+        }
+
+        {!saisieEnCours && (window.innerWidth <= 600) && (
+          <div className={styles.oneLogo}>
+            <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" color="#000" />
+          </div>
+        )}
+        
         <input
           type="text"
           name="rechercheTag"
@@ -94,34 +125,7 @@ const getScreenWidth = () => {
 }
 
 
-        { findTag && 
-        <div className={styles.icon}>
-          <FontAwesomeIcon
-                icon={faX}
-                size="xs"
-                onClick={() => {
-                  setFindTag("");
-                  setSaisieEnCours(false)
-                }}
-                style={{ cursor: 'pointer', color: "grey" }}
-              />  
-        </div>
         
-        }   
-        { saisieEnCours && (window.innerWidth <= 600) ? "" :
-          <div className={styles.oneLogo}>
-            <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              size="xl"
-            /> 
-          </div>
-        }
-
-        {!saisieEnCours && (window.innerWidth <= 600) && (
-          <div className={styles.oneLogo}>
-            <FontAwesomeIcon icon={faMagnifyingGlass} size="xl" />
-          </div>
-        )}
       </div>
       
        

@@ -98,6 +98,7 @@ const SignIn = forwardRef((props, ref) => {
             <FontAwesomeIcon 
               icon={faCircleXmark} 
               size="xl"
+              color="#000"
               onClick={() => props.closeModal(false)}
               className={styles.btnToClose}
                 />
@@ -110,6 +111,7 @@ const SignIn = forwardRef((props, ref) => {
             <FontAwesomeIcon
               icon={faUserPlus}
               size="lg"
+              color="#000"
             />
           </div> 
 

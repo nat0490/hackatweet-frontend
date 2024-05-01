@@ -255,6 +255,7 @@ const handleLoadingChange = (loading) => {
       <FontAwesomeIcon
                 icon={faFaceSadTear}
                 size="8x"
+                color="#000"
               /> 
     </section>}>
 
@@ -300,6 +301,7 @@ const handleLoadingChange = (loading) => {
           <FontAwesomeIcon
                 icon={faImage}
                 size="lg"
+                color="#000"
                 onClick={handleAddPictures}
                 // style={{ cursor: 'pointer'}}
                 className={styles.icon}
@@ -308,14 +310,14 @@ const handleLoadingChange = (loading) => {
                 icon={faLock}
                 size="lg"
                 onClick={() => setPrivat(true)}
-                style={{ cursor: 'pointer', color: privat ? 'EA3680' : "" }}
+                style={{ cursor: 'pointer', color: privat ? 'EA3680' : '#000' }}
                 className={styles.icon}
               /> 
           <FontAwesomeIcon
                 icon={faLockOpen}
                 size="lg"
                 onClick={() =>setPrivat(false)}
-                style={{ cursor: 'pointer', color: privat ? '' : "#EA3680" }}
+                style={{ cursor: 'pointer', color: privat ? '#000' : "#EA3680" }}
                 className={styles.icon}
               /> 
            

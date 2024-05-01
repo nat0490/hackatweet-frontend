@@ -3,8 +3,21 @@
     width: 100%;
     height: 100%;
     overflow-y: auto;
-    /* max-width: 25%; */
 }
+.light.trendPage {
+    border-left: 1px solid grey;
+    @media only screen and (max-width: 600px){
+        border:none;
+     }
+}
+.dark.trendPage {
+    /* background-color: #222; */
+    border-left: 1px solid black;
+    @media only screen and (max-width: 600px){
+        border:none;
+     }
+}
+
 .totalTweet {
     color: #EA3680;
     font-size: 0.75rem;
@@ -34,6 +47,12 @@
         z-index: 2;
     }
 }
+.light.hashtagContainer {
+    background-color: #fff;
+}
+.dark.hashtagContainer {
+    background-color: rgba(0,0,0,0.9);
+}
 
 .hashtagName {
     text-decoration: none;
@@ -41,7 +60,14 @@
     font-size: 1.25rem;
     @media only screen and (max-width: 600px){
         font-size: 1rem;
-    }}
+    }
+}
+.light.hashtagName {
+    color: #000;
+}
+.dark.hashtagName {
+    color: #fff;
+}
 
 .hashtagName:hover {
     opacity: 80%;
@@ -57,29 +83,44 @@
         text-indent: 0;
     }
 }
+.light.inputHashtag {
+    background-color: #fff;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
+.dark.inputHashtag {
+    background-color: #fefefe;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
+
 
 .findHashtag {
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 1rem;
-    @media only screen and (max-width: 600px) {
+    /* @media only screen and (max-width: 600px) {
         margin-top: 1rem;
-    }
+    } */
 }
 
 .oneLogo {
     display: flex;
     align-items: center;
     position: absolute;
-    top: 3.5%;
+    /* top: 3.5%; */
+    top: 2rem;
     /* right: 20rem; */
-    right: 3rem;
+    right: 2rem;
     transform: translateY(-50%);
     width: 1rem;
     transition: all 0.2s;
     @media only screen and (max-width: 600px) {
-        top: 3.5%;
+        /* top: 3.5%; */
+        top:2.5rem;
         right: 1rem;
     }
 }
@@ -89,6 +130,7 @@
     align-items: center;
     position: absolute;
     top: 3.4%;
+    /* top: 1rem; */
     right: 4rem;
     transform: translateY(-50%);
     width: 1rem;
@@ -148,47 +190,3 @@
 .titleAlert{
     font-variant-caps: small-caps;
 }
-
-
-/* LIGHT MODE */
-.light.trendPage {
-    border-left: 1px solid grey;
-}
-
-.light.hashtagContainer {
-    background-color: #fff;
-}
-
-.light.hashtagName {
-    color: #000;
-}
-
-.light.inputHashtag {
-    background-color: #fff;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
-}
-
-
-/* DARK MODE */
-.dark.trendPage {
-    /* background-color: #222; */
-    border-left: 1px solid black;
-}
-
-.dark.hashtagContainer {
-    background-color: rgba(0,0,0,0.9);
-}
-
-.dark.hashtagName {
-    color: #fff;
-}
-
-.dark.inputHashtag {
-    background-color: #fefefe;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
-}
-

@@ -129,6 +129,7 @@ const handleLogout = () => {
       <FontAwesomeIcon
                 icon={faFaceSadTear}
                 size="8x"
+                color="#000"
               /> 
     </section>}>
 
@@ -137,7 +138,8 @@ const handleLogout = () => {
     <div className={`${styles[theme]} ${styles.userInfoPage} ${customClassName}`} ref={ref}>
 { user.token ?
 // UTILISATEUR CONNECTE
-      <>
+<>
+      {/* <section className={styles.userConnected}> */}
       <div className={styles.topPage}> 
         <div className={styles.topPage2}> 
         
@@ -162,6 +164,7 @@ const handleLogout = () => {
               <FontAwesomeIcon
                 icon={faBell}
                 size="xl"
+                color="#000"
                 onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
               /> {notifNonLues > 0 && <span className={styles.nbrNotif}></span> }
             </div> 
@@ -170,6 +173,7 @@ const handleLogout = () => {
               <FontAwesomeIcon
                 icon={faUser}
                 size="xl"
+                color="#000"
                 // onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
               />
             </div> 
@@ -178,6 +182,7 @@ const handleLogout = () => {
               <FontAwesomeIcon
                 icon={faGear}
                 size="xl"
+                color="#000"
                 onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
               /> 
             </div>
@@ -187,6 +192,7 @@ const handleLogout = () => {
               <FontAwesomeIcon
                 icon={faHome}
                 size="lg"
+                color="#000"
                 // onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
               /> 
               </Link> 
@@ -209,6 +215,7 @@ const handleLogout = () => {
             <FontAwesomeIcon
               icon={faRightFromBracket}
               size="xl"
+              color="#000"
               onClick={handleLogout}
             /> 
           </div>
@@ -216,6 +223,7 @@ const handleLogout = () => {
 
 
       </div>
+      {/* </section> */}
       </>
 : 
 
@@ -236,6 +244,7 @@ const handleLogout = () => {
         <FontAwesomeIcon
           icon={faUser}
           size="xl"
+          color="#000"
         />
       </div>
        <SignUp 
@@ -255,6 +264,7 @@ const handleLogout = () => {
         <FontAwesomeIcon
           icon={faUserPlus}
           size="xl"
+          color="#000"
         />
     </div> 
       <SignIn 
@@ -276,6 +286,7 @@ const handleLogout = () => {
         <FontAwesomeIcon
           icon={faUser}
           size="xl"
+          color="#000"
         />
     </div> }
 
