@@ -10,13 +10,20 @@
     z-index: 1;
     overflow-y: auto;    
     scrollbar-width:none;
-    /* transition: margin-right; */
-    
-    /* transform: translate(60%, 30%);*/
-    /* @media only screen and (max-width: 600px) {
-        transform: translate(40%, 55%);
-    }  */
+    @media only screen and (max-width: 600px) {
+        left:0;
+    } 
 }
+.light.modalContainer {
+    background-color: #edebeb;
+    box-shadow: rgba(31, 1, 20, 0.35) 0px 0px 15px;
+}
+.dark.modalContainer {
+    background-color: #171717;
+    color:#fff;
+    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
+}
+
 
 .title {
     font-variant-caps: small-caps;
@@ -30,6 +37,12 @@
     border-radius: 10px;
     /* max-height: 3rem;
     overflow: hidden; */
+}
+.light.oneNote {
+    box-shadow: rgba(31, 1, 20, 0.35) -10px -10px 10px;
+}
+.dark.oneNote {
+    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
 }
 
 .infoNote {
@@ -66,8 +79,8 @@
 }
 
 .photoContainer {
-    width: 20px; /* Définissez la largeur souhaitée */
-    height: 20px; /* Définissez la hauteur souhaitée */
+    width: 20px; 
+    height: 20px; 
 }
 
 .contenteLine {
@@ -105,32 +118,11 @@
     font-size: 10px;
 }
 
-/* LIGHT MODE */
-.light.modalContainer {
-    background-color: #edebeb;
-    box-shadow: rgba(31, 1, 20, 0.35) 0px 0px 15px;
-}
-
-.light.oneNote {
-    box-shadow: rgba(31, 1, 20, 0.35) -10px -10px 10px;
-}
 
 .light.noteUnread {
     background-color: #fff;
 }
-
-
-/* DARK MODE */
-.dark.modalContainer {
-    background-color: #171717;
-    color:#fff;
-    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
-}
-
-.dark.oneNote {
-    box-shadow: rgba(185, 4, 122, 0.35) 0px 0px 10px;
-}
-
 .dark.noteUnread {
     background-color: #000;
 }
+

@@ -7,7 +7,7 @@ import styles from "../styles/LastTweet.module.css";
 import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from '../reducers/likes';
 import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
-import { faImage, faLock, faLockOpen, faFaceSadTear, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faLock, faLockOpen, faFaceSadTear, faCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from "react-error-boundary";
 // import axios from "axios";
@@ -18,6 +18,7 @@ import { ErrorBoundary } from "react-error-boundary";
 function LastTweets() {
 
   const tweetRef = useRef(null);
+  const addPostRef = useRef(null);
   const toggleSuccesPostRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -29,6 +30,7 @@ function LastTweets() {
   const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
   //const tweetILkd = [];
 
+  const [ showAddTweet, setShowAddTweet] = useState(false);
   const [ tweetsData, setTweetsData] = useState([]);
   const [ tweet, setTweet] = useState("");
   const [ privat, setPrivat ] = useState(false);
@@ -44,18 +46,15 @@ function LastTweets() {
 
 
   useEffect(() => {
-//Charger les tweets au chargemet de la page
     fetchTweet();
   }, []);
 
-//Quand il y a des données dans loadPic (envoyé de la page addPic après le téléchargement sur cloudy), poster la publication
   useEffect(()=>{
     if(loadPic.length > 0){
       postTweet()
     }
   },[loadPic]);
 
-//Ecoute pour détecter le click en dehors du toggle SuccesPost
   useEffect(() => {
     let timeoutId;
     if (activeToggleSuccesPost) {
@@ -65,7 +64,26 @@ function LastTweets() {
     }
   }, [activeToggleSuccesPost]);
 
-
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+        if (showAddTweet && addPostRef.current && !addPostRef.current.contains(event.target)) {
+          setShowAddTweet(false);
+        };
+        
+    };
+    let timeoutId;
+    if (showAddTweet) {
+        timeoutId = setTimeout(() => {
+            document.addEventListener('click', handleClickOutside);
+        }, 100); 
+        document.removeEventListener('click', handleClickOutside);
+    };
+    return () => {
+        clearTimeout(timeoutId); 
+        document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showAddTweet]);
 
   const fetchTweet = async() => {
 //Fetcher les tweets
@@ -145,6 +163,7 @@ const handleLoadingChange = (loading) => {
           setResetChild(true);
           setAddPic(false);
           setActiveToggleSuccesPost(true);
+          setShowAddTweet(false);
           if (createdTweet.tweet.hashtags.length > 0) {
             fetchAllTags(dispatch);
           };
@@ -193,27 +212,6 @@ const handleLoadingChange = (loading) => {
   };
 
 
-
-// //Supprimer les images d'un post
-//  const handleDeletePic = async(allPic) => {
-//   // console.log(allPic);
-//   allPic?.forEach(async (pic) => {
-//     // console.log(pic);
-//     const encodedCloudId = encodeURIComponent(pic.cloudId);
-//   try {
-//     const res = await axios.post(`${URL}tweets/destroy/${encodedCloudId}`);
-//     // console.log("ok:", res.status);
-//     if(res.status === 200) {
-//       console.log("picture delete from cloudinary")
-//     } else {
-//       console.log("error: failed to delete picture from cloudinary")
-//     }
-//   } catch(error) {
-//     console.log({error: error});
-//   }
-//   })
-//  };
-
   const updateLikedTweet = (tweetId) => {
     //dispatch(rmvAlltweet());
     if (tweetILkd?.some(tweet => tweet === tweetId)) {  
@@ -248,6 +246,8 @@ const handleLoadingChange = (loading) => {
     setStart(!start);
   }
 
+ 
+
   return (
     <ErrorBoundary fallback={
       <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
@@ -261,10 +261,28 @@ const handleLoadingChange = (loading) => {
 
 
 
-    <div className={`${styles[theme]} ${styles.tweetPage}`}>
-      {/* <h3 className={styles.titlePage}>Flowst</h3> */}
+    <div className={`${styles[theme]} ${styles.tweetPage}`} id="tweetPage">
+ 
     { user.token &&
-      <div className={`${styles[theme]} ${styles.addTweet}`}>
+
+<section>
+
+
+  <div className={styles.createPost}>
+    <div 
+      className={styles.createPostInside}
+      onClick={() =>setShowAddTweet(!showAddTweet)}
+      >
+    <span className={styles.createPostText}>Créer un post</span>
+      <FontAwesomeIcon
+                  icon={faCirclePlus}
+                  size="lg"
+                /> 
+    </div>
+  </div>
+
+{showAddTweet &&
+      <div className={`${styles[theme]} ${styles.addTweet}`} ref={addPostRef} >
         <input
           type="text"
           name="createPost"
@@ -357,11 +375,15 @@ const handleLoadingChange = (loading) => {
 
 
       </div>
+   }
+  </section>
         
       }  
 
 
-      <div className={styles.lastTweetsContainer}>
+      <div 
+        className={styles.lastTweetsContainer}
+        style={user.token && {marginTop:"2rem"} }>
         {tweetsData.length === 0 ? 
           <div className={styles.spinner}><BeatLoader color="#EA3680"/>
           </div> : 

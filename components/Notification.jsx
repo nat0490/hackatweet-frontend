@@ -75,26 +75,6 @@ const Notification = forwardRef((props, ref) => {
         return texteTronque
       };
   
-    
-
-  
-    // const [currentIndex, setCurrentIndex] = useState(0); 
-    // const [displayedNotifications, setDisplayedNotifications] = useState([]);
-
-    // useEffect(() => {
-    //     const displayNotifications = () => {
-    //         if (currentIndex < notification.length) {
-    //             const currentNote = notification[currentIndex];
-    //             setDisplayedNotifications(prevNotifications => [...prevNotifications, currentNote]); // Ajoutez la nouvelle notification à la liste
-    //             fetchUpdateRead(currentNote); // Mettre à jour la notification comme lue
-    //             setCurrentIndex(currentIndex + 1); // Passer à la prochaine notification
-    //         }
-    //     };
-    
-    //     const intervalId = setInterval(displayNotifications, 30); // Délai entre chaque notification (en millisecondes)
-    
-    //     return () => clearInterval(intervalId); // Nettoyage de l'intervalle lorsque le composant est démonté
-    // }, [currentIndex, notification]);
 
 
     const notif = notification?.map((note, i) => {

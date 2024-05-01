@@ -44,7 +44,6 @@ const UserInfo = forwardRef((props, ref) => {
 //Ecoute pour détecter le click en dehors des notif/setting pour fermer les onglets 
   useEffect(() => {
     const handleClickOutside = (event) => {
-  //Si il y a selectedPic && onClick en dehors de la zone
         if (openNotifModal && notificationContainerRef.current && !notificationContainerRef.current.contains(event.target)) {
           setOpenNotifModal(false);
         };
@@ -53,25 +52,22 @@ const UserInfo = forwardRef((props, ref) => {
         };
     };
     let timeoutId;
-//Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
     if (openNotifModal) {
         timeoutId = setTimeout(() => {
             document.addEventListener('click', handleClickOutside);
-        }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
-    } else {
+        }, 100); 
         document.removeEventListener('click', handleClickOutside);
     };
-
 
     if (openSettingModal) {
       timeoutId = setTimeout(() => {
           document.addEventListener('click', handleClickOutside);
-      }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+      }, 100); 
   } else {
       document.removeEventListener('click', handleClickOutside);
   };
     return () => {
-        clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
+        clearTimeout(timeoutId); 
         document.removeEventListener('click', handleClickOutside);
     };
   }, [openNotifModal, openSettingModal]);
@@ -80,7 +76,6 @@ const UserInfo = forwardRef((props, ref) => {
 //Ecoute pour détecter le click en dehors dees signIn/signUp pour fermer les onglets 
 useEffect(() => {
   const handleClickOutside = (event) => {
-//Si il y a selectedPic && onClick en dehors de la zone
       if (openModalSignIn && signInModalRef.current && !signInModalRef.current.contains(event.target)) {
         setOpenModalSignIn(false);
       };
@@ -89,11 +84,10 @@ useEffect(() => {
       };
   };
   let timeoutId;
-//Ajout de timeout afin de laisser la "fenêtre" s'ouvrir pour afficher l'image avant de d'éclancher l'evènement d'écoute du click
   if (openModalSignIn) {
       timeoutId = setTimeout(() => {
           document.addEventListener('click', handleClickOutside);
-      }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+      }, 100); 
   } else {
       document.removeEventListener('click', handleClickOutside);
   };
@@ -102,12 +96,12 @@ useEffect(() => {
   if (openModalSignUp) {
     timeoutId = setTimeout(() => {
         document.addEventListener('click', handleClickOutside);
-    }, 100); // Ajoutez un délai de 100 millisecondes (ou ajustez selon vos besoins)
+    }, 100);
 } else {
     document.removeEventListener('click', handleClickOutside);
 };
   return () => {
-      clearTimeout(timeoutId); // Nettoyez le timeOut avant de retirer l'écouteur
+      clearTimeout(timeoutId); 
       document.removeEventListener('click', handleClickOutside);
   };
 }, [openModalSignIn, openModalSignUp]);
@@ -115,8 +109,6 @@ useEffect(() => {
 
 const handleLogout = () => {
   dispatch(logout());
-  // window.location.assign('/');
-  // fetchAllTags(dispatch);
 };
 
 
