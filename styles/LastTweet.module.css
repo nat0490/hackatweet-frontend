@@ -78,6 +78,18 @@
         margin-bottom: 0.25rem;
     }
 }
+.light.inputLastTweets {
+    background-color: #fff;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
+.dark.inputLastTweets {
+    background-color: #fefefe;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
 
 .addTweet {
     display: flex;
@@ -128,15 +140,12 @@
     background-color: rgba(0, 0, 0, 0.4);
     margin:0;
     padding: 0.25rem;
-    /* max-width: 10rem; */
     position: fixed;
     top: 20;
-    
+    color:#000;
 }
 .createPostInside:hover{
-    /* width: 100%; */
     cursor: pointer;
-    /* font-weight: 600; */
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
 }
@@ -170,6 +179,15 @@
     justify-content: center;
     text-align: center;
 }
+.light.popAlert {
+    background-color: rgba(255, 255, 255);
+    box-shadow: rgba(31, 1, 20, 0.35) 0px 0px 15px;
+}
+.dark.popAlert {
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    box-shadow: rgba(109, 90, 102, 0.35) 0px 0px 15px;
+}
 
 .popAlert:hover{
     box-shadow: rgba(227, 2, 145, 0.35) 0px 0px 15px;
@@ -189,47 +207,9 @@
     font-variant-caps: small-caps;
 }
 
-
-
-/* LIGHT MODE */
-.light.inputLastTweets {
-    background-color: #fff;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
-}
-
-
-
 .spinner {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 }
 
-.light.popAlert {
-    background-color: rgba(255, 255, 255);
-    box-shadow: rgba(31, 1, 20, 0.35) 0px 0px 15px;
-}
-
-
-  /* DARK MODE */
-.dark.inputLastTweets {
-    background-color: #fefefe;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
-}
-
-
-
-/* .dark.tweetPage {
-    background-color: #222;
-    color: #fefefe;
-} */
-
-.dark.popAlert {
-    background-color: rgb(0, 0, 0);
-    color: #fff;
-    box-shadow: rgba(109, 90, 102, 0.35) 0px 0px 15px;
-}

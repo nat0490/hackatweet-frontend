@@ -1,6 +1,5 @@
 import React, { forwardRef } from "react";
 import styles from "../../styles/Signin.module.css";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../reducers/user";
@@ -49,7 +48,6 @@ const SignIn = forwardRef((props, ref) => {
               hashtagsFind.push(...hashT);
             }          
           }); 
-          //console.log(hashtagsFind);
           nbrOccurence(hashtagsFind);
         } else {
           console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
@@ -58,7 +56,6 @@ const SignIn = forwardRef((props, ref) => {
   }
 
   const handleConnection = () => {
-    //console.log('click signin')
     fetch(`${URL}users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -91,8 +88,7 @@ const SignIn = forwardRef((props, ref) => {
       });
   };
 
-  return (
-      
+  return (      
         <div className={styles.modalContainer} ref={ref}>
           <div className={styles.topPage}> 
             <FontAwesomeIcon 
@@ -114,9 +110,6 @@ const SignIn = forwardRef((props, ref) => {
               color="#000"
             />
           </div> 
-
-         
-
           <div className={styles.body}>
             <div className={styles.inputs}>
               <label className={styles.onlyInputs}> 
@@ -133,8 +126,7 @@ const SignIn = forwardRef((props, ref) => {
                   color: '#000', 
                   borderRadius: '5px', 
                   width: '80%'}}
-              />
-              
+              />              
               <input
                 type={showEye? "password": "text"}
                 placeholder="Mots de passe"
@@ -153,18 +145,12 @@ const SignIn = forwardRef((props, ref) => {
               {showEye ? <Eye onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> : <EyeOff onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> }
                   {/* {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> } */}
               </div>
-
-              </label>
-              
+              </label>              
               { errorMsg && <span className={styles.errorMsg}>*{errorMsg}</span>}
               <button id="signup" className={styles.btnSign} onClick={() => handleConnection()}> Se connecter </button>
               </div>
           </div>
         </div>
-      
-      
-   
-
   );
 });
 

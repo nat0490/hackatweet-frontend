@@ -368,20 +368,6 @@ const handlePrevpic = () => {
           </div>
         </div>
 
-        {/* <div 
-          className={styles.menuFont}
-          onClick={()=>setOpenMenuTweet(!openMenuTweet)}>
-          <FontAwesomeIcon 
-              icon={faEllipsisVertical}
-              size="lg"
-                />
-
-        { openMenuTweet && 
-           <MenuTweets  ref={menuTweetContainerRef}/>
-           }
-        </div> */}
-          
-
         <div>
           <p className={styles.description}>
             {formatDescription(props.description)}

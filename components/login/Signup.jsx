@@ -1,8 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "../../styles/Signup.module.css";
-import Image from "next/image";
 import { login } from "../../reducers/user";
 import { addHashtag, removehashTag } from '../../reducers/hashtags';
 import { addTheme } from '../../reducers/theme';
@@ -39,8 +38,7 @@ const SignUp = forwardRef((props,ref) => {
   const fetchAllHashtag = () => {
     fetch(`${URL}tweets/lastTweet`)
       .then((res) => res.json())
-      .then((data) => {
-        //console.log(data.tweets);        
+      .then((data) => {      
         if (data.tweets) {       
           const hashtagsFind = [];
           data.tweets.map((tweet) => {
@@ -49,7 +47,6 @@ const SignUp = forwardRef((props,ref) => {
               hashtagsFind.push(...hashT);
             }          
           }); 
-          //console.log(hashtagsFind);
           nbrOccurence(hashtagsFind);
         } else {
           console.error("Error in fetchHashtag: Response is missing 'tweets' field", data);
@@ -58,7 +55,6 @@ const SignUp = forwardRef((props,ref) => {
   }
 
   const handleRegister = () => {
-    //console.log('click signup');
     setErrorMsg(null);
     setErrorMsgPw(null);
     if ( signUpPassword === signUpCheckPassword) {
@@ -105,7 +101,6 @@ const SignUp = forwardRef((props,ref) => {
 
 
   return (
-    
       <div className={styles.modalContainer} ref={ref}>
         <div className={styles.topPage}> 
           <FontAwesomeIcon 
@@ -127,8 +122,6 @@ const SignUp = forwardRef((props,ref) => {
             color="#000"
           />
         </div>
-
-
         <div className={styles.body}>
           <div className={styles.inputs}>
             <label className={styles.onlyInputs}> 
@@ -178,13 +171,10 @@ const SignUp = forwardRef((props,ref) => {
                   fontWeight: errorMsgPw? 'bold': 'none',
                   fontStyle: errorMsgPw? 'italic': 'none',}}
               />
-
               <div className={styles.password_icon}>
               {showEye ? <Eye onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> : <EyeOff onClick={(e) => { e.stopPropagation(); setShowEye(!showEye); }} /> }
                   {/* {showEye ? <Eye onClick={() => setShowEye(!showEye)}/> : <EyeOff onClick={() => setShowEye(!showEye)}/> } */}
               </div>
-              
-              
               <input
                  type={showEye2? "password": "text"}
                 placeholder="Vérification du Mot de passe"
@@ -202,30 +192,19 @@ const SignUp = forwardRef((props,ref) => {
                   fontWeight: errorMsgPw? 'bold': 'none',
                   fontStyle: errorMsgPw? 'italic': 'none',}}
               />
-
               <div className={styles.password_icon2}>
               {showEye2 ? <Eye onClick={(e) => { e.stopPropagation(); setShowEye2(!showEye2); }} /> : <EyeOff onClick={(e) => { e.stopPropagation(); setShowEye2(!showEye2); }} /> }
                   {/* {showEye2 ? <Eye onClick={() => setShowEye2(!showEye2)}/> : <EyeOff onClick={() => setShowEye2(!showEye2)}/> } */}
               </div>
-
-            
-          
             </label>
-
           { errorMsg && <span className={styles.errorMsg}>*{errorMsg}</span>}
           { errorMsgPw && <span className={styles.errorMsg}>*{errorMsgPw}</span>}
-            
             <button className={styles.btnSign} onClick={() => handleRegister()}>
               S'inscrire
             </button>
-
-          
           </div>
         </div>
-
-
       </div>
-    
   );
 });
 

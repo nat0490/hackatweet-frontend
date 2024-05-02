@@ -38,6 +38,7 @@
     border-radius: 1rem;
     padding: 1rem;
     overflow-y: auto;
+    overflow-x: hidden;
     @media only screen and (max-width: 600px) {
         margin: 0.25rem;
         padding: 0.25rem;

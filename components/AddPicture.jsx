@@ -111,7 +111,6 @@ function resizeImageToTargetSize(image, targetSizeInKB) {
     setIsLoading(true);
     setUploadStatus('Uploading...');
     const formData = new FormData();
-
     // Utiliser Promise.all pour attendre que toutes les images soient redimensionnées
     await Promise.all(selectedImages.map(async (image, i) => {
         try {
@@ -125,7 +124,6 @@ function resizeImageToTargetSize(image, targetSizeInKB) {
             console.error("Error resizing image:", error);
         }
     }));
-
     try {
         const config = {
             headers: {
@@ -151,9 +149,7 @@ function resizeImageToTargetSize(image, targetSizeInKB) {
     if(uploadStatus === "Failed.." ) {
       setPopUpError(true);
     }
-  },[uploadStatus])
-
- 
+  },[uploadStatus]) 
 
 //Lors d'appuie sur le boutton POST, lance le téléchargement sur Cloudy
   useEffect(()=>{
@@ -239,7 +235,6 @@ const getDownPicStyle = () => {
                 color="#000"
               /> 
     </section>}>
-
     <div className={styles.addPictureContainer} ref={ref} >
         <div className={styles.container}>
           {/* <form encType="multipart/form-data" action='/upload' method="POST"> */}
@@ -284,9 +279,6 @@ const getDownPicStyle = () => {
               </aside>
             </section>
             }  
-
-            
-          
         <div >
           <p className={styles.maxPicText} style={getDownPicStyle()}>Images: {selectedImages.length > 0 ? selectedImages.length: 0}/6</p> 
         </div>

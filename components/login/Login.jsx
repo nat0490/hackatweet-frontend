@@ -4,13 +4,10 @@ import SignUp from './Signup';
 import SignIn from './Signin';
 import styles from '../../styles/Login.module.css';
 import Typewriter from 'typewriter-effect';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import Image from 'next/image';
 
 
 function Login() {
-
 const dispatch = useDispatch();
 
 const[openModal1, setOpenModal1] = useState(false);
@@ -19,7 +16,6 @@ const[openModal2, setOpenModal2] = useState(false);
   return (
     <div className={styles.container}>
       <div className={styles.leftContainer}>
-        {/* <img className={styles.img} src="depo.jpg" alt="logo" /> */}
         <img className={styles.img} src="Logo3BG.png" alt="logo" />
       </div>
       <div className={styles.rightContainer}>

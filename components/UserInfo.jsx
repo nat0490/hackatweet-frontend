@@ -1,7 +1,6 @@
 import React, {forwardRef, useRef, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/user";
-import Image from "next/image";
 import Link from "next/link";
 import {} from "@fortawesome/free-solid-svg-icons";
 import styles from '../styles/UserInfo.module.css';
@@ -20,10 +19,8 @@ import Setting from './Setting';
 import SignUp from './login/Signup';
 import SignIn from './login/Signin';
 import { ErrorBoundary } from "react-error-boundary";
-// import { fetchAllTags } from '../utils';
 
 const UserInfo = forwardRef((props, ref) => {
-
   const dispatch = useDispatch();
   const { customClassName } = props;
   const user = useSelector(state => state.users.value);
@@ -91,8 +88,6 @@ useEffect(() => {
   } else {
       document.removeEventListener('click', handleClickOutside);
   };
-
-
   if (openModalSignUp) {
     timeoutId = setTimeout(() => {
         document.addEventListener('click', handleClickOutside);
@@ -111,9 +106,6 @@ const handleLogout = () => {
   dispatch(logout());
 };
 
-
-
-
   return (
     <ErrorBoundary fallback={
       <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
@@ -130,107 +122,82 @@ const handleLogout = () => {
     <div className={`${styles[theme]} ${styles.userInfoPage} ${customClassName}`} ref={ref}>
 { user.token ?
 // UTILISATEUR CONNECTE
-<>
-      {/* <section className={styles.userConnected}> */}
-      <div className={styles.topPage}> 
-        <div className={styles.topPage2}> 
-        
-       
-        <div className={styles.blocUser}>
-          <img 
-            className={styles.photoProfil} 
-            name="profil picture"
-            alt="profil picture"
-            src={"/user.jpg"} 
-            // width={50} 
-            // height={50} 
-            />
-          <p className={styles.username}> @{user.username && user.username.slice(0, 8) }</p>
-         
-        </div>
-
-
-        <div className={styles.logo}>
-            <div className={styles.oneLogo}>
-            {/* <div className={{marginRight: "-0.25rem", ...styles.oneLogo }}> */}
-              <FontAwesomeIcon
-                icon={faBell}
-                size="xl"
-                color="#000"
-                onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
-              /> {notifNonLues > 0 && <span className={styles.nbrNotif}></span> }
-            </div> 
-
-            <div className={styles.oneLogo}>
-              <FontAwesomeIcon
-                icon={faUser}
-                size="xl"
-                color="#000"
-                // onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
-              />
-            </div> 
-            
-            <div className={styles.oneLogo} style={{marginRight:"-0.1rem"}}>
-              <FontAwesomeIcon
-                icon={faGear}
-                size="xl"
-                color="#000"
-                onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
-              /> 
+      <>
+        <div className={styles.topPage}> 
+          <div className={styles.topPage2}> 
+            <div className={styles.blocUser}>
+              <img 
+                className={styles.photoProfil} 
+                name="profil picture"
+                alt="profil picture"
+                src={"/user.jpg"} 
+                />
+              <p className={styles.username}> @{user.username && user.username.slice(0, 8) }</p>
             </div>
-
-            <div className={styles.oneLogo}>
-            <Link href="/">
-              <FontAwesomeIcon
-                icon={faHome}
-                size="lg"
-                color="#000"
-                // onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
-              /> 
-              </Link> 
-            </div>
-          { openNotifModal && 
-              <Notification ref={notificationContainerRef}/>
+            <div className={styles.logo}>
+              <div className={styles.oneLogo}>
+                <FontAwesomeIcon
+                  icon={faBell}
+                  size="xl"
+                  color="#000"
+                  onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
+                /> {notifNonLues > 0 && <span className={styles.nbrNotif}></span> }
+              </div> 
+              <div className={styles.oneLogo}>
+                <FontAwesomeIcon
+                  icon={faUser}
+                  size="xl"
+                  color="#000"
+                />
+              </div> 
+              <div className={styles.oneLogo} style={{marginRight:"-0.1rem"}}>
+                <FontAwesomeIcon
+                  icon={faGear}
+                  size="xl"
+                  color="#000"
+                  onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
+                /> 
+              </div>
+              <div className={styles.oneLogo}>
+              <Link href="/">
+                <FontAwesomeIcon
+                  icon={faHome}
+                  size="lg"
+                  color="#000"
+                /> 
+                </Link> 
+              </div>
+            { openNotifModal && 
+                <Notification ref={notificationContainerRef}/>
+              }
+            { openSettingModal && 
+            <Setting  ref={settingContainerRef}/>
             }
-          { openSettingModal && 
-           <Setting  ref={settingContainerRef}/>
-           }
-            
+            </div>
           </div>
         </div>
-      </div>
-
-      
-      <div className={styles.bottom}> 
-        <div className={styles.logo}>
-          <div className={styles.oneLogo}>
-            <FontAwesomeIcon
-              icon={faRightFromBracket}
-              size="xl"
-              color="#000"
-              onClick={handleLogout}
-            /> 
+        <div className={styles.bottom}> 
+          <div className={styles.logo}>
+            <div className={styles.oneLogo}>
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                size="xl"
+                color="#000"
+                onClick={handleLogout}
+              /> 
+            </div>
           </div>
         </div>
-
-
-      </div>
-      {/* </section> */}
       </>
 : 
 
 // PAS DUTILISATEUR CONNECTE
   <section className={styles.noUser}>
-   
-   
-
     {openModalSignUp && 
     <aside>
-       {/* <button className={styles.btnSignIn} onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}>Connexion</button> */}
        <div 
         className={styles.oneLogoConnection} 
         onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}
-        // style={{ cursor: 'pointer'}}
         >
         <p className={styles.connection}>Se connecter</p>
         <FontAwesomeIcon
@@ -247,7 +214,6 @@ const handleLogout = () => {
     </aside>}
     {openModalSignIn && 
     <aside>
-      {/* <button className={styles.btnSignUp} onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}>Inscription</button> */}
       <div 
         className={styles.oneLogoConnection}
         onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}
@@ -265,10 +231,7 @@ const handleLogout = () => {
         openOtherModal={() => setOpenModalSignUp(true)}
         />
     </aside>}
-
-    {/* <button className={styles.btnSignUp} onClick={() => setOpenModalSignUp(true)}>Inscription</button> */}
     {!openModalSignUp && !openModalSignIn && 
-      // <button className={styles.btnSignIn} onClick={() => setOpenModalSignIn(true)}>Connexion</button>
       <div 
         className={styles.oneLogoConnection}
         onClick={() => setOpenModalSignIn(true)}
@@ -281,9 +244,7 @@ const handleLogout = () => {
           color="#000"
         />
     </div> }
-
   </section>
-
 }
     </div>
     </ErrorBoundary>

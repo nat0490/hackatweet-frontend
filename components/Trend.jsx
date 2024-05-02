@@ -7,29 +7,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faX, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 import { ErrorBoundary } from "react-error-boundary";
 
-
-
-
 function Trend() {
-
   const dispatch = useDispatch();
-
   const hashtag = useSelector((state) => state.hashtags.value);
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
-  //console.log(hashtag);
 
   const [ findTag, setFindTag ] = useState("");
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);
   const [activeToggleConnection, setActiveToggleConnection] = useState(false);
+  const [ showAllTags, setShowAllTag ] = useState(false);
 
+  useEffect(()=>{
+    if(saisieEnCours || showAllTags ) {
+      fetchAllTags(dispatch);
+      console.log(hashtag);
+    }
+  },[saisieEnCours, showAllTags])
 
   //Dimension écran
 const getScreenWidth = () => {
   return window.innerWidth;
 };
 //Style des images en fonction de la taille de l'écran
-
 
 
   const hashs =  hashtag.length > 0 && Object.entries(hashtag[0])
@@ -62,6 +62,7 @@ const getScreenWidth = () => {
       }
   });
 
+
   return (
     <ErrorBoundary fallback={
       <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
@@ -89,9 +90,10 @@ const getScreenWidth = () => {
         
         }   
         { saisieEnCours && (window.innerWidth <= 600) ? "" :
-          <div className={styles.oneLogo}>
+          <div className={styles.oneLogo} onClick={()=>setShowAllTag(!showAllTags)}>
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
+              cursor="pointer"
               size="xl"
               color="#000"
             /> 
@@ -115,28 +117,20 @@ const getScreenWidth = () => {
           className={`${styles[theme]} ${styles.inputHashtag}`}
         />
 
-{ activeToggleConnection && 
-  <section className={`${styles[theme]} ${styles.popAlert}`} >
-    <aside>
-        <h4 className={styles.titleAlert}>Vous devez vous connecter</h4>
-        <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggleConnection(!activeToggleConnection)}>Ok</button>
-    </aside>
-  </section>
-}
-
-
-        
-      </div>
-      
-       
-        {(getScreenWidth() < 600 && findTag === "" )? null : 
-          <div className={`${styles[theme]} ${styles.hashtagContainer}`}>
-            {hashs}
-            </div>}
-    
-       
-        
+    { activeToggleConnection && 
+      <section className={`${styles[theme]} ${styles.popAlert}`} >
+        <aside>
+            <h4 className={styles.titleAlert}>Vous devez vous connecter</h4>
+            <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggleConnection(!activeToggleConnection)}>Ok</button>
+        </aside>
+      </section>
+    }
     </div>
+      {((hashs.length > 0 && findTag !== "") || showAllTags) && 
+        <div className={`${styles[theme]} ${styles.hashtagContainer}`}>
+          {hashs}
+        </div>}
+      </div>
     </ErrorBoundary>
   );
 }

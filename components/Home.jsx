@@ -5,11 +5,9 @@ import Trend from "./Trend";
 import styles from '../styles/Home.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNotification, rmvNotification, rmvAllNotification, updateNotification } from '../reducers/notifications';
-import { useFetch } from '../hooks/useFetch';
-import { fetchAllTags } from '../utils';
+
 
 function Home() {
-
   const userRef = useRef(null);
   const dispatch = useDispatch();
   // const URL = "http://localhost:3000/";
@@ -21,15 +19,12 @@ function Home() {
 
   useEffect(()=> {
     getMyNotif();
-    if(getScreenWidth > 600) {
-      fetchAllTags(dispatch);
-    }
   }, []);
 
   //Dimension écran
-const getScreenWidth = () => {
-  return window.innerWidth;
-};
+// const getScreenWidth = () => {
+//   return window.innerWidth;
+// };
 
   const getMyNotif = async() => {
     // (async()=> {

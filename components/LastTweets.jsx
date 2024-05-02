@@ -5,18 +5,14 @@ import AddPicture from './AddPicture';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/LastTweet.module.css";
 import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from '../reducers/likes';
-import { fetchAllTags} from '../utils';
+// import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
 import { faImage, faLock, faLockOpen, faFaceSadTear, faCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from "react-error-boundary";
-// import axios from "axios";
-
-
 
 
 function LastTweets() {
-
   const tweetRef = useRef(null);
   const addPostRef = useRef(null);
   const toggleSuccesPostRef = useRef(null);
@@ -28,7 +24,6 @@ function LastTweets() {
   const user = useSelector((state) => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
-  //const tweetILkd = [];
 
   const [ showAddTweet, setShowAddTweet] = useState(false);
   const [ tweetsData, setTweetsData] = useState([]);
@@ -43,6 +38,8 @@ function LastTweets() {
   const [ start, setStart ] = useState(false);
   const [ activeToggle, setActiveToggle] = useState(false);
   const [ activeToggleSuccesPost, setActiveToggleSuccesPost] = useState(false);
+
+  const [scrollTop, setScrollTop] = useState(0);
 
 
   useEffect(() => {
@@ -63,7 +60,6 @@ function LastTweets() {
       }, 100);
     }
   }, [activeToggleSuccesPost]);
-
   
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -85,19 +81,30 @@ function LastTweets() {
     };
   }, [showAddTweet]);
 
+  useEffect(() => {
+    const element = document.querySelector("#tweetPage");
+    function handleScroll() {      
+      const scrollTop2 = element.scrollTop || document.documentElement.scrollTop;
+      setScrollTop(scrollTop2);
+    }
+    element.addEventListener('scroll', handleScroll);
+    return () => document.removeEventListener('scroll', handleScroll);
+  }, []);
+
+
   const fetchTweet = async() => {
 //Fetcher les tweets
-try {
-  const res = await fetch(`${URL}tweets/lastTweet`);
-  const data = await res.json();
-  if (data.tweets) {
-      setTweetsData(data.tweets.reverse());
-    } else {
-      console.error("Error lors du fetchTweet:", data);
-    }
-  } catch(error) {
-    console.log("Erreur serveur")
-  }
+    try {
+      const res = await fetch(`${URL}tweets/lastTweet`);
+      const data = await res.json();
+      if (data.tweets) {
+          setTweetsData(data.tweets.reverse());
+        } else {
+          console.error("Error lors du fetchTweet:", data);
+        }
+      } catch(error) {
+        console.log("Erreur serveur")
+      }
 };
 
 
@@ -164,9 +171,9 @@ const handleLoadingChange = (loading) => {
           setAddPic(false);
           setActiveToggleSuccesPost(true);
           setShowAddTweet(false);
-          if (createdTweet.tweet.hashtags.length > 0) {
-            fetchAllTags(dispatch);
-          };
+          // if (createdTweet.tweet.hashtags.length > 0) {
+          //   fetchAllTags(dispatch);
+          // };
         } else {
           console.log(createdTweet.error);
           setActiveToggle(!activeToggle);
@@ -202,7 +209,7 @@ const handleLoadingChange = (loading) => {
       const data = await res.json();
       if (data.result){
         setTweetsData(tweetsData.filter((e) => e._id !== id));
-        fetchAllTags(dispatch);
+        // fetchAllTags(dispatch);
       } else {
         console.log("erreur lors de la suppression:",data.error)
       }
@@ -246,7 +253,7 @@ const handleLoadingChange = (loading) => {
     setStart(!start);
   }
 
- 
+
 
   return (
     <ErrorBoundary fallback={
@@ -273,11 +280,14 @@ const handleLoadingChange = (loading) => {
       className={styles.createPostInside}
       onClick={() =>setShowAddTweet(!showAddTweet)}
       >
-    <span className={styles.createPostText}>Créer un post</span>
-      <FontAwesomeIcon
-                  icon={faCirclePlus}
-                  size="lg"
-                /> 
+      <span 
+        className={styles.createPostText}
+        style={{ display: scrollTop > 0 ? "none" : "" }}
+        >Créer un post</span>
+        <FontAwesomeIcon
+                    icon={faCirclePlus}
+                    size="lg"
+                  /> 
     </div>
   </div>
 
@@ -293,7 +303,7 @@ const handleLoadingChange = (loading) => {
         <div className={styles.addPictureContainer}> 
 
           { addPic && 
-          // <div style={{height: start ? "10rem" : ""}}>
+          
             <AddPicture
               
             //Appuie sur boutton POST
