@@ -6,30 +6,34 @@ import { fetchAllTags } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faX, faFaceSadTear } from "@fortawesome/free-solid-svg-icons";
 import { ErrorBoundary } from "react-error-boundary";
-
+import { useWindowSize } from '../utils';
 function Trend() {
   const dispatch = useDispatch();
+  const { width } = useWindowSize();
+
   const hashtag = useSelector((state) => state.hashtags.value);
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
 
   const [ findTag, setFindTag ] = useState("");
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);
-  const [activeToggleConnection, setActiveToggleConnection] = useState(false);
+  const [ activeToggleConnection, setActiveToggleConnection ] = useState(false);
   const [ showAllTags, setShowAllTag ] = useState(false);
+  
+  useEffect(() => {
+    if (width > 600) {
+      setShowAllTag(true);
+    } else {
+      setShowAllTag(false);
+    }
+  }, [width]);
 
   useEffect(()=>{
     if(saisieEnCours || showAllTags ) {
       fetchAllTags(dispatch);
-      console.log(hashtag);
+      // console.log(hashtag);
     }
   },[saisieEnCours, showAllTags])
-
-  //Dimension écran
-const getScreenWidth = () => {
-  return window.innerWidth;
-};
-//Style des images en fonction de la taille de l'écran
 
 
   const hashs =  hashtag.length > 0 && Object.entries(hashtag[0])

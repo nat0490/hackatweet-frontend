@@ -16,9 +16,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Tweet.module.css";
 import Comment from './Comment';
-import MenuTweets from './MenuTweets';
-import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likes';
-import { addShowComment, rmvShowComment, rmvAllShowComment} from '../reducers/showComment';
+// import MenuTweets from './MenuTweets';
+import { addLikedComment, rmvLikedComment, rmvAllComment } from '../reducers/likesComment';
+import { addShowComment, rmvShowComment} from '../reducers/showComment';
 import { tempsEcoule, detectClickOutside } from '../utils';
 import Link from 'next/link';
 import { ErrorBoundary } from "react-error-boundary";
@@ -37,7 +37,18 @@ import SwipeListener from "swipe-listener";
 
     const user = useSelector(state => state.users.value);
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
-    const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
+
+    // const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
+
+    const commentILkd = useSelector(state => state.likesComment.value.find(e => e.user === user.token)?.comment);
+
+    const likesPostReducer = useSelector(state => state.likesPost.value);
+    const likesCommentReducer = useSelector(state => state.likesComment.value);
+    // const postILkd = useSelector(state => state.likesPost.value.find(e=> e.user === user.token)?.post);
+
+    // console.log(commentILkd);
+    // console.log(likesCommentReducer);
+
     const commentILook = useSelector(state => state.showComment.value);
 
     const [ upLikes, setUpLikes] = useState(0);
@@ -56,7 +67,8 @@ import SwipeListener from "swipe-listener";
     const [ openMenuTweet, setOpenMenuTweet] = useState(false);
     const menuTweetContainerRef = useRef(null);
     
-    
+
+    //  console.log(commentILkd)
   
   useEffect(() => {
     setShowInputAddComment(commentILook.includes(props._id));
@@ -106,12 +118,18 @@ import SwipeListener from "swipe-listener";
   }
   }, [selectedPic]);
 
+  useEffect(()=>{
+    if (!user.token) {
+      setShowInputAddComment(false);
+    }
+  },[user]);
+
 
 
 //Mettre à jour les commentaire liké de l'utilisateur
   
 const updateLikedCom = (comId) => {
-    if (commentILkd.some(com => com === comId)) { 
+    if (commentILkd?.some(com => com === comId)) { 
       dispatch(rmvLikedComment({user: user.token, comment: comId}));     
     } else {   
       dispatch(addLikedComment({user: user.token, comment: comId}));
@@ -128,6 +146,8 @@ const updateLikedCom = (comId) => {
     props.handleDelete(props._id);
     // props.handleDeletePic(props.pictures);
   };
+
+  // console.log(props.user);
 
 //Bouton Like d'un tweet
   const handleLikeTweet = () => {
@@ -146,16 +166,17 @@ const updateLikedCom = (comId) => {
           .then(data => {
             if (data.result) {
               props.nbLike > 0 && setUpLikes(upLikes - 1);
-              console.log("like --");
+              // console.log("like --");
             }
           });
-      } else {
-        console.log("props nb like = 0", props.nbLike)
-      }
+      } 
+      // else {
+      //   console.log("props nb like = 0", props.nbLike)
+      // }
     } else { 
       const notification = {
         tweetDescription: props.description,
-        fromUserId: user.id,
+        fromUserToken: user.token,
         fromUserName: user.username,
         toUserId: props.user._id,
       };
@@ -184,11 +205,12 @@ const updateLikedCom = (comId) => {
 //Ajouter un commentaire
   const handleAddComment = () => {
     const newCom = {
-      userId: user.id,
+/////////////////////////////////////////////////////////////////////////
+      // userId: user.id,
       text: textComment,
       userName: user.username,
     }
-    fetch(`${URL}tweets/addComment/${props._id}`, {
+    fetch(`${URL}tweets/addCommentV3/${props._id}/from/${user.token}`, {
       method: "PUT",
       headers: { "Content-type": "application/json", },
       body: JSON.stringify(newCom)
@@ -231,8 +253,11 @@ const updateLikedCom = (comId) => {
       })
   };
 
+  // console.log(props);
+
+
 //Tous les commentaires d'un post
-  const allComment2 = props.comment.length > 0 && props.comment.map((com,i) => {
+  const allComment2 = props.comment?.length > 0 && props.comment.map((com,i) => {
     //console.log(com);
     return (
       <Comment
@@ -376,7 +401,7 @@ const handlePrevpic = () => {
         
           {props.pictures && props.pictures.length > 0 ?
             // <div className={styles.picContainer} style={{ justifyContent: props.pictures?.length > 3 ? 'flex-start': 'center'}}>
-               <div className={styles.picContainer} style={getContainerStyle()}>
+               <div className={`${styles[theme]} ${styles.picContainer}`}  style={getContainerStyle()}>
               {allPic}
             </div> 
             : ""}
@@ -444,10 +469,10 @@ const handlePrevpic = () => {
               onClick={user.token? handleShowAddComment : ()=>setActiveToggleConnection(!activeToggleConnection)}
               // onClick={handleShowAddComment}
               style={{ cursor: 'pointer'}}
-            />   <span className={styles.likesText}>    {   props.comment.length > 0 ? props.comment.length : ""} </span>
+            />   <span className={styles.likesText}>    {   props.comment?.length > 0 ? props.comment?.length : ""} </span>
           </div> 
 
-           {user.id === props.user._id && (
+           {user.id === props.user?._id && (
               <div className={styles.xDelete} onClick={()=>setActiveToggle(!activeToggle)} /*onClick={handleDelete}*/>
               <FontAwesomeIcon
                 icon={faTrash}
@@ -479,7 +504,10 @@ const handlePrevpic = () => {
             onChange={(e) => setTextComment(e.target.value)}
             className={`${styles[theme]} ${styles.inputComment}`}            
           />
-          <div >            
+          <div >  
+
+              
+            {/* <button className={styles.addButton} onClick={testFindUserId}> Post </button>         */}
             <button className={styles.addButton} onClick={handleAddComment}> Post </button>
           </div>
         </div>

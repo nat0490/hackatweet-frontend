@@ -13,7 +13,7 @@ export const usersSlice = createSlice({
         firstname: action.payload.firstname,
         username: action.payload.username,
         token: action.payload.token,
-        id: action.payload.id,
+        // id: action.payload.id,
       };
     },
     logout: (state, action) => {

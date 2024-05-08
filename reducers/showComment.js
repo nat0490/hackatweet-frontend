@@ -14,8 +14,8 @@ export const showCommentSlice = createSlice({
         rmvShowComment: (state, action) => {
             state.value = state.value.filter(e => e !== action.payload)
         },
-        rmvAllShowComment: (station, action) => {
-            state.value= []
+        rmvAllShowComment: (state, action) => {
+            state.value = [];
         },
     },
 });

@@ -7,29 +7,42 @@ import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-//import { hashtags, users, theme, likes } from '../reducers';
 import users from "../reducers/user";
 import hashtags from "../reducers/hashtags";
 import theme from "../reducers/theme";
-import likes from "../reducers/likes";
 import showComment from '../reducers/showComment';
 import notifications from '../reducers/notifications';
+import likesComment from '../reducers/likesComment';
+import likesPost from '../reducers/likesPost';
 
-const reducers = combineReducers({ users, hashtags, theme, likes, showComment, notifications });
+const reducers = combineReducers({ users, hashtags, theme, showComment, notifications, likesComment, likesPost });
 const persistConfig = { 
   key: "filters", 
   storage,
   blacklist: ["showComment"],
 };
 
-const store = configureStore({
-  reducer: persistReducer(persistConfig, reducers),
+// const store = configureStore({
+//   reducer: persistReducer(persistConfig, reducers),
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware({ 
+//       serializableCheck: false 
+//     }),
+// });
+
+// const persistor = persistStore(store);
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+const makeStore = () => configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ 
       serializableCheck: false 
     }),
 });
 
+const store = makeStore();
 const persistor = persistStore(store);
 
 function App({ Component, pageProps }) {

@@ -1,6 +1,7 @@
 import React, {forwardRef, useRef, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../reducers/user";
+import { rmvAllShowComment } from '../reducers/showComment';
 import Link from "next/link";
 import {} from "@fortawesome/free-solid-svg-icons";
 import styles from '../styles/UserInfo.module.css';
@@ -104,6 +105,8 @@ useEffect(() => {
 
 const handleLogout = () => {
   dispatch(logout());
+  dispatch(rmvAllShowComment());
+
 };
 
   return (

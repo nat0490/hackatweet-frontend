@@ -11,22 +11,24 @@ const Comment = forwardRef((props, ref) => {
 
   const user = useSelector(state => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+  
   // const URL = "http://localhost:3000/";
   const URL = "https://flowst-backend.vercel.app/";
 
-  
+  const likesCommentReducer = useSelector(state => state.likesComment.value);
 
-  //console.log("user id", props.userFrom);
+  // console.log(props);
+
   const [ likes, setLikes ] = useState(props.nbLike);
 
-  const handleLikeComment = (comId) => {
+  const handleLikeComment = () => {
     props.updateLikedCom(props._id);
     //console.log(user);
     if (!props.isLiked) {
       const newNotification = {
         commentText: props.text, 
         fromUserName: user.username,
-        fromUserId: user.id,
+        fromUserToken: user.token,
         toUserId: props.userFrom.id || props.userFrom._id ,
         };
       fetch(`${URL}tweets/${props.tweetId}/addLikeComment/${props._id}`, {
@@ -75,8 +77,8 @@ const Comment = forwardRef((props, ref) => {
               />
           <div className={styles.blocUserCom}>
             <div className={styles.userNameAndDeleteCom}> 
-              <p className={styles.infoUserCom}>{props.userFrom.username} - {tempsEcoule(props.date)}</p> 
-              {user.id === (props.userFrom._id || props.userFrom.id) && (
+              <p className={styles.infoUserCom}>{props.userFrom?.username} - {tempsEcoule(props.date)}</p> 
+              {user.token === (props.userFrom?.token) && (
                   <div className={styles.oneLogo}>
                     <FontAwesomeIcon onClick={handleDeleteComment} icon={faXmark} style={{ cursor: 'pointer'}} size="xs"/>
                   </div>

@@ -4,12 +4,13 @@ import Tweet from "./Tweet";
 import AddPicture from './AddPicture';
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../styles/LastTweet.module.css";
-import { addLikedTweet, rmvLikedTweet, rmvAlltweet, rmvAllTweetAndComment } from '../reducers/likes';
 // import { fetchAllTags} from '../utils';
 import { BeatLoader } from 'react-spinners';
 import { faImage, faLock, faLockOpen, faFaceSadTear, faCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from "react-error-boundary";
+import { rmvAllComment } from '../reducers/likesComment';
+import { addLikedPost, rmvLikedPost, rmvAllPost } from '../reducers/likesPost';
 
 
 function LastTweets() {
@@ -23,7 +24,16 @@ function LastTweets() {
 
   const user = useSelector((state) => state.users.value);
   const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
-  const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
+
+  // const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
+  const postILkd = useSelector(state => state.likesPost.value.find(e=> e.user === user.token)?.post);
+
+  const showComment = useSelector(state => state.showComment.value);
+  const likesCommentReducer = useSelector(state => state.likesComment.value);
+  const likesPostReducer = useSelector(state => state.likesPost.value);
+
+  // console.log(likesPostReducer);
+  // console.log(showComment);
 
   const [ showAddTweet, setShowAddTweet] = useState(false);
   const [ tweetsData, setTweetsData] = useState([]);
@@ -41,6 +51,20 @@ function LastTweets() {
 
   const [scrollTop, setScrollTop] = useState(0);
 
+  
+  // useEffect(()=>{
+  //   dispatch(rmvAllComment(user.token));
+  // },[])
+
+  useEffect(()=>{
+    if (!user.token) {
+      // Remettre le scroll à 0
+      const tweetPageDiv = document.getElementById("tweetPage");
+      if (tweetPageDiv) {
+        tweetPageDiv.scrollTop = 0;
+      }
+    }
+  },[user]);
 
   useEffect(() => {
     fetchTweet();
@@ -219,13 +243,13 @@ const handleLoadingChange = (loading) => {
   };
 
 
-  const updateLikedTweet = (tweetId) => {
+  const updateLikedTweet = (postId) => {
     //dispatch(rmvAlltweet());
-    if (tweetILkd?.some(tweet => tweet === tweetId)) {  
-      dispatch(rmvLikedTweet({user: user.token, tweet: tweetId}));  
+    if (postILkd?.some(post => post === postId)) {  
+      dispatch(rmvLikedPost({user: user.token, post: postId}));  
       //console.log("rmv t:", tweetComment);  
     } else {     
-      dispatch(addLikedTweet({user: user.token, tweet: tweetId}));
+      dispatch(addLikedPost({user: user.token, post: postId}));
       //console.log("add t:", tweetComment);
     } 
   };
@@ -235,14 +259,16 @@ const handleLoadingChange = (loading) => {
     setAddPic(!addPic);
   };
 
-  const tweets = tweetsData.length > 0 && tweetsData.map((tweet) => {
+  // console.log(tweetsData);
+
+  const tweets = tweetsData.length > 0 && tweetsData.map((post) => {
     return (
       <Tweet
         ref={tweetRef}
-        key={tweet._id}
-        {...tweet}
+        key={post._id}
+        {...post}
         updateLikedTweet={updateLikedTweet}
-        // isLiked={tweetILkd?.some( e => e === tweet._id )}        
+        isLiked={postILkd?.some( e => e === post._id )}        
         handleDelete={handleDelete}
         fetchTweet={fetchTweet}
       />

@@ -72,10 +72,10 @@ const SignUp = forwardRef((props,ref) => {
           if (data.result) {
             dispatch(
               login({
-                firstname: signUpFirstname,
-                username: signUpUsername,
+                firstname: signUpFirstname.toLowerCase(),
+                username: signUpUsername.toLowerCase(),
                 token: data.newDoc.token,
-                id: data.newDoc._id,
+                // id: data.newDoc._id,
               })
             );
             setSignUpFirstname("");

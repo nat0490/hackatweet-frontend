@@ -13,9 +13,52 @@
         padding-right: 0.25rem;
     }
 }
-.tweetPage::-webkit-scrollbar {
-    display: none;
-  }
+
+
+/* CUSTOM SCROLL BAR  */
+@media only screen and (max-width: 600px) {
+    .tweetPage::-webkit-scrollbar {
+        display: none;
+    }
+}
+@media only screen and (min-width: 600px){
+    .tweetPage::-webkit-scrollbar {
+        border-radius: 1rem;
+    }
+    .tweetPage::-webkit-scrollbar-thumb {
+        cursor: pointer;
+        border-radius: 1rem;
+    }
+    .light.tweetPage::-webkit-scrollbar {
+        background-color: rgba(255,255,255,0.3);
+      }
+    .light.tweetPage::-webkit-scrollbar:hover {
+        background-color: rgba(255,255,255,0.7);
+    }
+    .light.tweetPage::-webkit-scrollbar-thumb {
+        background: rgba(227, 2, 145, 0.35)
+    }
+    .light.tweetPage::-webkit-scrollbar-thumb:hover {
+        background: #EA3680;
+    }
+    .dark.tweetPage::-webkit-scrollbar {
+        background-color: rgba(63, 6, 40, 0.3);
+      }
+    .dark.tweetPage::-webkit-scrollbar:hover {
+        background-color: rgba(63, 6, 40, 0.5);
+    }
+    .dark.tweetPage::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.4);
+    }
+    .dark.tweetPage::-webkit-scrollbar-thumb:hover {
+        background: #000;
+    }
+}
+
+
+    
+
+
 
 .lastTweetsContainer {
     padding: 0;
