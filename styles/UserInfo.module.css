@@ -224,10 +224,14 @@
 .noUser{
     display: flex;
     flex-direction: column;
-    /* height: 100vh;*/
     width: 100%; 
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    @media only screen and (min-width: 600px) {
+        flex-direction: row;
+        height: 100vh;
+        /* margin:1rem; */
+    }
     @media only screen and (max-width: 600px) {
         flex-direction: row;
         /* margin:1rem; */
@@ -241,29 +245,77 @@
     text-align: center;
     cursor: pointer;
     font-style: italic;
-    margin-left: 1rem;
-    margin-top: 2rem;
     border: none;
-    /* border-bottom: 1px solid #EA3680;
-    border-right: 1px solid #EA3680;*/
-    border-radius: 2rem; 
+    border-radius: 1rem; 
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid #000;
+    @media only screen and (min-width: 600px){
+        background-color: rgba(0,0,0,0.4);
+        border: 1px solid #000;
+        height: 10rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 1rem; 
+    }
     @media only screen and (max-width: 600px){
         /* margin-top: 0.5rem;
         margin-left: 0; */
         margin:0;
         padding: 0.2rem;
-        width: 7rem;
+        width: 10rem;
         height: 4rem;
+        border-radius: 1rem; 
+    }
+}
+@media only screen and (min-width: 600px){
+    @keyframes explode {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(2);
+        }
+    }
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none; 
+        }
+    }    
+    .oneLogoConnection.exploded {
+        animation: explode 1s forwards, fadeOut 0.3s ease forwards;
+        border: none;
     }
 }
 
-
-.oneLogoConnection:hover{
-    opacity: 0.7;
-    font-weight: 800;
-    font-size: 20px;
-    /* box-shadow: rgba(26, 0, 16, 0.35) 0px 0px 15px; */
+@keyframes explode {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(2);
+    }
 }
+/* @keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none; 
+    }
+}   */
+.exploded {
+    animation: explode 1s forwards;
+    /* , fadeOut 0.3s ease forwards; */
+    border: none;
+}  
+
+
 
 .connection{
     font-size: 12px;

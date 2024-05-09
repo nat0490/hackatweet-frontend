@@ -10,7 +10,12 @@ import { tempsEcoule } from '../utils';
 const Comment = forwardRef((props, ref) => {
 
   const user = useSelector(state => state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+  
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
   
   // const URL = "http://localhost:3000/";
   const URL = "https://flowst-backend.vercel.app/";

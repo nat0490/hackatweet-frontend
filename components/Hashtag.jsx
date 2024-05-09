@@ -6,14 +6,21 @@ import styles from "../styles/Hashtag.module.css";
 import { addHashtag, removehashTag } from '../reducers/hashtags';
 import { useDispatch, useSelector } from "react-redux";
 import { BeatLoader } from 'react-spinners';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faReply } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 
 function Hashtag() {
 
-  const user = useSelector(state => state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const user = useSelector(state => state.users.value);
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
 
   // const URL = "http://localhost:3000/";
   const URL = "https://flowst-backend.vercel.app/";
@@ -23,8 +30,6 @@ function Hashtag() {
   const [ isLoading, setIsLoading] = useState(false);
   const [ allTweet, setAllTweet ] = useState(null);
   const [ nbMatch, setNbMatch ] = useState(null);
-
-  
 
   useEffect(() => {
     setHashtag(router.query.hashtagName);
@@ -52,10 +57,7 @@ function Hashtag() {
         console.error("Error in fetchTweet:", error);
       };
       setIsLoading(false);
-  };
-
-
-  
+  }; 
 
   const handleLike = (id) => {
     const tweetLiked = tweetsLiked.find((e) => {
@@ -91,8 +93,7 @@ function Hashtag() {
     }
     dispatch(removehashTag());
     dispatch(addHashtag(occurences));
-  };
-  
+  };  
 
   const fetchAllHashtag = () => {
     fetch(`${URL}tweets/lastTweet`)
@@ -106,12 +107,9 @@ function Hashtag() {
             hashtagsFind.push(...hashT);
           }          
         }); 
-        //console.log(hashtagsFind);
         nbrOccurence(hashtagsFind);
       });
-  }
-
- 
+  };
  
 const afficheTweet = allTweet?.map((tweet, i) => {
     const isMatchingHashtags = tweet.hashtags?.some(tag => tag.toLowerCase().startsWith(hashtag?.toLowerCase()));
@@ -128,20 +126,26 @@ const afficheTweet = allTweet?.map((tweet, i) => {
     } 
 });
 
-
   return (
     <div className={styles.PageAcceuil}>
       <div className={`${styles[theme]} ${styles.hashtagPage}`}> 
-      {/* { nbMatch && nbMatch > 0 ? 
-      <h3 className={`${styles[theme]} ${styles.titlePage}`}> {nbMatch} post{nbMatch > 1 && "s"}</h3> : 
-      !isLoading && <div className={styles.noFound}>Pas de <span className={styles.postNoFound}>post</span> trouvé </div> } */}
-        <div className={styles.tweetContainer}>
-          { 
-            isLoading ? <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : afficheTweet 
-          }
+        <div className={styles.oneLogo}>
+          <Link href="/">
+            <FontAwesomeIcon
+              icon={faReply}
+              size="xl"
+              color="#000"
+              style={{transform : "scaleY(-1)"}}
+            /> 
+          </Link> 
         </div>
+      <div className={styles.tweetContainer}>
+        { 
+          isLoading ? <div className={styles.spinner}><BeatLoader color="#EA3680"/></div> : afficheTweet 
+        }
       </div>
     </div>
+  </div>
   );
 }
 

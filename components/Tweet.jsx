@@ -36,7 +36,12 @@ import SwipeListener from "swipe-listener";
     const URL = "https://flowst-backend.vercel.app/";
 
     const user = useSelector(state => state.users.value);
-    const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+
+    // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+    const userToken = user.token; 
+    const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+    const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
 
     // const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
 
@@ -61,8 +66,8 @@ import SwipeListener from "swipe-listener";
     const bigPicContainerRef = useRef(null);
     const bigPicRef = useRef(null);
 //Popup d'alert
-    const [activeToggle, setActiveToggle] = useState(false);
-    const [activeToggleConnection, setActiveToggleConnection] = useState(false);
+    const [ activeToggle, setActiveToggle] = useState(false);
+    const [ activeToggleConnection, setActiveToggleConnection] = useState(false);
 //Modale action Tweet
     const [ openMenuTweet, setOpenMenuTweet] = useState(false);
     const menuTweetContainerRef = useRef(null);

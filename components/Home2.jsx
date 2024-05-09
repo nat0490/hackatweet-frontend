@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import UserInfo from "./UserInfo";
 import Hashtag from './Hashtag';
 import Trend from "./Trend";
@@ -9,7 +9,12 @@ function Home2() {
 
     const userRef = useRef(null);
     const user = useSelector((state)=> state.users.value);
-    const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
+
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
 
   return (
     <div className={`${styles[theme]} ${styles.PageAcceuil}`}>

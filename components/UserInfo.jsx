@@ -25,14 +25,19 @@ const UserInfo = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const { customClassName } = props;
   const user = useSelector(state => state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
   const notifNonLues = useSelector(state => state.notifications.value.nonLu);
   //console.log("reducer non lu:", notifNonLues);
 
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+
   const [ openNotifModal, setOpenNotifModal] = useState(false);
   const [ openSettingModal, setOpenSettingModal] = useState(false);
-  const[openModalSignUp, setOpenModalSignUp] = useState(false);
-  const[openModalSignIn, setOpenModalSignIn] = useState(false);
+  const [ openModalSignUp, setOpenModalSignUp] = useState(false);
+  const [ openModalSignIn, setOpenModalSignIn] = useState(false);
 
   const notificationContainerRef = useRef(null);
   const settingContainerRef = useRef(null);
@@ -70,7 +75,6 @@ const UserInfo = forwardRef((props, ref) => {
     };
   }, [openNotifModal, openSettingModal]);
 
-
 //Ecoute pour détecter le click en dehors dees signIn/signUp pour fermer les onglets 
 useEffect(() => {
   const handleClickOutside = (event) => {
@@ -102,12 +106,25 @@ useEffect(() => {
   };
 }, [openModalSignIn, openModalSignUp]);
 
+// const [openModalSignIn, setOpenModalSignIn] = useState(false);
+//   const [openModalSignUp, setOpenModalSignUp] = useState(false);
+  const [modalClosed, setModalClosed] = useState(false);
+
+  useEffect(() => {
+    if (!openModalSignIn && !openModalSignUp) {
+      setModalClosed(true);
+    } else {
+      setModalClosed(false);
+    }
+  }, [openModalSignIn, openModalSignUp]);
+
 
 const handleLogout = () => {
   dispatch(logout());
   dispatch(rmvAllShowComment());
 
 };
+
 
   return (
     <ErrorBoundary fallback={
@@ -198,17 +215,6 @@ const handleLogout = () => {
   <section className={styles.noUser}>
     {openModalSignUp && 
     <aside>
-       <div 
-        className={styles.oneLogoConnection} 
-        onClick={() => {setOpenModalSignIn(true), setOpenModalSignUp(false)}}
-        >
-        <p className={styles.connection}>Se connecter</p>
-        <FontAwesomeIcon
-          icon={faUser}
-          size="xl"
-          color="#000"
-        />
-      </div>
        <SignUp 
         ref={signUpModalRef} 
         closeModal={setOpenModalSignUp}
@@ -216,28 +222,19 @@ const handleLogout = () => {
          />
     </aside>}
     {openModalSignIn && 
-    <aside>
-      <div 
-        className={styles.oneLogoConnection}
-        onClick={() =>{ setOpenModalSignUp(true), setOpenModalSignIn(false)}}
-        style={{ cursor: 'pointer'}}>
-        <p className={styles.connection2}>S'inscrire</p>
-        <FontAwesomeIcon
-          icon={faUserPlus}
-          size="xl"
-          color="#000"
-        />
-    </div> 
+    <aside >
       <SignIn 
         ref={signInModalRef} 
+        // modalClosed={modalClosed}
+       
         closeModal={setOpenModalSignIn} 
         openOtherModal={() => setOpenModalSignUp(true)}
         />
     </aside>}
-    {!openModalSignUp && !openModalSignIn && 
+    {/* {!openModalSignUp && !openModalSignIn &&  */}
       <div 
-        className={styles.oneLogoConnection}
-        onClick={() => setOpenModalSignIn(true)}
+      className={`${styles.oneLogoConnection} ${(openModalSignIn || openModalSignUp) && styles.exploded}`}
+        onClick={() => {setOpenModalSignIn(true)}}
         style={{ cursor: 'pointer'}}
         >
         <p className={styles.connection}>Se connecter</p>
@@ -246,7 +243,8 @@ const handleLogout = () => {
           size="xl"
           color="#000"
         />
-    </div> }
+    </div> 
+    {/* } */}
   </section>
 }
     </div>

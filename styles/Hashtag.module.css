@@ -32,6 +32,12 @@
         margin-top: 0.5rem;
     }
 }
+.light.addTweet {
+    background-color: rgba(0,0,0,0.2);
+}
+.dark.addTweet {
+    background-color: rgba(255, 255, 255, 0.5);
+}
 
 .inputLastTweets {
     border-radius: 0.5rem;
@@ -42,6 +48,18 @@
         margin-bottom: 0.25rem;
     }
 }
+.light.inputLastTweets {
+    background-color: #fff;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
+.dark.inputLastTweets {
+    background-color: #fefefe;
+    color: #000;
+    border: #EA3680;
+    border-bottom: 1px solid grey;
+}
 
 .inputLine {
     width: 90%;
@@ -50,16 +68,6 @@
     align-items: center;
     justify-content: center;
 }
-
-/* .tag {
-    font-weight: bold;
-    margin-right: 0.25rem;
-    margin-top: -1rem;
-    font-size: 20px;
-    @media only screen and (max-width:600px) {
-        margin-top: 0;
-    }
-} */
 
 .tag {
     display: flex;
@@ -102,11 +110,10 @@
 }
 
 .tweetContainer {
-    height: 45rem; /* ou une hauteur fixe selon vos besoins */
-    overflow-y: auto; /* activer le défilement vertical si nécessaire */    
+    height: 45rem; 
+    overflow-y: auto; 
     scrollbar-width: thin;
 }
-
 .tweetContainer::-webkit-scrollbar {
     width: 12px;
   }
@@ -124,7 +131,9 @@
         padding-right: 0.25rem;
     }
 }
-
+.dark.hashtagPage {
+    color: #000;
+}
 
 .titlePage {
     margin-top: 2rem;
@@ -137,14 +146,15 @@
         margin-bottom: 1rem;
     }
 }
+.dark.titlePage {
+    color: #fff;
+}
 
 .spinner {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
 }
-
-
 
 .noFound {
     text-align: center;
@@ -155,35 +165,11 @@
     font-variant-caps: small-caps;
     font-weight: bold;
 }
-
-/* LIGHT MODE */
-.light.addTweet {
-    background-color: rgba(0,0,0,0.2);
-}
-
-.light.inputLastTweets {
-    background-color: #fff;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
-}
-
-/* DARK MODE */
-.dark.hashtagPage {
-    color: #000;
-}
-
-.dark.addTweet {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.dark.titlePage {
-    color: #fff;
-}
-
-.dark.inputLastTweets {
-    background-color: #fefefe;
-    color: #000;
-    border: #EA3680;
-    border-bottom: 1px solid grey;
+.oneLogo{
+    padding: 1rem;
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    position: sticky;
+    top: 20;
 }

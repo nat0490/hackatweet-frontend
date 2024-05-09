@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../../styles/Signup.module.css";
 import { login } from "../../reducers/user";
 import { addHashtag, removehashTag } from '../../reducers/hashtags';
@@ -24,6 +24,13 @@ const SignUp = forwardRef((props,ref) => {
 
   // const URL = "http://localhost:3000/";
   const URL = "https://flowst-backend.vercel.app/";
+
+  const user = useSelector((state)=> state.users.value);
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
 
   const nbrOccurence = (tab) => {
     const occurences = [];  
@@ -83,11 +90,11 @@ const SignUp = forwardRef((props,ref) => {
             setSignUpPassword("");
             setSignUpCheckPassword("");
             setErrorMsgPw(null);
-            setErrorMsgUserName(null);
+            // setErrorMsgUserName(null);
             setShowEye(true);
             setShowEye2(true);
             fetchAllHashtag();
-            dispatch(addTheme(data.newDoc.token));
+            dispatch(addTheme({user: data.newDoc.token, style: theme }));
           } else {
             console.log(data.message);
             setErrorMsg(data.message);

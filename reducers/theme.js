@@ -10,10 +10,11 @@ export const themeSlice = createSlice({
   reducers: {
     addTheme: (state, action) => {
       //console.log(addTheme);
-      if (!state.value.some(e => e.user === action.payload )){
+      if (!state.value.some(e => e.user === action.payload.user )){
+        const {user, style} = action.payload;
         state.value.push({
-          user: action.payload,
-          style: "light",
+          user: user,
+          style: style,
         });
       } ;
     },

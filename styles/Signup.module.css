@@ -1,8 +1,8 @@
 
 .modalContainer {
     background-color: #f8ecf4;
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.35) 2rem 1rem 5rem;
     display: flex;
@@ -12,15 +12,16 @@
     left:50%;
     margin: 0;
     padding: 0;
-    transform: translate(-50%, -10%);
+    transform: translate(-50%, -60%);
     position: absolute;
     z-index: 1;
     @media only screen and (max-width: 600px) {
         /* transform: translate(-50%, 30%);
         width: 350px;
         height: 400px; */
-        height: 110vh;
-        width: 110vw;
+        transform: translate(-50%, -4%);
+        height: 100vh;
+        width: 100vw;
         padding: 2rem;
     }
 }
@@ -57,12 +58,26 @@
 /* ALLER SUR LAUTRE PAGE DE CONNECTION */
 .oneLogo {
     padding: 0.5rem;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* text-align: center; */
     cursor: pointer;
     font-style: italic;
     margin-left: 1rem;
     margin-top: 1rem;
-    border-radius: 2rem;
+    border-radius: 1rem;
+    background-color: rgba(0,0,0,0.2);
+    /* border: 0.5px solid #000; */
+    @media only screen and (min-width: 600px){
+        width: 7rem;
+        height: 6rem;
+    }
+    @media only screen and (max-width: 600px){
+        width: 6rem;
+        height: 8rem;
+    }
 }
 
 .oneLogo:hover{

@@ -13,7 +13,12 @@ function Trend() {
 
   const hashtag = useSelector((state) => state.hashtags.value);
   const user = useSelector(state => state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+  
+   // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+   const userToken = user.token; 
+   const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+   const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+   const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
 
   const [ findTag, setFindTag ] = useState("");
   const [ saisieEnCours, setSaisieEnCours ] = useState(false);

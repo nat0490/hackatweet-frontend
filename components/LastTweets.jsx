@@ -9,7 +9,7 @@ import { BeatLoader } from 'react-spinners';
 import { faImage, faLock, faLockOpen, faFaceSadTear, faCheck, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ErrorBoundary } from "react-error-boundary";
-import { rmvAllComment } from '../reducers/likesComment';
+// import { rmvAllComment } from '../reducers/likesComment';
 import { addLikedPost, rmvLikedPost, rmvAllPost } from '../reducers/likesPost';
 
 
@@ -23,7 +23,12 @@ function LastTweets() {
   const URL = "https://flowst-backend.vercel.app/";
 
   const user = useSelector((state) => state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
+
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
 
   // const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
   const postILkd = useSelector(state => state.likesPost.value.find(e=> e.user === user.token)?.post);

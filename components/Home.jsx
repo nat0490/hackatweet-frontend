@@ -1,9 +1,9 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import UserInfo from "./UserInfo";
 import LastTweets from "./LastTweets";
 import Trend from "./Trend";
 import styles from '../styles/Home.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { addNotification, rmvNotification, rmvAllNotification, updateNotification } from '../reducers/notifications';
 
 
@@ -13,12 +13,18 @@ function Home() {
   // const URL = "http://localhost:3000/";
   const URL = "https://flowst-backend.vercel.app/";
   const user = useSelector((state)=> state.users.value);
-  const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
 
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
+  const userToken = user.token; 
+  const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
   //console.log("them:",theme);
 
   useEffect(()=> {
-    getMyNotif();
+    if(user.token){
+      getMyNotif();
+    }
   }, []);
 
   //Dimension écran
