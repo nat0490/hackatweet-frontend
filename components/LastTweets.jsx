@@ -51,16 +51,16 @@ function LastTweets() {
   const [ isLoadingChild, setIsLoadingChild] = useState(false);
 
   const [ start, setStart ] = useState(false);
+
+//TOGGLE & MSG ERREUR
   const [ activeToggle, setActiveToggle] = useState(false);
+  const [ postMsgError, setPostMsgError] = useState("");
   const [ activeToggleSuccesPost, setActiveToggleSuccesPost] = useState(false);
 
   const [scrollTop, setScrollTop] = useState(0);
 
   
-  // useEffect(()=>{
-  //   dispatch(rmvAllComment(user.token));
-  // },[])
-
+//Remonter à la déconnexion
   useEffect(()=>{
     if (!user.token) {
       // Remettre le scroll à 0
@@ -71,16 +71,26 @@ function LastTweets() {
     }
   },[user]);
 
+//Recuperer les posts au chargement
   useEffect(() => {
     fetchTweet();
   }, []);
 
+//Photo chargé => Poster
   useEffect(()=>{
     if(loadPic.length > 0){
       postTweet()
     }
   },[loadPic]);
 
+//Reset postErrorMsg à fermture toggle
+useEffect(()=>{
+  if (!activeToggle){
+    setPostMsgError("");
+  }
+},[activeToggle])
+
+//Event clickOutside toggleSucess
   useEffect(() => {
     let timeoutId;
     if (activeToggleSuccesPost) {
@@ -89,13 +99,13 @@ function LastTweets() {
       }, 100);
     }
   }, [activeToggleSuccesPost]);
-  
+
+//Event clickOutside addTweet
   useEffect(() => {
     const handleClickOutside = (event) => {
         if (showAddTweet && addPostRef.current && !addPostRef.current.contains(event.target)) {
           setShowAddTweet(false);
         };
-        
     };
     let timeoutId;
     if (showAddTweet) {
@@ -110,15 +120,15 @@ function LastTweets() {
     };
   }, [showAddTweet]);
 
-  useEffect(() => {
-    const element = document.querySelector("#tweetPage");
-    function handleScroll() {      
-      const scrollTop2 = element.scrollTop || document.documentElement.scrollTop;
-      setScrollTop(scrollTop2);
-    }
-    element.addEventListener('scroll', handleScroll);
-    return () => document.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const element = document.querySelector("#tweetPage");
+  //   function handleScroll() {      
+  //     const scrollTop2 = element.scrollTop || document.documentElement.scrollTop;
+  //     setScrollTop(scrollTop2);
+  //   }
+  //   element.addEventListener('scroll', handleScroll);
+  //   return () => document.removeEventListener('scroll', handleScroll);
+  // }, []);
 
 
   const fetchTweet = async() => {
@@ -170,11 +180,8 @@ const handleLoadingChange = (loading) => {
       // }))
       pictures = loadPic;
     };
-
-    // console.log(pictures);
-
     const newPost = {
-      user: user.id,
+      user: user.token,
       description: tweet,
       privat: privat,
       pictures: pictures,
@@ -198,14 +205,17 @@ const handleLoadingChange = (loading) => {
           setPrivat(false);
           setResetChild(true);
           setAddPic(false);
-          setActiveToggleSuccesPost(true);
+          
           setShowAddTweet(false);
+          setActiveToggleSuccesPost(true);
           // if (createdTweet.tweet.hashtags.length > 0) {
           //   fetchAllTags(dispatch);
           // };
         } else {
-          console.log(createdTweet.error);
+          // console.log(createdTweet.error);
+          // console.log(createdTweet.message);
           setActiveToggle(!activeToggle);
+          setPostMsgError(createdTweet.message)
         }
        
       });
@@ -392,31 +402,35 @@ const handleLoadingChange = (loading) => {
         { activeToggle && 
           <section className={`${styles[theme]} ${styles.popAlert}`} >
             <aside>
-                <h4 className={styles.titleAlert}>Vous devez mettre quelque chose à poster...</h4>
-                <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggle(!activeToggle)}>Ok</button>
+              { postMsgError === "MissingFields" && <h4 className={styles.titleAlert}>Vous devez mettre quelque chose à poster...</h4>}
+              { postMsgError === "noUser" && <h4 className={styles.titleAlert}>Problème technique, veuillez nous excuser.</h4>}
+              { postMsgError === "Erreur serveur" && <h4 className={styles.titleAlert}>Erreur serveur, veuillez réassayer plus tard.</h4>}
+              <button type="button" className={`${styles[theme]} ${styles.btnAlert}`} onClick={()=>setActiveToggle(!activeToggle)}>Ok</button>
             </aside>
           </section>
-
         }
 
-        { activeToggleSuccesPost &&
-          <section className={`${styles[theme]} ${styles.popAlert}`} ref={toggleSuccesPostRef}>
-          <aside>
-              <h4 className={styles.titleAlert}>Post publié!</h4>
-              <FontAwesomeIcon
-                icon={faCheck}
-                size="2x"
-                onClick={() =>setPrivat(false)}
-                style={{ color: "#EA3680" }}
-                className={styles.icon}
-              /> 
-          </aside>
-        </section>
-         }  
+        
 
 
       </div>
    }
+
+{ activeToggleSuccesPost &&
+<section className={`${styles[theme]} ${styles.popAlert}`} ref={toggleSuccesPostRef}>
+          <aside>
+            <h4 className={styles.titleAlert}>Post publié!</h4>
+            <FontAwesomeIcon
+              icon={faCheck}
+              size="2x"
+              onClick={() =>setPrivat(false)}
+              style={{ color: "#EA3680" }}
+              className={styles.icon}
+            /> 
+          </aside>
+        </section>
+          }  
+
   </section>
         
       }  

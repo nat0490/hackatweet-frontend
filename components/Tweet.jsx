@@ -210,8 +210,6 @@ const updateLikedCom = (comId) => {
 //Ajouter un commentaire
   const handleAddComment = () => {
     const newCom = {
-/////////////////////////////////////////////////////////////////////////
-      // userId: user.id,
       text: textComment,
       userName: user.username,
     }
@@ -367,6 +365,9 @@ const handlePrevpic = () => {
 // console.log(props.pictures.length);
 // console.log(selectedPic);
 
+// console.log(props.user);
+// console.log(user);
+
   return (
     <ErrorBoundary fallback={
       <section style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}> 
@@ -477,7 +478,7 @@ const handlePrevpic = () => {
             />   <span className={styles.likesText}>    {   props.comment?.length > 0 ? props.comment?.length : ""} </span>
           </div> 
 
-           {user.id === props.user?._id && (
+           {user.token === props.user?.token && (
               <div className={styles.xDelete} onClick={()=>setActiveToggle(!activeToggle)} /*onClick={handleDelete}*/>
               <FontAwesomeIcon
                 icon={faTrash}

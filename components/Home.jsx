@@ -32,14 +32,15 @@ function Home() {
 //   return window.innerWidth;
 // };
 
+
   const getMyNotif = async() => {
-    // (async()=> {
       try {
-          const res = await fetch(`${URL}notification/findNotification/${user.id}`);
+          const res = await fetch(`${URL}notification/findNotification/${user.token}`);
           const data = await res.json();
+          // console.log(data);
           if (data?.result) {
-            let allNotifs = data.notifs;
-            let onlyMine = allNotifs.filter(e => e.fromUserId !== user.id );
+            let allNotifs = data.userNotif;
+            let onlyMine = allNotifs.filter(e => e.fromUserName !== user.username );
             dispatch(rmvAllNotification());
             dispatch(addNotification(onlyMine.reverse()));
           } else {
@@ -48,8 +49,7 @@ function Home() {
       } catch(error) {
           console.log(error.message , "Failed to fetch");
   }};
-  // )();
-//};
+
 
   return (
     <div className={`${styles[theme]} ${styles.PageAcceuil}`}>

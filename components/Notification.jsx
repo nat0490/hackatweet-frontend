@@ -14,7 +14,7 @@ const Notification = forwardRef((props, ref) => {
     const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');  
     const notification = useSelector((state)=> state.notifications.value.notification);
  
-    //const URL = "http://localhost:3000/";
+    // const URL = "http://localhost:3000/";
     const URL = "https://flowst-backend.vercel.app/";
 
     useEffect(()=> {
@@ -24,14 +24,14 @@ const Notification = forwardRef((props, ref) => {
 
     const fetchMyNotifications = async () => {
         try {
-            const response = await fetch(`${URL}notification/findNotification/${user.id}`);
+            const response = await fetch(`${URL}notification/findNotification/${user.token}`);
             if(!response.ok) {
                 throw new Errow('Network response was not ok')
             }
             const data = await response.json();
             if (data.result) {
-                let allNotifs = data.notifs;
-                let onlyMine = allNotifs.filter(e => e.fromUserId !== user.id );
+                let allNotifs = data.userNotif;
+                let onlyMine = allNotifs.filter(e => e.fromUserName !== user.username );
                 //console.log("onlyMine:", onlyMine);
                 dispatch(rmvAllNotification());
                 dispatch(addNotification(onlyMine.reverse()));
