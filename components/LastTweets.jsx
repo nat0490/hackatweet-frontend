@@ -383,7 +383,7 @@ const handleLoadingChange = (loading) => {
           <FontAwesomeIcon
                 icon={faImage}
                 size="lg"
-                color="#000"
+                color={`${theme === "light" ? "#ccc" : "#000"}`}
                 onClick={handleAddPictures}
                 // style={{ cursor: 'pointer'}}
                 className={styles.icon}
@@ -391,15 +391,17 @@ const handleLoadingChange = (loading) => {
           <FontAwesomeIcon
                 icon={faLock}
                 size="lg"
+                // color={`${theme === "light" ? "#ccc" : "#000"}`}
                 onClick={() => setPrivat(true)}
-                style={{ cursor: 'pointer', color: privat ? 'EA3680' : '#000' }}
+                style={{ cursor: 'pointer', color: privat ? "#EA3680"  : (theme === "light" ? "#ccc" : "#000") }}
                 className={styles.icon}
               /> 
           <FontAwesomeIcon
                 icon={faLockOpen}
                 size="lg"
+                // color={`${theme === "light" ? "#ccc" : "#000"}`}
                 onClick={() =>setPrivat(false)}
-                style={{ cursor: 'pointer', color: privat ? '#000' : "#EA3680" }}
+                style={{ cursor: 'pointer', color: privat ? (theme === "light" ? "#ccc" : "#000") : "#EA3680" }}
                 className={styles.icon}
               /> 
            
