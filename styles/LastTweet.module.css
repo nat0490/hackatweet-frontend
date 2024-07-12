@@ -166,11 +166,9 @@
     margin: 0;
     margin-top: 0.25rem;
     display: flex;
-    flex-direction: row-reverse;
-    /* position: sticky;
-    top: 10; */
-   
+    flex-direction: row-reverse;   
 }
+
 
 .createPostText{
     font-variant-caps: small-caps;
@@ -180,13 +178,19 @@
 .createPostInside{
     border:none;
     border-radius: 5rem;
-    background-color: rgba(0, 0, 0, 0.4);
     margin:0;
     padding: 0.25rem;
     position: fixed;
     top: 20;
     color:#000;
 }
+.dark.createPostInside{
+    background-color: rgba(255, 255, 255, 0.4);
+}
+.light.createPostInside{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 .createPostInside:hover{
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.8);

@@ -247,10 +247,9 @@
     font-style: italic;
     border: none;
     border-radius: 1rem; 
-    background-color: rgba(0,0,0,0.4);
+    
     border: 1px solid #000;
     @media only screen and (min-width: 600px){
-        background-color: rgba(0,0,0,0.4);
         border: 1px solid #000;
         height: 10rem;
         display: flex;
@@ -268,6 +267,14 @@
         border-radius: 1rem; 
     }
 }
+.dark.oneLogoConnection{
+    background-color: rgba(255, 255, 255, 0.4);
+}
+.light.oneLogoConnection{
+    background-color: rgba(0,0,0,0.4);
+}
+
+
 @media only screen and (min-width: 600px){
     @keyframes explode {
         0% {

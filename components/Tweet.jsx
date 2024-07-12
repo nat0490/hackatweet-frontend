@@ -40,8 +40,12 @@ import SwipeListener from "swipe-listener";
     // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
     const userToken = user.token; 
     const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
-    const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+    let theme = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+    // const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+
+    if(!userToken){
+      theme = defaultTheme;
+    };
 
     // const commentILkd = useSelector(state => state.likes.value.find(e => e.user === user.token)?.comment);
 
@@ -74,6 +78,8 @@ import SwipeListener from "swipe-listener";
     
 
     //  console.log(commentILkd)
+
+    // console.log(user.token, props.user.token);
   
   useEffect(() => {
     setShowInputAddComment(commentILook.includes(props._id));
@@ -400,7 +406,7 @@ const handlePrevpic = () => {
         </div>
 
         <div>
-          <p className={styles.description}>
+          <p className={`${styles[theme]} ${styles.description}`} >
             {formatDescription(props.description)}
           </p>
         </div>
@@ -447,6 +453,7 @@ const handlePrevpic = () => {
           <FontAwesomeIcon 
               icon={faCircleXmark} 
               size="xl"
+              color={`${theme === "light" ? "#000" : "#ddd"}`}
               onClick={()=> setSelectedPic(null)} 
               className={styles.xClosePic}
               style={{ 
@@ -464,25 +471,31 @@ const handlePrevpic = () => {
             <FontAwesomeIcon
               icon={faHeart}
               size="xs"
+              color={`${theme === "light" ? "#000" : "#ccc"}`}
               style={{ cursor: 'pointer', ...(props.isLiked && { color: '#EA3680' }) }}
               onClick={user.token? handleLikeTweet : ()=>setActiveToggleConnection(!activeToggleConnection)}
-            />   <span className={styles.likesText}>    {   props.nbLike + upLikes } </span>
+            />   <span className={`${styles[theme]} ${styles.likesText}`}>    {   props.nbLike + upLikes } </span>
           </div>
           <div className={styles.oneLogo}>
             <FontAwesomeIcon
               icon={faCommentDots}
               size="xs"
+              color={`${theme === "light" ? "#000" : "#ccc"}`}
               onClick={user.token? handleShowAddComment : ()=>setActiveToggleConnection(!activeToggleConnection)}
               // onClick={handleShowAddComment}
               style={{ cursor: 'pointer'}}
-            />   <span className={styles.likesText}>    {   props.comment?.length > 0 ? props.comment?.length : ""} </span>
+            />   <span className={`${styles[theme]} ${styles.likesText}`} >    {   props.comment?.length > 0 ? props.comment?.length : ""} </span>
           </div> 
 
-           {user.token === props.user?.token && (
+    
+
+           {user.token === (props.user?.token) && (
               <div className={styles.xDelete} onClick={()=>setActiveToggle(!activeToggle)} /*onClick={handleDelete}*/>
               <FontAwesomeIcon
                 icon={faTrash}
+                // icon={faXmark}
                 size="xs"
+                color={`${theme === "light" ? "#000" : "#ccc"}`}
                 style={{ cursor: 'pointer'}}
               />   
             </div> 

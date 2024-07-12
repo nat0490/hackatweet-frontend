@@ -13,17 +13,23 @@ function Home2() {
   // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
   const userToken = user.token; 
   const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
-  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+  let theme = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  
+  // const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+
+  if(!userToken){
+    theme = defaultTheme;
+  };
 
   return (
     <div className={`${styles[theme]} ${styles.PageAcceuil}`}>
-      <img
+      {/* <img
         src={theme === "light" ? "/background.jpg" :"/backgroundBW.jpg" }
         name="background"
         alt="background" 
         className={`background ${theme}`}
-      />
+      /> */}
+      <div  className={`background ${theme}`}></div>
       <div className={styles.userInfo}>
         <UserInfo /*customClassName={styles.userInfo} */ref={userRef}/>
       </div>

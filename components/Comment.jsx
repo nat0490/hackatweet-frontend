@@ -14,8 +14,13 @@ const Comment = forwardRef((props, ref) => {
   // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
   const userToken = user.token; 
   const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
-  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+  let theme = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  // const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+
+  if(!userToken){
+    theme = defaultTheme;
+  };
+
   
   // const URL = "http://localhost:3000/";
   const URL = "https://flowst-backend.vercel.app/";
@@ -85,7 +90,11 @@ const Comment = forwardRef((props, ref) => {
               <p className={styles.infoUserCom}>{props.userFrom?.username} - {tempsEcoule(props.date)}</p> 
               {user.token === (props.userFrom?.token) && (
                   <div className={styles.oneLogo}>
-                    <FontAwesomeIcon onClick={handleDeleteComment} icon={faXmark} style={{ cursor: 'pointer'}} size="xs"/>
+                    <FontAwesomeIcon 
+                      onClick={handleDeleteComment} 
+                      color={`${theme === "light" ? "#000" : "#ddd"}`} 
+                      icon={faXmark} style={{ cursor: 'pointer'}} 
+                      size="xs"/>
                   </div>
                 )}
             </div>
@@ -97,6 +106,7 @@ const Comment = forwardRef((props, ref) => {
               <FontAwesomeIcon
                 icon={faHeart}
                 size="2xs"
+                color={`${theme === "light" ? "#000" : "#ddd"}`}
                 style={{ cursor: 'pointer', ...(props.isLiked && { color: '#EA3680' }) }}
                 onClick={() => handleLikeComment(props._id)}
               />    <span className={styles.likesText}>{likes} </span>

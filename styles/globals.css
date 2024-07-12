@@ -38,6 +38,12 @@
 
 .dark.background{
   opacity:1;
+  background-color: #180013;
+}
+
+.light.background{
+  opacity:0.8;
+  background-color: #e2ccd5;
 }
 
 

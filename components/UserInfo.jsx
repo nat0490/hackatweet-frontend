@@ -31,8 +31,13 @@ const UserInfo = forwardRef((props, ref) => {
   // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
   const userToken = user.token; 
   const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
-  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+  let theme = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  // const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+
+  if(!userToken){
+    theme = defaultTheme;
+  };
+ 
 
   const [ openNotifModal, setOpenNotifModal] = useState(false);
   const [ openSettingModal, setOpenSettingModal] = useState(false);
@@ -43,6 +48,7 @@ const UserInfo = forwardRef((props, ref) => {
   const settingContainerRef = useRef(null);
   const signInModalRef = useRef(null);
   const signUpModalRef = useRef(null);
+
  
 //Ecoute pour détecter le click en dehors des notif/setting pour fermer les onglets 
   useEffect(() => {
@@ -159,7 +165,7 @@ const handleLogout = () => {
                 <FontAwesomeIcon
                   icon={faBell}
                   size="xl"
-                  color="#000"
+                  color={`${theme === "light" ? "#000" : "#fff"}`}
                   onClick={() =>{setOpenNotifModal(!openNotifModal); setOpenSettingModal(false)}}
                 /> {notifNonLues > 0 && <span className={styles.nbrNotif}></span> }
               </div> 
@@ -167,14 +173,14 @@ const handleLogout = () => {
                 <FontAwesomeIcon
                   icon={faUser}
                   size="xl"
-                  color="#000"
+                  color={`${theme === "light" ? "#000" : "#fff"}`}
                 />
               </div> 
               <div className={styles.oneLogo} style={{marginRight:"-0.1rem"}}>
                 <FontAwesomeIcon
                   icon={faGear}
                   size="xl"
-                  color="#000"
+                  color={`${theme === "light" ? "#000" : "#fff"}`}
                   onClick={() =>{setOpenSettingModal(!openSettingModal); setOpenNotifModal(false) }}
                 /> 
               </div>
@@ -183,7 +189,7 @@ const handleLogout = () => {
                 <FontAwesomeIcon
                   icon={faHome}
                   size="lg"
-                  color="#000"
+                  color={`${theme === "light" ? "#000" : "#fff"}`}
                 /> 
                 </Link> 
               </div>
@@ -202,7 +208,7 @@ const handleLogout = () => {
               <FontAwesomeIcon
                 icon={faRightFromBracket}
                 size="xl"
-                color="#000"
+                color={`${theme === "light" ? "#000" : "#fff"}`}
                 onClick={handleLogout}
               /> 
             </div>
@@ -233,7 +239,7 @@ const handleLogout = () => {
     </aside>}
     {/* {!openModalSignUp && !openModalSignIn &&  */}
       <div 
-      className={`${styles.oneLogoConnection} ${(openModalSignIn || openModalSignUp) && styles.exploded}`}
+      className={`${styles.oneLogoConnection} ${styles[theme]} ${(openModalSignIn || openModalSignUp) && styles.exploded}`}
         onClick={() => {setOpenModalSignIn(true)}}
         style={{ cursor: 'pointer'}}
         >
@@ -241,7 +247,7 @@ const handleLogout = () => {
         <FontAwesomeIcon
           icon={faUser}
           size="xl"
-          color="#000"
+          color={`${theme === "light" ? "#000" : "#fff"}`}
         />
     </div> 
     {/* } */}

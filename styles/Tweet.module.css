@@ -53,13 +53,16 @@
     margin-left: 3rem;
     margin-top: 0;
 }
+.dark.description{
+    color: #fff;
+}
 
 
 /* FONTAWESOME */
 .logo {
     display: flex;    
-    margin-left: 3.25rem;
-    margin-top: -0.75rem;
+    margin-left: 0.75rem;
+    margin-top: -0.5rem;
 }
 .oneLogo {
     margin-right: 1.5rem;
@@ -86,6 +89,9 @@
 .likesText {
     font-size: 0.6rem; 
     font-weight: 100;
+}
+.dark.likesText{
+    color: #fff;
 }
 
 /* COMMENT */

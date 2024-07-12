@@ -27,8 +27,14 @@ function LastTweets() {
   // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light');
   const userToken = user.token; 
   const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  const themeFromStore = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
-  const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+  let theme = useSelector(state => state.theme.value.find(e => e.user === userToken)?.style);
+  // const [theme, setTheme] = useState(userToken ? themeFromStore : defaultTheme);
+
+  if(!userToken){
+    theme = defaultTheme;
+  };
+
+  // const theme = useSelector(state => state.theme.value.find(e => e.user === user.token)?.style || 'light'); 
 
   // const tweetILkd = useSelector(state => state.likes.value.find(e=> e.user === user.token)?.tweet); 
   const postILkd = useSelector(state => state.likesPost.value.find(e=> e.user === user.token)?.post);
@@ -60,6 +66,13 @@ function LastTweets() {
   const [scrollTop, setScrollTop] = useState(0);
 
   
+  // useEffect(() => {
+  //   if(userToken){
+  //     console.log(themeFromStore);
+  //     setTheme(themeFromStore);
+  //   }
+  // },[themeFromStore]);
+
 //Remonter à la déconnexion
   useEffect(()=>{
     if (!user.token) {
@@ -316,9 +329,9 @@ const handleLoadingChange = (loading) => {
 <section>
 
 
-  <div className={styles.createPost}>
+  <div className={`${styles[theme]} ${styles.createPost}`}>
     <div 
-      className={styles.createPostInside}
+    className={`${styles[theme]} ${styles.createPostInside}`}
       onClick={() =>setShowAddTweet(!showAddTweet)}
       >
       <span 
